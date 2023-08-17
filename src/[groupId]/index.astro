@@ -1,0 +1,31 @@
+---
+import GroupInfo from "../components/GroupInfo.svelte";
+import Layout from "../layouts/Layout.astro";
+const { groupId } = Astro.params;
+const userName = Astro.url.searchParams.get("user");
+
+if (!userName) {
+  return Astro.redirect(`/${groupId}/name`);
+}
+
+const group = {
+  id: groupId as string,
+  name: "Group Name",
+  createdBy: "Group Creator",
+  members: [
+    {
+      name: "User 1",
+    },
+  ],
+};
+---
+<Layout title={group.name}>
+  <div>
+    <GroupInfo
+      client:load
+      group={{ createdBy: group.createdBy, name: group.name, id: group.id }}
+      userName={userName}
+      members={group.members}
+    />
+  </div>
+</Layout>

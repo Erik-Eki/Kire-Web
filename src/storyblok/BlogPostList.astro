@@ -1,0 +1,64 @@
+---
+import { storyblokEditable } from '@storyblok/astro'
+import { useStoryblokApi } from '@storyblok/astro'
+
+const storyblokApi = useStoryblokApi();
+
+const { data } = await storyblokApi.get('cdn/stories', {
+  version: import.meta.env.DEV ? "draft" : "published",
+  content_type: 'blogPost',
+})
+
+const posts = data.stories.map(story => {
+  console.log(story)
+  return {
+    title: story.content.title,
+    date: new Date(story.published_at).toLocaleDateString("en-US", {dateStyle: "full"}),
+    description: story.content.description,
+    slug: "blog/"+story.full_slug,
+    alt_slug: story.name,
+    headImage: story.content.headerImage?.url
+  }
+})
+
+console.log(posts)
+
+const { blok } = Astro.props
+---
+
+<div class="border-solid border-2 border-violet-800 rounded-lg p-2 bg-black bg-opacity-40 mb-4 mt-4">
+  <h1 class=" text-white text-center">Storyblok Blog posts</h1>
+  <ul {...storyblokEditable(blok)}>
+    {posts.map(post => (
+      <div style=`background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(${post.headImage});` class="card-background p-5 m-5 rounded-md">
+        <li class=" flex flex-col">
+            <time class=" text-sm">{post.date}</time>
+            <a class=" text-3xl" href={post.alt_slug}>{post.title}</a>
+            <p class=" text-end text-base">{post.description}</p>
+        </li>
+      </div>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .card-background{
+    background-repeat:no-repeat !important; 
+    background-position:center !important;
+    background-size: cover !important;
+    /* background-attachment:fixed !important; */
+  }
+  /* .card-background{
+    position: relative;
+    z-index:1;
+    overflow:hidden
+  }
+  .card-background:before{
+      z-index:-1;
+      position:absolute;
+      left:0;
+      top:0;
+      content: url('path/to/image.ext');
+      opacity:0.4;
+  } */
+</style>

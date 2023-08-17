@@ -1,0 +1,37 @@
+---
+import { contentfulClient } from '../../lib/contentful'
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
+import type { ContentPost } from '../../lib/contentful'
+
+let post;
+const { slug } = Astro.params
+
+try {
+	const data = await contentfulClient.getEntries<ContentPost>({
+		content_type: 'contentPost',
+		'fields.slug': slug
+	})
+
+    const { title, date, content } = data.items[0].fields;
+    post = {
+        title,
+        date: new Date(date).toLocaleDateString(),
+        content: documentToHtmlString(content),
+    };
+
+} catch (error) {
+	return Astro.redirect('/404')
+}
+---
+
+
+<html lang="en">
+  <head>
+    <title>{post?.title}</title>
+  </head>
+  <body>
+    <h1>{post?.title}</h1>
+    <time>{post?.date}</time>
+    <article set:html={post?.content} />
+  </body>
+</html>
