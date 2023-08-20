@@ -78,6 +78,7 @@ const supaBaseContent = marked.parse(markdown);
 
 
 <!-- <Layout title="Welcome to Astro." user={user}> -->
+<pre class="construction text-2xl font-extrabold text-black text-center">&#128679 UNDER HEAVY CONSTRUCTION BECAUSE WORKERS UNIONIZED &#128679</pre>
 <Layout title="Welcome to Danger Zone!">
 	<main>
 		<svg
@@ -237,5 +238,15 @@ const supaBaseContent = marked.parse(markdown);
 		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
 		gap: 2rem;
 		padding: 0;
+	}
+
+	.construction {
+		background: repeating-linear-gradient(
+			45deg,
+			#ffffff,
+			#ffffff 10px,
+			#ff925f 10px,
+			#ff925f 20px
+			);
 	}
 </style>

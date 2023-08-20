@@ -3,6 +3,11 @@ import { contentfulClient } from '../../lib/contentful'
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
 import type { ContentPost } from '../../lib/contentful'
 
+import { marked } from 'marked';
+const response = await fetch('https://kirewebblob.blob.core.windows.net/kire-web-assets/mdx_test.mdx');
+const markdown = await response.text();
+const mdxContent = marked.parse(markdown);
+
 let post;
 const { slug } = Astro.params
 
@@ -16,12 +21,20 @@ try {
     post = {
         title,
         date: new Date(date).toLocaleDateString(),
-        content: documentToHtmlString(content),
+        content: content,
     };
 
 } catch (error) {
 	return Astro.redirect('/404')
 }
+
+
+console.log(post.content.content[0].data.target.fields.file.url)
+// for (let i of Object.keys(post.content)) {
+//   console.log(i)
+// }
+
+// console.log(JSON.stringify(post.content))
 ---
 
 
@@ -32,6 +45,8 @@ try {
   <body>
     <h1>{post?.title}</h1>
     <time>{post?.date}</time>
-    <article set:html={post?.content} />
+    <!-- <article set:html={documentToHtmlString(post?.content)} /> -->
+    <!-- <article set:html={post.content.content[0].data.target.fields.file.url}></article> -->
+    <article set:html={mdxContent}></article>
   </body>
 </html>
