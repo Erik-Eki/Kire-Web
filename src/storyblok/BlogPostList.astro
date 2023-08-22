@@ -10,7 +10,6 @@ const { data } = await storyblokApi.get('cdn/stories', {
 })
 
 const posts = data.stories.map(story => {
-  console.log(story)
   return {
     title: story.content.title,
     date: new Date(story.published_at).toLocaleDateString("en-US", {dateStyle: "full"}),
@@ -21,27 +20,37 @@ const posts = data.stories.map(story => {
   }
 })
 
-console.log(posts)
 
 const { blok } = Astro.props
 ---
-
+<!-- <a class=" text-3xl" href={post.alt_slug}>{post.title}</a> -->
 <div class="border-solid border-2 border-violet-800 rounded-lg p-2 bg-black bg-opacity-40 mb-4 mt-4">
   <h1 class=" text-white text-center">Storyblok Blog posts</h1>
-  <ul {...storyblokEditable(blok)}>
+  <ul {...storyblokEditable(blok)} class=" flex flex-col">
     {posts.map(post => (
-      <div style=`background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(${post.headImage});` class="card-background p-5 m-5 rounded-md">
+      <a href={post.alt_slug} style=`background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(${post.headImage});` class="card-button card-background p-5 m-5 rounded-md">
         <li class=" flex flex-col">
             <time class=" text-sm">{post.date}</time>
-            <a class=" text-3xl" href={post.alt_slug}>{post.title}</a>
+            <p class=" text-3xl">{post.title}</p>
             <p class=" text-end text-base">{post.description}</p>
         </li>
-      </div>
+      </a>
     ))}
   </ul>
 </div>
 
 <style>
+  .card-button {
+    text-align: left;
+    box-shadow: none;
+    transition: 0.3s;
+  }
+  .card-button:hover {
+      /* border: 2px solid white; */
+      /* box-sizing: border-box; */
+
+      box-shadow:inset 0px 0px 0px 3px white;
+    }
   .card-background{
     background-repeat:no-repeat !important; 
     background-position:center !important;

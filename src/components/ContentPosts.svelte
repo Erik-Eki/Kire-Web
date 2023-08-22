@@ -20,16 +20,11 @@
 			}
 		})
 
-		console.log('Content:', contentPosts)
+		//console.log('Content:', contentPosts)
 		//return contentPosts
 	})
 
 	//let promise = getContent()
-
-    function handleClick() {
-        console.log('Content 2:', contentPosts)
-	}
-    console.log('Content 2:', contentPosts)
 
 	
 </script>

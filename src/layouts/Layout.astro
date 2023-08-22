@@ -1,5 +1,8 @@
 --- 
+import '../styles/global.scss'
 import { SEO } from "astro-seo";
+import Header from '$components/main/Header.astro';
+import Footer from '../components/main/Footer.astro';
 //import LoginStatus from "../components/stuff/LoginStatus.astro"
 
 export interface Props {
@@ -42,7 +45,12 @@ const { title } = Astro.props as Props;
 		/>
 	</head>
 	<body>
+		<pre class="construction text-center text-2xl font-extrabold text-black">&#128679 UNDER HEAVY CONSTRUCTION BECAUSE WORKERS UNIONIZED &#128679</pre>
+
+		<!-- <h1>{title}</h1> -->
+		<Header />
 		<slot/>
+		<Footer />
 		<!-- <div class="container mx-auto px-4 font-outfit">
 			<div class="flex flex-col items-center pt-20 pb-12 prose-a:text-blue-800 prose-blockquote:text-gray-500 prose-blockquote:border-l prose-blockquote:border-l-4 prose-blockquote:border-emerald-500 prose-blockquote:font-light">
 				<h1 class="text-3xl md:text-7xl text-white">Astro + Supabase + Vercel</h1>
@@ -56,20 +64,7 @@ const { title } = Astro.props as Props;
 		</div> -->
 	</body>
 </html>
-<style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), rgb(var(--accent-light)) 30%, white 60%);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-		background: #13151A;
-		background-size: 224px;
-	}
-	code {
-		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-			Bitstream Vera Sans Mono, Courier New, monospace;
-	}
-</style>
+
+<!-- <style is:global>
+	
+</style> -->

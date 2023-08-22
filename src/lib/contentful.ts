@@ -25,5 +25,7 @@ export interface ContentComic {
   fields: {
     title: EntryFieldTypes.Text
     content: EntryFieldTypes.Object,
+    cloudinary: EntryFieldTypes.Object
+    slug: EntryFieldTypes.Text
   }
 }

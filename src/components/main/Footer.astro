@@ -1,0 +1,36 @@
+---
+import Social from '../main/Social.astro'
+
+const linkedin = 'https://www.linkedin.com/in/'
+---
+
+<footer>
+	<Social
+		platform="linkedin.com/in"
+		title="LinkedIn"
+		username="erik-huuskonen-ai"
+		logo="/linkedin-blue.svg"
+		width="65"
+	/>
+	<Social
+		platform="github.com/"
+		title="Github"
+		username="erik-eki"
+		logo="/github-mark-white.svg"
+		width="50"
+	/>
+</footer>
+
+<style>
+	footer {
+		border-top: rgb(91 33 182) 2px solid;
+		padding-top: 5px;
+		display: flex;
+		gap: 1rem;
+		margin-top: 2rem;
+		/* flex: 1 0 80px; */
+		/* flex-grow: 1; */
+		justify-content: center;
+		align-items: center;
+	}
+</style>

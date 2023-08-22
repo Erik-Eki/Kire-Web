@@ -1,0 +1,161 @@
+
+
+:root {
+	--accent: 136, 58, 234;
+	--accent-light: 224, 204, 250;
+	--accent-dark: 49, 10, 101;
+	--accent-gradient: linear-gradient(
+		45deg,
+		rgb(var(--accent)),
+		rgb(var(--accent-light)) 30%,
+		white 60%
+	);
+}
+html {
+	font-family: system-ui, sans-serif;
+	background: #13151a;
+	background-size: 224px;
+	font-family: sans-serif;
+}
+code {
+	font-family:
+		Menlo,
+		Monaco,
+		Lucida Console,
+		Liberation Mono,
+		DejaVu Sans Mono,
+		Bitstream Vera Sans Mono,
+		Courier New,
+		monospace;
+}
+
+/* body {
+	margin: 0 auto;
+	width: 100%;
+	max-width: 80ch;
+	padding: 1rem;
+	line-height: 1.5;
+} */
+
+body {
+	margin: auto !important;
+	padding: 1rem;
+	width: 100%;
+	max-width: 80ch;
+	/* max-width: calc(100% - 2rem); */
+	color: white;
+	font-size: 20px;
+	line-height: 1.5;
+}
+
+.embed-container {
+	// background-color: transparent !important;
+	//background-color: white;
+	border: 5px solid white;
+	border-radius: 5px;
+}
+
+/* * {
+	box-sizing: border-box;
+} */
+
+/* h1 {
+	margin: 1rem 0;
+	font-size: 2.5rem;
+} */
+
+// li::before {
+
+// }
+
+h1 {
+	// margin: 1rem 0;
+	padding: 20px 0 10px 0;
+	// font-size: 4rem;
+	font-size: xx-large !important;
+	font-weight: 700;
+	line-height: 1;
+	// text-align: center;
+	/* margin-bottom: 1em; */
+}
+h2 {
+	// margin: 1rem 0;
+	padding: 20px 0 10px 0;
+	// font-size: 4rem;
+	font-size: x-large !important;
+	font-weight: 700;
+	line-height: 1;
+	/* margin-bottom: 1em; */
+}
+
+.construction {
+	background: repeating-linear-gradient(45deg, #ffffff, #ffffff 10px, #ff925f 10px, #ff925f 20px);
+	text-wrap: balance;
+	border-radius: 5px;
+}
+
+.main-header {
+	margin: 10px 0 10px 0;
+	border-top: rgb(91 33 182) 2px solid;
+	border-bottom: rgb(91 33 182) 2px solid;
+}
+
+.hamburger {
+	padding-left: 10px;
+	cursor: pointer;
+	margin: 10px 0 10px 0;
+  }
+  
+  .hamburger .line {
+	display: block;
+	width: 40px;
+	height: 5px;
+	margin-bottom: 10px;
+	background-color: rgb(91 33 182);
+  }
+
+.nav-links {
+	width: 100%;
+	top: 5rem;
+	left: 48px;
+	background-color: #181124;
+	display: none;
+	margin: 0;
+}
+
+.nav-links a {
+	display: block;
+	text-align: center;
+	padding: 10px 0;
+	text-decoration: none;
+	font-size: 1.2rem;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.nav-links a:hover,
+a:focus {
+	background-color: rgb(91 33 182);
+}
+
+.expanded {
+	display: unset;
+}
+
+@media screen and (min-width: 636px) {
+	.nav-links {
+		// margin-left: 5em;
+		display: block;
+		position: static;
+		width: auto;
+		background: none;
+	}
+
+	.nav-links a {
+		display: inline-block;
+		padding: 15px 20px;
+	}
+	.hamburger {
+		display: none;
+	  }
+}

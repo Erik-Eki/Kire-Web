@@ -19,7 +19,7 @@
             return
         }
 
-        console.log("BUCKET DATA:", data)
+        //console.log("BUCKET DATA:", data)
 
         bucketData = data
     }
@@ -43,7 +43,7 @@
             return
         }
 
-        console.log("BUCKET CONTENT:", data)
+        //console.log("BUCKET CONTENT:", data)
 
         bucketContent = data
     }

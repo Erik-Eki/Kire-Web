@@ -1,0 +1,51 @@
+---
+import '../styles/global.scss'
+import Layout from '../layouts/Layout.astro'
+import MarkdownPostLayout from '../layouts/MarkdownPostLayout.astro'
+import { Content as AboutMD } from '../content/about/about.mdx'
+
+const pageTitle = 'About Me'
+
+const identity = {
+	firstName: 'Erik',
+	country: 'Finland',
+	occupation: 'Web & ML Developer',
+	hobbies: ['Reading Wikipedia', 'writing', 'drawing']
+}
+
+const skills = ['HTML', 'CSS', 'JavaScript', 'React', 'Astro', 'Writing Docs']
+
+const skillColor = 'seagreen'
+const fontWeight = 'bold'
+const textCase = 'uppercase'
+---
+
+<Layout title="Welcome to Danger Zone!">
+		<h1 class="text-gradient">{pageTitle}</h1>
+		<h2>... and my horribly bad, no good website!</h2>
+
+		<AboutMD />
+
+		<!-- <p>My skills are:</p>
+		<ul>
+			{skills.map((skill) => <li class="skill">{skill}</li>)}
+		</ul> -->
+</Layout>
+
+<style define:vars={{ skillColor, fontWeight }}>
+	h1 {
+		color: purple;
+		font-size: 4rem;
+	}
+	.skill {
+		color: var(--skillColor);
+		font-weight: var(--fontWeight);
+	}
+	.text-gradient {
+		background-image: var(--accent-gradient);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-size: 400%;
+		background-position: 0%;
+	}
+</style>

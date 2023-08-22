@@ -1,6 +1,7 @@
 ---
 import { useStoryblokApi } from '@storyblok/astro'
 import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
+import Layout from 'src/layouts/Layout.astro'
 
 
 const storyblokApi = useStoryblokApi()
@@ -13,18 +14,11 @@ try {
 		version: import.meta.env.DEV ? 'draft' : 'published'
 	})
 
-	console.log(data)
 	content = data.story.content
 } catch (error) {
 	return Astro.redirect('/404')
 }
 ---
-
-<html lang="en">
-	<head>
-		<title>Storyblok & Astro</title>
-	</head>
-	<body>
+<Layout title="Welcome to Danger Zone!">
 		<StoryblokComponent blok={content} />
-	</body>
-</html>
+</Layout>

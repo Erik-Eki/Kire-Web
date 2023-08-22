@@ -1,0 +1,18 @@
+---
+// const { frontmatter } = Astro.props;
+// console.log("FRontmatter", frontmatter)
+---
+
+<!-- <h1>{frontmatter.title}</h1>
+<p>Written by {frontmatter.author}</p> -->
+<slot />
+
+<style is:global>
+    ol, ul, menu {
+        list-style: disc !important;
+        margin-left: 30px !important;
+    }
+    li {
+        font-size: medium;
+    }
+</style>
