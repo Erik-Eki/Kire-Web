@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { supabase } from "$lib/subabaseClient";
+    import { supabase } from "$lib/supabaseClient";
 
     let bucketData = null
     let bucketContent = null
@@ -18,8 +18,6 @@
             console.error("No data returned")
             return
         }
-
-        //console.log("BUCKET DATA:", data)
 
         bucketData = data
     }
@@ -42,8 +40,6 @@
             console.error("No data returned")
             return
         }
-
-        //console.log("BUCKET CONTENT:", data)
 
         bucketContent = data
     }

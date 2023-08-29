@@ -12,10 +12,13 @@ const { data } = await storyblokApi.get('cdn/stories', {
 const posts = data.stories.map(story => {
   return {
     title: story.content.title,
-    date: new Date(story.published_at).toLocaleDateString("en-US", {dateStyle: "full"}),
+    created_at: story.first_published_at,
+    edited_at: story.published_at,
+    // created_at: new Date(story.first_published_at).toLocaleString("en-FI", {dateStyle: "full", timeStyle: "short"}),
+    // edited_at: new Date(story.published_at).toLocaleString("en-FI", {dateStyle: "short", timeStyle: "short"}),
     description: story.content.description,
-    slug: "blog/"+story.full_slug,
-    alt_slug: story.name,
+    // slug: "posts/"+story.full_slug,
+    slug: story.name,
     headImage: story.content.headerImage?.url
   }
 })
@@ -23,16 +26,28 @@ const posts = data.stories.map(story => {
 
 const { blok } = Astro.props
 ---
-<!-- <a class=" text-3xl" href={post.alt_slug}>{post.title}</a> -->
+
 <div class="border-solid border-2 border-violet-800 rounded-lg p-2 bg-black bg-opacity-40 mb-4 mt-4">
   <h1 class=" text-white text-center">Storyblok Blog posts</h1>
   <ul {...storyblokEditable(blok)} class=" flex flex-col">
     {posts.map(post => (
-      <a href={post.alt_slug} style=`background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(${post.headImage});` class="card-button card-background p-5 m-5 rounded-md">
+      <a 
+      href={post.slug}
+      style=`background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url(${post.headImage});` 
+      class="card-button card-background p-5 m-5 rounded-md"
+      rel="prefetch-intent"
+      >
         <li class=" flex flex-col">
-            <time class=" text-sm">{post.date}</time>
-            <p class=" text-3xl">{post.title}</p>
-            <p class=" text-end text-base">{post.description}</p>
+          {post.created_at !== post.edited_at && 
+            <time class="text-sm text-end">
+              (edited: {new Date(post.edited_at).toLocaleString("en-FI", {dateStyle: "short", timeStyle: "short"})})
+            </time>
+            }
+          <time class="text-sm">
+            {new Date(post.created_at).toLocaleString("en-FI", {dateStyle: "full", timeStyle: "short"})}
+          </time>
+          <p class=" text-3xl">{post.title}</p>
+          <p class="text-base text-end">{post.description}</p>
         </li>
       </a>
     ))}

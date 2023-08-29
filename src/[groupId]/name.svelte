@@ -1,7 +1,7 @@
 <script>
   import {onMount} from 'svelte';
   import Layout from "../layouts/Layout.astro";
-  import { supabase } from "../lib/subabaseClient";
+  import { supabase } from "../lib/supabaseClient";
   
   const { groupId } = Astro.params;
   let members, error;

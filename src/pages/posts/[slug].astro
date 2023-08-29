@@ -1,82 +1,26 @@
 ---
-import Layout from '../../layouts/Layout.astro'
-import { contentfulClient } from '../../lib/contentful'
-import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
-import type { ContentPost, ContentComic } from '../../lib/contentful'
+import { useStoryblokApi } from '@storyblok/astro'
+import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
+import Layout from 'src/layouts/Layout.astro'
 
-// import { marked } from 'marked';
-// const response = await fetch('https://kirewebblob.blob.core.windows.net/kire-web-assets/mdx_test.mdx');
-// const markdown = await response.text();
-// const mdxContent = marked.parse(markdown);
 
-let post;
-const { slug } = Astro.params
+const storyblokApi = useStoryblokApi()
+const slug = Astro.params.slug
 
-console.log("#############", Astro.params, Astro.props)
+let content
 
-// const page = pages.find((page) => page.slug === slug);
-// if (!page) return Astro.redirect("/404");
-// const { title, text } = page;
+console.log("#############",Astro.params)
 
 try {
-	const data = await contentfulClient.getEntries<ContentPost>({
-		content_type: 'contentPost',
-		'fields.slug': slug
+	const { data } = await storyblokApi.get(`cdn/stories/${slug}`, {
+		version: import.meta.env.DEV ? 'draft' : 'published'
 	})
-
-  if (data.items.length !== 0) {
-    const { title, date, content } = data.items[0].fields;
-      post = {
-        title,
-        date: new Date(date).toLocaleDateString(),
-        content: content,
-    };
-  }
-  else {
-    const data = await contentfulClient.getEntries<ContentComic>({
-      content_type: 'contentComic',
-      'fields.slug': slug
-    })
-
-    const { title, cloudinary, content } = data.items[0].fields;
-      post = {
-        title,
-        content: content,
-        cloudinary: cloudinary
-    };
-
-    console.log(post)
-  }
-
-
-  
-
+	content = data.story.content
 } catch (error) {
+	console.error(error)
 	return Astro.redirect('/404')
 }
-
-// console.log(post.content?.content[0]?.data?.target)
-// if (post.content?.content[0]?.data?.target?.fields?.file?.url) {
-//   post.content = mdxContent
-// }
-
-// for (let i of Object.keys(post.content)) {
-//   console.log(i)
-// }
-
-// console.log(JSON.stringify(post.content))
 ---
-
-
-<Layout title={post?.title}>
-    <h1>{post?.title}</h1>
-    <time>{post?.date}</time>
-    <article set:html={documentToHtmlString(post?.content)} />
-    {post?.cloudinary &&
-      post.cloudinary.map((i) => 
-        <img class=" m-1" src={i.secure_url}></img>
-      )
-    }
-    <!-- <article set:html={post.content.content[0].data.target.fields.file.url}></article> -->
-    <!-- <article set:html={mdxContent}></article> -->
+<Layout title="Welcome to Danger Zone!">
+		<StoryblokComponent blok={content} />
 </Layout>

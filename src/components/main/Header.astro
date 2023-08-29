@@ -1,13 +1,36 @@
 ---
 import Navigation from "./Navigation.astro";
 import Hamburger from './Hamburger.astro';
+import LoginModal from "../login/LoginModal.svelte"
 
+
+let user = null
+
+
+// supabase.auth.onAuthStateChange((event, session) => {
+// 	//   if (event == 'SIGNED_IN') console.log('SIGNED_IN', session)
+// 	//   if (event == 'SIGNED_OUT') console.log('SIGNED_OUT', session)
+// 	//   if (event == 'TOKEN_REFRESHED') console.log('TOKEN_REFRESHED', session)
+
+// 	console.log("AUTH CHANGE:", event, session)
+// 	// if (session) {
+// 	// 	user = session.user
+// 	// 	if (session && session.user) {
+// 	// 		console.log(session.user)
+// 	// 	}
+// 	// }
+	
+// })
+
+// const isLoggedIn = !(user == null);
+let ebin = true
 ---
 
+<LoginModal client:load/>
 <header class="main-header">
     <nav class="header-container">
         <Hamburger />
-        <Navigation/>
+        <Navigation />
     </nav>
 </header>
 

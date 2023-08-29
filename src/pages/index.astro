@@ -1,11 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import Card from '../components/Card.astro'
-import Login from '$components/Login.svelte'
 import { Image } from 'astro:assets'
 import { marked } from 'marked'
+import { useStoryblokApi } from '@storyblok/astro'
+import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
+// import {getUser, supabase} from '$lib/supabaseClient';
+import { contentfulClient } from '../lib/contentful'
+import type { ContentPost, ContentComic } from '../lib/contentful'
+import { GetStaticPathsInvalidRouteParam } from 'astro/dist/core/errors/errors-data'
 
-import BucketFetch from '$components/BucketFetch.svelte'
+// import BucketFetch from '$components/BucketFetch.svelte'
 
 const pageTitle = 'Home Page'
 //import Darnc from "../assets/darnc.jpg"
@@ -26,9 +31,6 @@ const pageTitle = 'Home Page'
 //       }`,
 //   }),
 // };
-
-import { contentfulClient } from '../lib/contentful'
-import type { ContentPost, ContentComic } from '../lib/contentful'
 
 const entries = await contentfulClient.getEntries<ContentPost>({
 	content_type: 'contentPost'
@@ -57,14 +59,17 @@ const contentComics = entriesComics.items.map((item) => {
 		cloudinary
 	}
 })
-import { useStoryblokApi } from '@storyblok/astro'
-import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
 
 const storyblokApi = useStoryblokApi()
 const { data } = await storyblokApi.get('cdn/stories/home', {
 	version: 'draft'
 })
 const story = data.story.content
+
+
+
+// const user = await getUser(Astro.request);
+
 
 // const response = await fetch(
 // 	'https://fjkaxagqdonnlhqdallw.supabase.co/storage/v1/object/public/posts/blogs/mdx_test.mdx'
@@ -125,7 +130,7 @@ const story = data.story.content
 			{
 				contentPosts.map((post) => (
 					<li>
-						<a href={`/posts/${post.slug}/`}>
+						<a href={`/contentful_posts/${post.slug}/`} rel="prefetch-intent">
 							<h2 class=" font-bold underline underline-offset-2">{post.title}</h2>
 						</a>
 						<time>{post.date}</time>
@@ -145,7 +150,7 @@ const story = data.story.content
 			{
 				contentComics.map((post) => (
 					<li>
-						<a href={`/posts/${post.slug}/`}>
+						<a href={`/contentful_posts/${post.slug}/`} rel="prefetch-intent">
 							<h2 class=" font-bold underline underline-offset-2">{post.title}</h2>
 						</a>
 						<img src={post.content[0].fields.file.url} />

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { supabase } from "$lib/subabaseClient";
+  import { supabase } from "$lib/supabaseClient";
 
   async function signInWithGitHub() {
       const { data, error } = await supabase.auth.signInWithOAuth({
@@ -26,7 +26,6 @@
 
   async function fetchUserDetails() {
     const { data } = await supabase.auth.getUser()
-    console.log("User data:", JSON.stringify(data))
   }
 
 
@@ -38,7 +37,6 @@
       const [key, value] = field;
       data[key] = value;
     }
-    console.log(data)
 
     signInWithEmail(data)
   }

@@ -3,16 +3,33 @@ import '../styles/global.scss'
 import { SEO } from "astro-seo";
 import Header from '$components/main/Header.astro';
 import Footer from '../components/main/Footer.astro';
-//import LoginStatus from "../components/stuff/LoginStatus.astro"
+import {checkForState, checkForSession, fetchUserDetails, supabase} from '$lib/supabaseClient';
+
+let state = await checkForState(Astro.request)
+let user = fetchUserDetails()
+let session = checkForSession()
+Astro.cookies.set("state", state)
+Astro.cookies.set("user", user)
+Astro.cookies.set("session", session)
 
 export interface Props {
 	title: string;
-	//user: object;
+	user: object;
 }
 
-// const { title, user } = Astro.props as Props;
 const { title } = Astro.props as Props;
-//const isLoggedIn = !(user == null);
+// const { title, user } = Astro.props as Props;
+// const isLoggedIn = !(user == null);
+// console.log("LAYOUT:", user)
+
+let counter = 0
+
+if(Astro.cookies.has("counter")){
+  const cookie = Astro.cookies.get("counter")
+  counter = cookie.number() + 1
+}
+
+Astro.cookies.set("counter",counter)
 ---
 
 <!DOCTYPE html>
@@ -46,10 +63,15 @@ const { title } = Astro.props as Props;
 	</head>
 	<body>
 		<pre class="construction text-center text-2xl font-extrabold text-black">&#128679 UNDER HEAVY CONSTRUCTION BECAUSE WORKERS UNIONIZED &#128679</pre>
-
-		<!-- <h1>{title}</h1> -->
 		<Header />
 		<slot/>
+
+		<h1 class="flex">Cookie counter test = 
+			<div class="bg-gradient-to-tr from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% bg-clip-text text-transparent font-extrabold">
+				{counter}
+			</div>
+		</h1>
+		
 		<Footer />
 		<!-- <div class="container mx-auto px-4 font-outfit">
 			<div class="flex flex-col items-center pt-20 pb-12 prose-a:text-blue-800 prose-blockquote:text-gray-500 prose-blockquote:border-l prose-blockquote:border-l-4 prose-blockquote:border-emerald-500 prose-blockquote:font-light">

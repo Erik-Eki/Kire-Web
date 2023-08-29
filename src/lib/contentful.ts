@@ -14,6 +14,7 @@ export interface ContentPost {
   fields: {
     title: EntryFieldTypes.Text
     content: EntryFieldTypes.RichText,
+    markdown:  EntryFieldTypes.Text,
     date: EntryFieldTypes.Date,
     description: EntryFieldTypes.Text,
     slug: EntryFieldTypes.Text

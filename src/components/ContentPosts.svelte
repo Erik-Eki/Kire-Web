@@ -19,12 +19,7 @@
 				date: new Date(date).toLocaleDateString()
 			}
 		})
-
-		//console.log('Content:', contentPosts)
-		//return contentPosts
 	})
-
-	//let promise = getContent()
 
 	
 </script>

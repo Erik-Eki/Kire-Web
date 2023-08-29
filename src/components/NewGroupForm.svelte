@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { supabase } from '$lib/subabaseClient';
+  import { supabase } from '$lib/supabaseClient';
 
   let groupName: string = '';
   let userName: string = '';
@@ -34,19 +34,10 @@
       console.error(membersError)
       return
     }
-    //window.location.href = `/${data.id}?user=${userName}`
-
-
-
-    console.log(data)
-    console.log(groupName, userName, members)
-
   }
 
   function onDelete(value: string) {
-    console.log("DELETE:",value)
     members = members.filter(m => m !== value)
-    console.log("Members:",members)
   } 
 </script>
 
