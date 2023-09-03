@@ -1,3 +1,13 @@
+@font-face {
+	font-family: NorseBold;
+	src: url(/NorseBold-2Kge.otf) format("opentype");
+	font-style: normal;
+}
+@font-face {
+	font-family: Norse;
+	src: url(/Norse-KaWl.otf) format("opentype");
+	font-style: normal;
+}
 
 
 :root {
@@ -13,9 +23,10 @@
 }
 html {
 	font-family: system-ui, sans-serif;
-	background: #13151a;
+	background: #0e0e0e;
 	background-size: 224px;
 	font-family: sans-serif;
+	height: 100%;
 }
 code {
 	font-family:
@@ -38,14 +49,17 @@ code {
 } */
 
 body {
+	background: #13151a;
 	margin: auto !important;
 	padding: 1rem;
-	width: 100%;
-	max-width: 80ch;
+	// width: 100%;
+	min-height: 100%;
+	width: 80ch;
 	/* max-width: calc(100% - 2rem); */
 	color: white;
 	font-size: 20px;
 	line-height: 1.5;
+	// position: relative;
 }
 
 .embed-container {
@@ -131,6 +145,7 @@ h2 {
 	font-size: 1.2rem;
 	font-weight: bold;
 	text-transform: uppercase;
+	transition:ease 0.3s;
 }
 
 .nav-links a:hover,

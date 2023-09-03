@@ -3,7 +3,6 @@ import Navigation from "./Navigation.astro";
 import Hamburger from './Hamburger.astro';
 import LoginModal from "../login/LoginModal.svelte"
 
-
 let user = null
 
 
@@ -26,6 +25,8 @@ let user = null
 let ebin = true
 ---
 
+<p class="border-t-white border mt-2 mb-2"></p>
+<div class="kire-web">KIRE WEB</div>
 <LoginModal client:load/>
 <header class="main-header">
     <nav class="header-container">
@@ -41,5 +42,13 @@ let ebin = true
     /* height: 70px; */
     /* display: grid; */
 	/* align-items: center; */
+}
+
+.kire-web {
+    font-family: Norse;
+    font-size: 50px;
+    letter-spacing: 4ch;
+    text-align: center;
+    margin-right:-4ch;
 }
 </style>

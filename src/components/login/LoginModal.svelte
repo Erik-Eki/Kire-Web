@@ -2,6 +2,12 @@
 	import Modal from '../buildingBlocks/Modal.svelte'
     import {checkForState, checkForSession, supabase} from '$lib/supabaseClient';
     import { fade } from 'svelte/transition'
+    import { profile } from "$components/stores/profile"
+
+    // export const $profile = map({
+    //     name: 'anonymous'
+    // })
+    
 
     export let session;
 
@@ -109,6 +115,9 @@
     <div
     />
 	<div class="flex w-96 flex-col" slot="header">
+        <button on:click={() => profile.set({"name": "Ebin"})} class="border-2 hover:border-green-700">Test Nano Store</button>
+        <div>{JSON.stringify($profile)}</div>
+
 		<h2 class="mb-2 border-b-2 border-solid border-b-violet-800">Log in</h2>
 
 		<p>Email</p>

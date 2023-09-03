@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import Card from '../components/Card.astro'
-import { Image } from 'astro:assets'
+import { Image } from "astro:assets"
 import { marked } from 'marked'
 import { useStoryblokApi } from '@storyblok/astro'
 import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
@@ -81,7 +81,7 @@ const story = data.story.content
 <!-- <Layout title="Welcome to Astro." user={user}> -->
 <Layout title="Welcome to Danger Zone!">
 	<main>
-		<svg
+		<!-- <svg
 			class="astro-a"
 			width="495"
 			height="623"
@@ -108,7 +108,7 @@ const story = data.story.content
 					<stop offset="1" stop-opacity="0.2"></stop>
 				</linearGradient>
 			</defs>
-		</svg>
+		</svg> -->
 		<h1>Welcome to <span class="text-gradient">Danger Zone!</span></h1>
 
 		<!-- <BucketFetch client:load/> -->
@@ -153,7 +153,7 @@ const story = data.story.content
 						<a href={`/contentful_posts/${post.slug}/`} rel="prefetch-intent">
 							<h2 class=" font-bold underline underline-offset-2">{post.title}</h2>
 						</a>
-						<img src={post.content[0].fields.file.url} />
+						<Image src={post.content[0].fields.file.url} alt={`Background image for ${post.title}`} width="2000" height="2000"/>
 					</li>
 				))
 			}

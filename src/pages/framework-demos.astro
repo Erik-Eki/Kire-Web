@@ -1,0 +1,127 @@
+---
+import Layout from 'src/layouts/Layout.astro'
+import { Image } from 'astro:assets'
+
+import svelteLogo from '$assets/logos/svelte-logo.svg'
+import vueLogo from '$assets/logos/vue-9-logo.svg'
+import solidjsLogo from '$assets/logos/solidjs-logo.svg'
+import preactLogo from '$assets/logos/preact-logo.svg'
+import alpineLogo from '$assets/logos/alpinejs-logo.svg'
+
+import { Content as SvelteContent } from '$content/frameworks/blurbs/svelte.md'
+import { Content as VueContent } from '$content/frameworks/blurbs/vue.md'
+import { Content as SolidContent } from '$content/frameworks/blurbs/solid.md'
+import { Content as PreactContent } from '$content/frameworks/blurbs/preact.md'
+import { Content as AlpineContent } from '$content/frameworks/blurbs/alpine.md'
+---
+
+<Layout title="Framework Demos">
+    <button class="bg-#ff3c00">Button 1</button>
+    <button class="bg-#ff3c00">Button 2</button>
+    <button class="bg-#ff3c00">Button 3</button> 
+	<div class="prose min-w-full dark:prose-invert">
+		<h2>Here are demos of trying out all the frameworks Astro supports.</h2>
+		<p>They are simple commponents with some reactivity to test how they handle.</p>
+		<ul class="w-full">
+			<li class="framework-list hover:border-orange-600">
+				<Image src={svelteLogo} alt="Svelte logo" width="150" height="100" class="h-full" />
+				<div class="framework-blurb-box">
+					<h1>Svelte</h1>
+					<SvelteContent />
+                    <a href="/framework-demos/svelte" class="p-3 rounded text-xl font-bold text-center bg-orange-700">Check here</a>
+				</div>
+			</li>
+			<li class="framework-list hover:border-emerald-600">
+				<Image src={vueLogo} alt="Vue.js logo" width="150" height="100" class="h-full" />
+				<div class="framework-blurb-box">
+					<h1>Vue</h1>
+					<VueContent />
+                    <pre class="construction text-center text-2xl font-extrabold text-black p-0">&#128679 WIP &#128679</pre>
+				</div>
+			</li>
+			<li class="framework-list hover:border-blue-300">
+				<Image src={solidjsLogo} alt="Solid.js logo" width="150" height="100" class="h-full" />
+				<div class="framework-blurb-box">
+					<h1>Solid</h1>
+					<SolidContent />
+                    <pre class="construction text-center text-2xl font-extrabold text-black p-0">&#128679 WIP &#128679</pre>
+				</div>
+			</li>
+			<li class="framework-list hover:border-violet-500">
+				<Image src={preactLogo} alt="Preact logo" width="150" height="100" class="h-full" />
+				<div class="framework-blurb-box">
+					<h1>Preact</h1>
+					<PreactContent />
+                    <pre class="construction text-center text-2xl font-extrabold text-black p-0">&#128679 WIP &#128679</pre>
+				</div>
+			</li>
+			<li class="framework-list hover:border-gray-400">
+				<Image src={alpineLogo} alt="Preact logo" width="150" height="100" class="h-full" />
+				<div class="framework-blurb-box">
+					<h1>Alpine</h1>
+					<AlpineContent />
+                    <pre class="construction text-center text-2xl font-extrabold text-black p-0">&#128679 WIP &#128679</pre>
+				</div>
+			</li>
+		</ul>
+	</div>
+</Layout>
+
+<!-- <style define:vars={{ borderColor }}> -->
+<style>
+	.framework-list {
+        /* color: #ff3c00; */
+		display: flex;
+		gap: 20px;
+		width: 100%;
+		padding: 20px;
+		margin: 10px 0 10px 0;
+		border: 2px transparent solid;
+        border-radius: 20px;  
+
+		/* &:hover {
+			border: 2px solid var(--borderColor);
+			
+		} */
+
+		/* img:not(:first-child) {
+            flex-direction: column;
+        } */
+	}
+
+    /* [class*="bg-"] {
+        color: darkcyan;
+        background-color: attr(class);
+    }
+    [class*="bg-"]::hover {
+        border: 2px solid red;
+        border-radius: 20px;
+        border: 2px solid attr(class);
+        background-color: attr(class) !important;
+    } */
+    /* @mixin change-hover-color($classname){
+        &.#{$classname}{
+            color: #{$classname};
+        }
+    }
+
+    &:hover {
+        color: white;
+        @include change-hover-color($classname);
+    } */
+    /* [variable="value"] {
+        &:hover {
+            border: 2px solid var(--hover_color);
+        }
+    } */
+    /* [class*='color']:hover {
+        border: 2px inherit solid;
+        border-radius: 20px;
+    } */
+
+	.framework-blurb-box {
+		display: flex;
+		flex-direction: column;
+		margin-left: 20px;
+	}
+</style>

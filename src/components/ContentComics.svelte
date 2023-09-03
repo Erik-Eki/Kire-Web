@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { contentfulClient } from '../lib/contentful'
 	import type { ContentComic } from '../lib/contentful'
+	import { Image } from "astro:assets"
 
 	async function getContent() {
 		const entriesComics = await contentfulClient.getEntries<ContentComic>({
@@ -21,7 +22,7 @@
 	let promise = getContent()
 </script>
 
-<h1 class=" text-white">Astro Comics</h1>
+<h1 class=" text-white">Contentful Comics</h1>
 <ul>
 	{#await promise}
 		<p>...waiting</p>
@@ -30,7 +31,7 @@
 			<li>
 				<a href={`/posts/${i.title}/`}>
 					<h2>{i.title}</h2>
-					<img src={i.content[0].fields.file.url} alt="Picture contains {i.title}" />
+					<Image src={i.content[0].fields.file.url} alt="Picture contains {i.title}" width="500" height="500"/>
 				</a>
 			</li>
 		{/each}
