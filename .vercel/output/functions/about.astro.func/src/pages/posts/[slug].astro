@@ -1,0 +1,26 @@
+---
+import { useStoryblokApi } from '@storyblok/astro'
+import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
+import Layout from 'src/layouts/Layout.astro'
+
+
+const storyblokApi = useStoryblokApi()
+const slug = Astro.params.slug
+
+let content
+
+console.log("#############",Astro.params)
+
+try {
+	const { data } = await storyblokApi.get(`cdn/stories/${slug}`, {
+		version: import.meta.env.DEV ? 'draft' : 'published'
+	})
+	content = data.story.content
+} catch (error) {
+	console.error(error)
+	return Astro.redirect('/404')
+}
+---
+<Layout title="Welcome to Danger Zone!">
+		<StoryblokComponent blok={content} />
+</Layout>

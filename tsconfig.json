@@ -10,7 +10,7 @@
 			"$content/*": ["src/content/*"],
 			"$assets/*": ["src/assets/*"],
 			"$pages/*": ["src/pages/*"],
-      "$layouts/*": ["src/layouts/*"]
+      		"$layouts/*": ["src/layouts/*"]
 		},
 		"plugins": [
 			{
