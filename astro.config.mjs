@@ -9,6 +9,7 @@ import prefetch from '@astrojs/prefetch';
 import preact from '@astrojs/preact';
 import vue from '@astrojs/vue';
 import alpinejs from '@astrojs/alpinejs';
+import solidJs from "@astrojs/solid-js";
 const env = loadEnv('', process.cwd(), 'STORYBLOK');
 
 
@@ -18,20 +19,37 @@ export default defineConfig({
   adapter: vercel({
     analytics: true
   }),
-  integrations: [svelte(), tailwind({
-    applyBaseStyles: true
-  }), mdx(), storyblok({
-    accessToken: env.STORYBLOK_TOKEN,
-    components: {
-      blogPost: 'storyblok/BlogPost',
-      blogPostList: 'storyblok/BlogPostList',
-      page: 'storyblok/Page'
-    },
-    apiOptions: {
-      // Choose your Storyblok space region
-      region: 'eu' // optional,  or 'eu' (default)
+  image: {
+    service: {
+      entrypoint: 'astro/assets/services/noop'
     }
-  }), prefetch(), preact({
-    include: ['**/preact/*']
-  }), vue(), alpinejs()]
+  },
+  integrations: [
+    tailwind({
+      applyBaseStyles: true
+    }), 
+    mdx(), 
+    storyblok({
+      accessToken: env.STORYBLOK_TOKEN,
+      components: {
+        blogPost: 'storyblok/BlogPost',
+        blogPostList: 'storyblok/BlogPostList',
+        page: 'storyblok/Page'
+      },
+      apiOptions: {
+        // Choose your Storyblok space region
+        region: 'eu' // optional,  or 'eu' (default)
+      }
+    }), 
+    prefetch(),
+    svelte(), 
+    vue(),
+    alpinejs(),
+    preact({
+      include: ['**/preact/*']
+    }), 
+    solidJs({
+      include: ['**/solid/*'],
+    })
+  ]
 });
