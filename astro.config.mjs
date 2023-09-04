@@ -1,21 +1,20 @@
 import { defineConfig } from 'astro/config';
-import vercel from "@astrojs/vercel/serverless";
-import svelte from "@astrojs/svelte";
-import tailwind from "@astrojs/tailwind";
-import mdx from "@astrojs/mdx";
+import vercel from '@astrojs/vercel/serverless';
+import svelte from '@astrojs/svelte';
+import tailwind from '@astrojs/tailwind';
+import mdx from '@astrojs/mdx';
 import storyblok from '@storyblok/astro';
 import { loadEnv } from 'vite';
-import prefetch from "@astrojs/prefetch";
-import solidJs from "@astrojs/solid-js";
-import preact from "@astrojs/preact";
-import vue from "@astrojs/vue";
-import alpinejs from "@astrojs/alpinejs";
-const env = loadEnv("", process.cwd(), 'STORYBLOK');
+import prefetch from '@astrojs/prefetch';
+import preact from '@astrojs/preact';
+import vue from '@astrojs/vue';
+import alpinejs from '@astrojs/alpinejs';
+const env = loadEnv('', process.cwd(), 'STORYBLOK');
 
 
 // https://astro.build/config
 export default defineConfig({
-  output: "server",
+  output: 'server',
   adapter: vercel({
     analytics: true
   }),
@@ -32,9 +31,7 @@ export default defineConfig({
       // Choose your Storyblok space region
       region: 'eu' // optional,  or 'eu' (default)
     }
-  }), prefetch(), solidJs({
-    include: ['**/solid/*']
-  }), preact({
+  }), prefetch(), preact({
     include: ['**/preact/*']
   }), vue(), alpinejs()]
 });

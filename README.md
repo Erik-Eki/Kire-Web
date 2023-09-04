@@ -11,7 +11,7 @@ Ultimate goal is to make host my webcomic with the superior controls and feature
 - Content
   - .md & .mdx
 - Image optimization
-  - Astro Images
+  - Astro Image
   - [Responsive images](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images#art_direction)
 
 

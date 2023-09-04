@@ -1,24 +1,43 @@
 {
-	"include": ["src/**/*", "src/node_modules"],
-	"exclude": ["node_modules/*", "__sapper__/*", "public/*"],
-	"compilerOptions": {
-		"module": "esnext",
-		"baseUrl": ".",
-		"paths": {
-			"$lib/*": ["src/lib/*"],
-			"$components/*": ["src/components/*"],
-			"$content/*": ["src/content/*"],
-			"$assets/*": ["src/assets/*"],
-			"$pages/*": ["src/pages/*"],
-      		"$layouts/*": ["src/layouts/*"]
-		},
-		"plugins": [
-			{
-				"name": "@astrojs/ts-plugin"
-			}
-		],
-		"jsx": "preserve",
-		"jsxImportSource": "preact"
-	},
-	"extends": "astro/tsconfigs/base"
+  "include": [
+    "src/**/*",
+    "src/node_modules"
+  ],
+  "exclude": [
+    "node_modules/*",
+    "__sapper__/*",
+    "public/*"
+  ],
+  "compilerOptions": {
+    "module": "esnext",
+    "baseUrl": ".",
+    "paths": {
+      "$lib/*": [
+        "src/lib/*"
+      ],
+      "$components/*": [
+        "src/components/*"
+      ],
+      "$content/*": [
+        "src/content/*"
+      ],
+      "$assets/*": [
+        "src/assets/*"
+      ],
+      "$pages/*": [
+        "src/pages/*"
+      ],
+      "$layouts/*": [
+        "src/layouts/*"
+      ]
+    },
+    "plugins": [
+      {
+        "name": "@astrojs/ts-plugin"
+      }
+    ],
+    "jsx": "preserve",
+    "jsxImportSource": "preact"
+  },
+  "extends": "astro/tsconfigs/base"
 }
