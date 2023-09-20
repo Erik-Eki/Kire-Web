@@ -1,0 +1,94 @@
+---
+import Layout from "$layouts/Layout.astro";
+import { storyblokEditable } from '@storyblok/astro'
+import { useStoryblokApi } from '@storyblok/astro'
+
+let excess = false
+
+const storyblokApi = useStoryblokApi();
+
+const { data } = await storyblokApi.get('cdn/stories', {
+  version: import.meta.env.DEV ? "draft" : "published",
+  content_type: 'blogPost',
+  per_page: 25
+})
+
+const posts = data.stories.map(story => {
+  return {
+    title: story.content.title,
+    created_at: story.first_published_at,
+    edited_at: story.published_at,
+    // created_at: new Date(story.first_published_at).toLocaleString("en-FI", {dateStyle: "full", timeStyle: "short"}),
+    // edited_at: new Date(story.published_at).toLocaleString("en-FI", {dateStyle: "short", timeStyle: "short"}),
+    description: story.content.description,
+    slug: story.full_slug,
+    //slug: story.name,
+    headImage: story.content.headerImage?.url
+  }
+})
+
+
+const { blok } = Astro.props
+
+---
+
+<Layout title="Blog">
+<div class="border-solid border-2 border-violet-800 rounded-lg p-2 bg-black bg-opacity-40 mb-4 mt-4">
+    <h1 class=" text-white text-center">Storyblok Blog posts</h1>
+    <ul {...storyblokEditable(blok)} class=" flex flex-col gap-4">
+      {posts.map(post => (
+        <div class="h-72 bg-zinc-900 border-2 rounded pl-2 pr-2 pt-5 pb-12 h-55">
+          <a 
+          href={post.slug}
+          style=`--bgURL: url(${post.headImage})`
+          // style=`background: linear-gradient( rgba(0, 0, 0, .0), rgba(0, 0, 0, 1) ), url(${post.headImage});`
+          class="card-button card-background p-5 w-full h-full rounded-md"
+          rel="prefetch-intent"
+          >
+            <li class=" flex flex-col h-full">
+              {post.created_at !== post.edited_at && 
+                <time class="text-sm text-end">
+                  (edited: {new Date(post.edited_at).toLocaleString("en-FI", {dateStyle: "short", timeStyle: "short"})})
+                </time>
+                }
+              <time class="text-sm">
+                {new Date(post.created_at).toLocaleString("en-FI", {dateStyle: "full", timeStyle: "short"})}
+              </time>
+              <p class=" text-3xl flex-grow w-4/5 line-clamp-2 max-h-28 ease-in-out duration-300 hover:max-h-80 hover:lg:line-clamp-none">{post.title}</p>
+              <p class="text-base text-end">{post.description}</p>
+            </li>
+          </a>
+      </div>
+      ))}
+    </ul>
+  </div>
+</Layout>
+
+<style>
+  .card-button {
+    display: block;
+    text-align: left;
+    box-shadow: none;
+    transition: 0.3s;
+    /* background: rgba(0,0,0,0.5), var(--bgURL); */
+    background: linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ), var(--bgURL);
+    /* background-color: var(--src); */
+  }
+  /* .card-button:before{
+    z-index:-1;
+    position:absolute;
+    left:0;
+    top:0;
+    content: var(--bgURL);
+    opacity:0.4;
+  } */
+  .card-button:hover {
+
+    box-shadow:inset 0px 0px 0px 3px white;
+  }
+  .card-background{
+    background-repeat:no-repeat !important; 
+    background-position:center !important;
+    background-size: cover !important;
+  }
+</style>

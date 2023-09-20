@@ -24,8 +24,16 @@
 			"dest": "_slug_.astro"
 		},
 		{
+			"src": "^\\/framework-demos\\/preact\\/?$",
+			"dest": "preact.astro"
+		},
+		{
 			"src": "^\\/framework-demos\\/svelte\\/?$",
 			"dest": "svelte.astro"
+		},
+		{
+			"src": "^\\/framework-demos\\/vue\\/?$",
+			"dest": "vue.astro"
 		},
 		{
 			"src": "^\\/framework-demos\\/?$",
@@ -36,12 +44,20 @@
 			"dest": "_slug_.astro"
 		},
 		{
+			"src": "^\\/comics\\/?$",
+			"dest": "comics.astro"
+		},
+		{
 			"src": "^\\/about\\/?$",
 			"dest": "about.astro"
 		},
 		{
 			"src": "^\\/posts\\/([^/]+?)\\/?$",
 			"dest": "_slug_.astro"
+		},
+		{
+			"src": "^\\/posts\\/?$",
+			"dest": "posts.astro"
 		},
 		{
 			"src": "^\\/404\\/?$",

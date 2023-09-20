@@ -3,24 +3,46 @@ import { useStoryblokApi } from '@storyblok/astro'
 import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
 import Layout from 'src/layouts/Layout.astro'
 
-
 const storyblokApi = useStoryblokApi()
 const slug = Astro.params.slug
 
-let content
-
-console.log("#############",Astro.params)
+let content: Object
+let created_at: String
+let edited_at: String
 
 try {
 	const { data } = await storyblokApi.get(`cdn/stories/${slug}`, {
 		version: import.meta.env.DEV ? 'draft' : 'published'
 	})
 	content = data.story.content
+
+	created_at = new Date(data?.story?.first_published_at).toLocaleString('en-FI', {
+		dateStyle: 'full',
+		timeStyle: 'short'
+	})
+	edited_at = new Date(data?.story?.published_at).toLocaleString('en-FI', {
+		dateStyle: 'short',
+		timeStyle: 'short'
+	})
+
+	// console.log("###########", data.story)
 } catch (error) {
 	console.error(error)
 	return Astro.redirect('/404')
 }
 ---
-<Layout title="Welcome to Danger Zone!">
-		<StoryblokComponent blok={content} />
+
+<Layout title="Blog post">
+	<button
+		onclick="javascript: history.back()"
+		class="rounded p-3 text-4xl duration-200 ease-in-out hover:bg-violet-950"
+	>
+		<i class="fas fa-angle-left text-4xl"></i> Back</button
+	>
+	<img src={content.headerImage?.url} class="m-2 rounded" />
+	<div class="ml-2">
+		<p>{created_at}</p>
+		{edited_at && <p class="text-sm">(Edited: {edited_at})</p>}
+	</div>
+	<StoryblokComponent blok={content} />
 </Layout>

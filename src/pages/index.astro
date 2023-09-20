@@ -1,16 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import Card from '../components/Card.astro'
-import { Image } from "astro:assets"
+import { Image } from 'astro:assets'
 import { marked } from 'marked'
 import { useStoryblokApi } from '@storyblok/astro'
 import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
-// import {getUser, supabase} from '$lib/supabaseClient';
 import { contentfulClient } from '../lib/contentful'
 import type { ContentPost, ContentComic } from '../lib/contentful'
+// import {getUser, supabase} from '$lib/supabaseClient';
 
 // import BucketFetch from '$components/BucketFetch.svelte'
-
 
 // interface Post {
 //   title: string;
@@ -63,20 +62,204 @@ const { data } = await storyblokApi.get('cdn/stories/home', {
 })
 const story = data.story.content
 
-
-
 // const user = await getUser(Astro.request);
-
 
 // const response = await fetch(
 // 	'https://fjkaxagqdonnlhqdallw.supabase.co/storage/v1/object/public/posts/blogs/mdx_test.mdx'
 // )
 // const markdown = await response.text()
 // const supaBaseContent = marked.parse(markdown)
+
+const bikeEndpoint: String =
+	'http://42cee8a1-d308-4e59-a387-2a14cf9dea27.northeurope.azurecontainer.io/score'
+const electricityEndpoint: String =
+	'http://af6fe771-ed99-44fc-b290-e0ea2f2dc0d8.northeurope.azurecontainer.io/score'
+const carEndpoint: String =
+	'http://2a92d5ed-23e5-4ade-abf5-9d188ef4a1cd.northeurope.azurecontainer.io/score'
+
+const bikeTest: Object = {
+	Inputs: {
+		data: [
+			{
+				day: 1,
+				mnth: 1,
+				year: 2022,
+				season: 2,
+				holiday: 0,
+				weekday: 1,
+				workingday: 1,
+				weathersit: 2,
+				temp: 0.3,
+				atemp: 0.3,
+				hum: 0.3,
+				windspeed: 0.3
+			}
+		]
+	},
+	GlobalParameters: 1.0
+}
+
+const carTest: Object = {
+	"Inputs": {
+		"WebServiceInput0": [
+			{
+				"symboling": 3,
+				"normalized-losses": 1.0,
+				"make": "alfa-romero",
+				"fuel-type": "gas",
+				"aspiration": "std",
+				"num-of-doors": "two",
+				"body-style": "convertible",
+				"drive-wheels": "rwd",
+				"engine-location": "front",
+				"wheel-base": 88.6,
+				"length": 168.8,
+				"width": 64.1,
+				"height": 48.8,
+				"curb-weight": 2548,
+				"engine-type": "dohc",
+				"num-of-cylinders": "four",
+				"engine-size": 130,
+				"fuel-system": "mpfi",
+				"bore": 3.47,
+				"stroke": 2.68,
+				"compression-ratio": 9,
+				"horsepower": 111,
+				"peak-rpm": 5000,
+				"city-mpg": 21,
+				"highway-mpg": 27
+			},
+			{
+				"symboling": 3,
+				"normalized-losses": 1.0,
+				"make": "alfa-romero",
+				"fuel-type": "gas",
+				"aspiration": "std",
+				"num-of-doors": "two",
+				"body-style": "convertible",
+				"drive-wheels": "rwd",
+				"engine-location": "front",
+				"wheel-base": 88.6,
+				"length": 168.8,
+				"width": 64.1,
+				"height": 48.8,
+				"curb-weight": 2548,
+				"engine-type": "dohc",
+				"num-of-cylinders": "four",
+				"engine-size": 130,
+				"fuel-system": "mpfi",
+				"bore": 3.47,
+				"stroke": 2.68,
+				"compression-ratio": 9,
+				"horsepower": 111,
+				"peak-rpm": 5000,
+				"city-mpg": 21,
+				"highway-mpg": 27
+			},
+			{
+				"symboling": 1,
+				"normalized-losses": 1.0,
+				"make": "alfa-romero",
+				"fuel-type": "gas",
+				"aspiration": "std",
+				"num-of-doors": "two",
+				"body-style": "hatchback",
+				"drive-wheels": "rwd",
+				"engine-location": "front",
+				"wheel-base": 94.5,
+				"length": 171.2,
+				"width": 65.5,
+				"height": 52.4,
+				"curb-weight": 2823,
+				"engine-type": "ohcv",
+				"num-of-cylinders": "six",
+				"engine-size": 152,
+				"fuel-system": "mpfi",
+				"bore": 2.68,
+				"stroke": 3.47,
+				"compression-ratio": 9,
+				"horsepower": 154,
+				"peak-rpm": 5000,
+				"city-mpg": 19,
+				"highway-mpg": 26
+			},
+			{
+				"symboling": 3,
+				"normalized-losses": 1.0,
+				"make": "alfa-romero",
+				"fuel-type": "gas",
+				"aspiration": "std",
+				"num-of-doors": "two",
+				"body-style": "convertible",
+				"drive-wheels": "rwd",
+				"engine-location": "front",
+				"wheel-base": 88.6,
+				"length": 168.8,
+				"width": 64.1,
+				"height": 48.8,
+				"curb-weight": 2548,
+				"engine-type": "dohc",
+				"num-of-cylinders": "four",
+				"engine-size": 130,
+				"fuel-system": "mpfi",
+				"bore": 3.47,
+				"stroke": 2.68,
+				"compression-ratio": 9,
+				"horsepower": 111,
+				"peak-rpm": 5000,
+				"city-mpg": 21,
+				"highway-mpg": 27
+			}
+		]
+	},
+	"GlobalParameters": {}
+}
+
+// ENDPOINT_CRED=$(az ml online-endpoint get-credentials -n predict-rentals -g  -w $WORKSPACE_NAME -o tsv --query primaryKey)
+
+// async function POST(formData: Object) {
+// 	const response = await fetch('/api/bicycle', {
+// 		method: 'POST',
+// 		body: JSON.stringify(formData),
+// 		// headers: {
+// 		// 	Authorization: import.meta.env.AZURE_ML_BICYCLE_PREDICT_KEY,
+// 		// 	'Content-Type': 'application/json'
+// 		// }
+// 	})
+// 	const data = await response.json();
+// 	console.log("Prediction of bicycles:", data)
+// }
+// await POST({url: endpoint, body: testEndpoint})
+
+// fetch('/api/bicycle', {
+// 	method: 'POST',
+// 	body: { url: endpoint, body: testEndpoint }
+// })
+// 	.then((response) => response.json())
+// 	.then((gResponse) => {
+// 		if (gResponse.success) {
+// 			console.log(gResponse)
+// 			// Captcha verification was a success
+// 		} else {
+// 			// Captcha verification failed
+// 		}
+// 	})
+
+import { bicyclePOST, carPOST } from './api/bicycle.ts'
+
+let bikeRes = await bicyclePOST({ url: bikeEndpoint, body: bikeTest })
+const bicycleData = await bikeRes.json()
+
+let carRes = await carPOST({ url: carEndpoint, body: carTest })
+const carData = await carRes.json()
+
+// const preds = carData?.Results?.WebServiceOutput0.map((i, index) => {
+// 	<div class="m-2">{index}. {i}</div>
+// })
 ---
 
 <!-- <Layout title="Welcome to Astro." user={user}> -->
-<Layout title="Welcome to Danger Zone!">
+<Layout title="Welcome to the Danger Zone!">
 	<main>
 		<!-- <svg
 			class="astro-a"
@@ -106,21 +289,26 @@ const story = data.story.content
 				</linearGradient>
 			</defs>
 		</svg> -->
-		<h1>Welcome to <span class="text-gradient">Danger Zone!</span></h1>
+		<h1 class="mb-4">Welcome to the <span class="text-gradient">Danger Zone!</span></h1>
+
+		<!-- <div class="someclass">
+			<h2>Drawing SVG Shapes With D3</h2>
+			<div id="svghandle"></div>
+		</div> -->
 
 		<!-- <BucketFetch client:load/> -->
 
 		<!-- <Login /> -->
 
-		<StoryblokComponent blok={story} />
+		<div class="flex w-full flex-col gap-12">
+			<StoryblokComponent blok={story} />
 
-
-		<ul
-			class=" list-none mb-4 mt-4 rounded-lg border-2 border-solid border-violet-800 bg-black bg-opacity-40 p-2"
-		>
-			<h1 class="text-white text-center">Contentful Blog posts</h1>
-			{
-				contentPosts.map((post) => (
+			<ul
+				class="list-none rounded-lg border-2 border-solid border-violet-800 bg-black bg-opacity-40 p-2"
+			>
+				<h1 class="text-center text-white">Contentful Blog posts</h1>
+				<p>{'Disabled because Contentful broke :('}</p>
+				<!-- contentPosts.map((post) => (
 					<li>
 						<a href={`/contentful_posts/${post.slug}/`} rel="prefetch-intent">
 							<h2 class=" font-bold underline underline-offset-2">{post.title}</h2>
@@ -128,14 +316,62 @@ const story = data.story.content
 						<time>{post.date}</time>
 						<p>{post.description}</p>
 					</li>
-				))
-			}
-		</ul>
+				)) -->
+			</ul>
+
+			<div
+				class="flex w-full flex-col rounded-lg border-2 border-solid border-violet-800 bg-black bg-opacity-40 p-2"
+			>
+				<h1 class="text-center text-white">Azure Machine Learning Test</h1>
+				<!-- <div>Parameters:
+					{marked.parse(JSON.stringify(testEndpoint))}
+				</div> -->
+				<h1>Car price prediction</h1>
+				<h2>Parameters:</h2>
+				<div class="fancy-scrollbar overflow-auto flex flex-col whitespace-nowrap">
+					{carTest.Inputs.WebServiceInput0.map((i, index) => (
+						<code class="m-2">{index}. {JSON.stringify(i)}</code>
+					))}
+					<!-- {JSON.stringify(carTest)} -->
+					</div>
+				<h2>Predicted car price:</h2>
+				<div>
+					{carData.Results ? (
+						// carData.Results.WebServiceInput0.map((i) => {
+						// 	<div class="m-2">{i}</div>
+						// })
+						carData.Results.WebServiceOutput0.map((i, index) => (
+							<div class="m-2">{index}. ${i?.predicted_price.toFixed(2)}</div>
+						))
+						// <div>{JSON.stringify(carData?.Results)}</div>
+					)
+					: (
+						<div>Loading...</div>
+					)
+					}
+					<!-- {JSON.stringify(carData?.Results)} -->
+				</div>
+
+				<hr class="mt-5">
+				<!-- <div>Parameters:
+					{marked.parse(JSON.stringify(testEndpoint))}
+				</div> -->
+				<h1>Bike rental price prediction</h1>
+				<h2>Parameters:</h2>
+				<code class="fancy-scrollbar overflow-auto">
+					{JSON.stringify(bikeTest)}
+				</code>
+				<h2>Predicted bicycle rent:</h2>
+				<div>
+					${Number(bicycleData?.Results).toFixed(2)}
+				</div>
+			</div>
+		</div>
 
 		<!-- <ContentPosts client:load/> -->
 		<!-- <ContentComics client:load/> -->
 
-		<ul
+		<!-- <ul
 			class="mb-4 mt-4 rounded-lg border-2 border-solid border-violet-800 bg-black bg-opacity-40 p-2"
 		>
 			<h1 class="text-white text-center">Contentful Images</h1>
@@ -149,7 +385,7 @@ const story = data.story.content
 					</li>
 				))
 			}
-		</ul>
+		</ul> -->
 
 		<!-- <article set:html={supaBaseContent} /> -->
 
@@ -181,6 +417,9 @@ const story = data.story.content
 		</ul>
 	</main>
 </Layout>
+<!-- <script>
+	import "../scripts/einstein-tile.js";
+</script> -->
 
 <style>
 	.astro-a {

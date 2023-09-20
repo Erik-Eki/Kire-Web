@@ -21,11 +21,20 @@
 
 
     let todos: Array = ["Commit taxfraud in Spain."]
+
 </script>
 
+<button
+	on:click={() => {javascript: history.back()}}
+	class="rounded p-3 text-4xl duration-200 ease-in-out hover:bg-violet-950"
+>
+	<i class="fa-solid fa-arrow-left text-4xl"></i> Back
+</button>
 <div class=" grid gap-y-14">
-    <p>Number of tasks: {todos.length}</p>
-    <SvelteTodo todos={todos}/>
+	<div>
+    	<p>Number of tasks: {todos.length}</p>
+		<SvelteTodo todos={todos}/>
+	</div>
 
 	<div>
 		Ebin counter
@@ -34,7 +43,11 @@
 			{counter === 1 ? 'time' : 'times'}
 		</h2>
 		<div class="flex flex-row">
-			<button on:click={() => decrement()} class="bt">-</button>
+			{#if counter === 0}
+				<button on:click={() => decrement()} disabled class="bt">-</button>
+			{:else}
+				<button on:click={() => decrement()} class="bt">-</button>
+			{/if}
 			<button on:click={() => increment()} class="bt">+</button>
 		</div>
 		<p>The count doubled is {doubled}</p>
@@ -46,7 +59,15 @@
 
 <style>
 	.bt {
-		background-color: blueviolet;
+		background-color: orangered;
+		border-radius: 10px;
+		padding: 10px;
+		margin: 10px;
+		width: 50px;
+		height: 50px;
+	}
+	.bt:disabled {
+		background-color: slategray;
 		border-radius: 10px;
 		padding: 10px;
 		margin: 10px;

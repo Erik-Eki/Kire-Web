@@ -25,7 +25,7 @@ const { title } = Astro.props as Props
 // const isLoggedIn = !(user == null);
 // console.log("LAYOUT:", user)
 
-let counter: Number = 0;
+let counter: Number = 0
 
 const cookie = Astro.cookies.get('counter')
 if (cookie) {
@@ -43,11 +43,12 @@ profile.subscribe((prof) => {
 <!DOCTYPE html>
 <!-- <html lang="en" transition:animate={slide({ duration: '1s' })}> -->
 <html lang="en" transition:animate={slide({ duration: '0.5s' })}>
-<!-- <html lang="en"> -->
+	<!-- <html lang="en"> -->
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content="Astro description" />
 		<meta name="viewport" content="width=device-width" />
+		<script src="https://kit.fontawesome.com/747d59d837.js" crossorigin="anonymous"></script>
 		<!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
 		<link rel="icon" type="image/jpg" href="/unnaafwafwfmed.jpg" />
 		<meta name="generator" content={Astro.generator} />
@@ -78,7 +79,7 @@ profile.subscribe((prof) => {
 			}}
 		/>
 	</head>
-	<body class="flex flex-col">
+	<body class="smooth-scroll flex flex-col">
 		<pre
 			class="construction text-center text-2xl font-extrabold text-black">&#128679 UNDER HEAVY CONSTRUCTION BECAUSE WORKERS UNIONIZED &#128679</pre>
 		<!-- <div id="nanoTest">{currentUser}</div> -->
@@ -86,16 +87,16 @@ profile.subscribe((prof) => {
 
 		<main class="flex-1">
 			<slot />
-
-			<h2 class="flex">
-				Refresh counter test =
-				<div
-					class="bg-gradient-to-tr from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% bg-clip-text font-extrabold text-transparent"
-				>
-					{counter}
-				</div>
-			</h2>
 		</main>
+
+		<h2 class="flex">
+			Refresh counter test =
+			<div
+				class="bg-gradient-to-tr from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% bg-clip-text font-extrabold text-transparent"
+			>
+				{counter}
+			</div>
+		</h2>
 
 		<Footer />
 		<!-- <div class="container mx-auto px-4 font-outfit">
@@ -118,4 +119,9 @@ profile.subscribe((prof) => {
 </script> --><!-- <style is:global>
 	
 </style> -->
+	<style>
+		.smooth-scroll {
+			scroll-behavior: smooth;
+		}
+	</style>
 </html>
