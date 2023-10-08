@@ -21,19 +21,19 @@
 		},
 		{
 			"src": "^\\/contentful_posts\\/([^/]+?)\\/?$",
-			"dest": "_slug_.astro"
+			"dest": "contentful_posts/[slug].astro"
 		},
 		{
 			"src": "^\\/framework-demos\\/preact\\/?$",
-			"dest": "preact.astro"
+			"dest": "framework-demos/preact.astro"
 		},
 		{
 			"src": "^\\/framework-demos\\/svelte\\/?$",
-			"dest": "svelte.astro"
+			"dest": "framework-demos/svelte.astro"
 		},
 		{
 			"src": "^\\/framework-demos\\/vue\\/?$",
-			"dest": "vue.astro"
+			"dest": "framework-demos/vue.astro"
 		},
 		{
 			"src": "^\\/framework-demos\\/?$",
@@ -41,7 +41,7 @@
 		},
 		{
 			"src": "^\\/supabase\\/([^/]+?)\\/?$",
-			"dest": "_slug_.astro"
+			"dest": "supabase/[slug].astro"
 		},
 		{
 			"src": "^\\/comics\\/?$",
@@ -53,7 +53,7 @@
 		},
 		{
 			"src": "^\\/posts\\/([^/]+?)\\/?$",
-			"dest": "_slug_.astro"
+			"dest": "posts/[slug].astro"
 		},
 		{
 			"src": "^\\/posts\\/?$",
@@ -62,6 +62,10 @@
 		{
 			"src": "^\\/404\\/?$",
 			"dest": "404.astro"
+		},
+		{
+			"src": "^\\/api\\/bicycle$",
+			"dest": "api/bicycle.ts"
 		}
 	]
 }

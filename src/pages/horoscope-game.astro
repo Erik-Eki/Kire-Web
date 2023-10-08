@@ -1,0 +1,101 @@
+---
+import Layout from 'src/layouts/Layout.astro'
+import GameCards from '$components/horoscope-game/GameCards.svelte'
+import * as cheerio from 'cheerio'
+import { ZodUndefined } from 'astro/zod'
+
+const url: String =
+	'https://www.horoscope.com/us/horoscopes/general/horoscope-general-daily-yesterday.aspx?sign='
+
+function shuffleArray(array) {
+	for (var i = array.length - 1; i > 0; i--) {
+		var j = Math.floor(Math.random() * (i + 1))
+		var temp = array[i]
+		array[i] = array[j]
+		array[j] = temp
+	}
+}
+
+async function getHoroscope() {
+	try {
+		let fetchedHoroscopes: Array<Object> = []
+
+		for (let i = 1; i <= 12; i++) {
+			const response: Response = await fetch(url + String(i))
+			const data: any = await response.text()
+			const selector = cheerio.load(data)
+			let horoscopeTitle = selector('section.banner > div > div > a > h1').text()
+			let horoscope = selector('div.main-horoscope>p').first().text()
+
+			let horoscopeData = {
+				id: i,
+				name: horoscopeTitle.split(' ')[0].toLowerCase(),
+				title: horoscopeTitle.split(' ')[0],
+				description: horoscope.substring(horoscope.indexOf(' - ') + 3),
+				answered: false,
+				answer: undefined,
+			}
+
+			fetchedHoroscopes.push(horoscopeData)
+		}
+
+		return fetchedHoroscopes
+	} catch (error) {
+		console.error(error)
+	}
+}
+
+let horoscopes = await getHoroscope()
+shuffleArray(horoscopes)
+
+let today = new Date()
+const dd = String(today.getDate()).padStart(2, '0')
+const mm = String(today.getMonth() + 1).padStart(2, '0') //January is 0!
+const yyyy = today.getFullYear()
+
+const todayDate = dd + '/' + mm + '/' + yyyy
+---
+
+<Layout title="Horoscope Guessing Game">
+		<h1>Horoscope Guessing Game</h1>
+		<details>
+			<summary>Rules:</summary>
+			<p>
+				Every day, yesterday's horoscopes are fetched from horoscopes.com. They are put into random
+				in order. You need to pick the one that you think is yours.
+			</p>
+			<i class="text-sm"
+				>E.g. If you are a Sagittarius, you read all of the horoscopes and then pick the one that
+				you think is Sagittarius.</i
+			>
+			<p>To make it easier, I have a Finnish translation for the signs too, you can change the view from the "Change sign translation" dropdown.</p>
+			<p>
+				If you picked correctly, you win! If not, either your birth certificate and parents are
+				lying to you OR horoscopes are mere generic applicable descriptions that apply whereever to
+				whomever and one uses selection bias to find things in their lives that fit it...
+			</p>
+			<p>
+				If you want real magic and to uncover the hidden rules of the world, try learning card tricks while doing Sadhana yoga.
+			</p>
+			<hr />
+		</details>
+		<details>
+			<summary>Future improvements</summary>
+			<p>This is so far just a simple game that doesn't save any progress.</p>
+			<p>When I implement the working login and account feature on the website, I can save the user's progress.</p>
+			<p>I could also gather statistics about it, visualize the guess history and maybe a global "accuracy %".</p>
+		</details>
+
+		<hr />
+
+		<h2>Yesterday's Horoscopes: {todayDate}</h2>
+		<div>
+			{
+				horoscopes ? (
+					<GameCards horoscopeData={horoscopes} client:load />
+				) : (
+					<div>Loading...</div>
+				)
+			}
+		</div>
+</Layout>

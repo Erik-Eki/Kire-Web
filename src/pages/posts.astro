@@ -29,15 +29,15 @@ const posts = data.stories.map(story => {
 
 
 const { blok } = Astro.props
-
+// 
 ---
 
 <Layout title="Blog">
-<div class="border-solid border-2 border-violet-800 rounded-lg p-2 bg-black bg-opacity-40 mb-4 mt-4">
+<div class="not-prose p-2 bg-black bg-opacity-40 mb-4 mt-4">
     <h1 class=" text-white text-center">Storyblok Blog posts</h1>
     <ul {...storyblokEditable(blok)} class=" flex flex-col gap-4">
       {posts.map(post => (
-        <div class="h-72 bg-zinc-900 border-2 rounded pl-2 pr-2 pt-5 pb-12 h-55">
+        <div class="h-72 bg-zinc-900 pl-2 pr-2 pt-5 pb-12 h-55 border-2 border-violet-800 rounded-lg">
           <a 
           href={post.slug}
           style=`--bgURL: url(${post.headImage})`
@@ -54,7 +54,8 @@ const { blok } = Astro.props
               <time class="text-sm">
                 {new Date(post.created_at).toLocaleString("en-FI", {dateStyle: "full", timeStyle: "short"})}
               </time>
-              <p class=" text-3xl flex-grow w-4/5 line-clamp-2 max-h-28 ease-in-out duration-300 hover:max-h-80 hover:lg:line-clamp-none">{post.title}</p>
+              
+              <p class="text-white text-3xl flex-grow w-4/5 line-clamp-2 max-h-28 ease-in-out duration-300 hover:max-h-80 hover:lg:line-clamp-none">{post.title}</p>
               <p class="text-base text-end">{post.description}</p>
             </li>
           </a>
@@ -69,7 +70,7 @@ const { blok } = Astro.props
     display: block;
     text-align: left;
     box-shadow: none;
-    transition: 0.3s;
+    /* transition: 0.3s; */
     /* background: rgba(0,0,0,0.5), var(--bgURL); */
     background: linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ), var(--bgURL);
     /* background-color: var(--src); */
@@ -83,8 +84,7 @@ const { blok } = Astro.props
     opacity:0.4;
   } */
   .card-button:hover {
-
-    box-shadow:inset 0px 0px 0px 3px white;
+    box-shadow:inset 0px 0px 0px 3px rgb(0, 159, 170);
   }
   .card-background{
     background-repeat:no-repeat !important; 

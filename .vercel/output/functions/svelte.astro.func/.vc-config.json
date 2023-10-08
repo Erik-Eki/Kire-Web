@@ -1,5 +1,0 @@
-{
-	"runtime": "nodejs18.x",
-	"handler": "dist\\entry.pages\\framework-demos\\svelte.astro.mjs",
-	"launcherType": "Nodejs"
-}

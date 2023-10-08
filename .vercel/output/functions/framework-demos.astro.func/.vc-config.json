@@ -1,5 +1,5 @@
 {
 	"runtime": "nodejs18.x",
-	"handler": "dist\\entry.pages\\framework-demos.astro.mjs",
+	"handler": "dist/pages/entry.framework-demos.astro.mjs",
 	"launcherType": "Nodejs"
 }
