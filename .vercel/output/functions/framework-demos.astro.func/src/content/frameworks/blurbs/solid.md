@@ -1,1 +1,0 @@
-<a href="https://www.solidjs.com" style="color: cadetblue;">Solid</a> is a framework designed for speed. It is one of the most performant reactive frameworks around (faster than everything on this list), very comparable to Astro. The ecosystem isn't that big yet, however. Small bundle size.

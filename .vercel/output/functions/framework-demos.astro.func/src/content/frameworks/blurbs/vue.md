@@ -1,1 +1,0 @@
-<a href="https://vuejs.org" style="color: mediumaquamarine;">Vue</a> is a popular truly reactive framework. It is very scalable, from small hobby sites (like this one) to enterprise products. It has a vast ecosystem of libraries and apps. Vue also intelligently optimizes the code when it compiles.

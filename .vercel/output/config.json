@@ -12,60 +12,8 @@
 			"handle": "filesystem"
 		},
 		{
-			"src": "^\\/_image$",
-			"dest": "_image.astro"
-		},
-		{
-			"src": "^\\/$",
-			"dest": "index.astro"
-		},
-		{
-			"src": "^\\/contentful_posts\\/([^/]+?)\\/?$",
-			"dest": "contentful_posts/[slug].astro"
-		},
-		{
-			"src": "^\\/framework-demos\\/preact\\/?$",
-			"dest": "framework-demos/preact.astro"
-		},
-		{
-			"src": "^\\/framework-demos\\/svelte\\/?$",
-			"dest": "framework-demos/svelte.astro"
-		},
-		{
-			"src": "^\\/framework-demos\\/vue\\/?$",
-			"dest": "framework-demos/vue.astro"
-		},
-		{
-			"src": "^\\/framework-demos\\/?$",
-			"dest": "framework-demos.astro"
-		},
-		{
-			"src": "^\\/supabase\\/([^/]+?)\\/?$",
-			"dest": "supabase/[slug].astro"
-		},
-		{
-			"src": "^\\/comics\\/?$",
-			"dest": "comics.astro"
-		},
-		{
-			"src": "^\\/about\\/?$",
-			"dest": "about.astro"
-		},
-		{
-			"src": "^\\/posts\\/([^/]+?)\\/?$",
-			"dest": "posts/[slug].astro"
-		},
-		{
-			"src": "^\\/posts\\/?$",
-			"dest": "posts.astro"
-		},
-		{
-			"src": "^\\/404\\/?$",
-			"dest": "404.astro"
-		},
-		{
-			"src": "^\\/api\\/bicycle$",
-			"dest": "api/bicycle.ts"
+			"src": "/.*",
+			"dest": "render"
 		}
 	]
 }

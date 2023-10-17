@@ -1,0 +1,63 @@
+---
+import fs from 'fs'
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+// const wasm = await WebAssembly.instantiateStreaming(
+//     fetch("hello.js"))
+//     .then((obj) => {
+// 	    return obj.instance.exports.main
+//     })
+
+// async function init() {
+//   const response = await fetch('$lib/hello.wasm');
+//   const bytes = await response.arrayBuffer();
+//   const importObject = {
+//     env: {
+//       jsLog: (message) => {
+//         console.log(`WebAssembly says: ${message}`);
+//       },
+//     },
+//   };
+//   const { instance } = await WebAssembly.instantiate(bytes, importObject);
+// }
+
+// init();
+// fs.readFile("../lib/test.txt", function read(err, data) {
+//     if (err) {
+//         throw err;
+//     }
+//     const content = data;
+
+//     // Invoke the next step here however you like
+//     console.log(content);   // Put all of the code here (not the best solution)
+// });
+
+//const t = await fetch("file:////home/hades/projects/Kire-Web/src/lib/test.txt")
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+const importObject = {
+	imports: {
+		main() {
+			console.log("Helo :)")
+		},
+        wasi_unstable: () => {}
+	}
+	// env: {
+	//   jsLog: (message) => {
+	//     console.log(`WebAssembly says: ${message}`);
+	//   },
+	// },
+}
+
+const wasmBuffer = fs.readFileSync(path.resolve(__dirname, '../lib/hello.wasm'))
+WebAssembly.instantiate(wasmBuffer, importObject).then((wasmModule) => {
+	// Exported function live under instance.exports
+	//const { main } = wasmModule.instance.exports;
+	//const res = main();
+	console.log(wasmModule.instance.exports) // Outputs: 11
+})
+---
+
+<div id="test">Ebin:</div>

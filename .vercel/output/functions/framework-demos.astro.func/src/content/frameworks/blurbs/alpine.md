@@ -1,1 +1,0 @@
-<a href="https://alpinejs.dev" style="color: lightslategrey;">Alpine.js</a> is a lightweight framework that composes directly in the markup. It's similar to HTMX, but possible bit better for bigger applications. It should also be compatible too.

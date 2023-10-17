@@ -49,6 +49,7 @@ let horoscopes = await getHoroscope()
 shuffleArray(horoscopes)
 
 let today = new Date()
+today.setDate(today.getDate() - 1);
 const dd = String(today.getDate()).padStart(2, '0')
 const mm = String(today.getMonth() + 1).padStart(2, '0') //January is 0!
 const yyyy = today.getFullYear()
@@ -81,7 +82,7 @@ const todayDate = dd + '/' + mm + '/' + yyyy
 		</details>
 		<details>
 			<summary>Future improvements</summary>
-			<p>This is so far just a simple game that doesn't save any progress.</p>
+			<p>This is so far just a simple game that is ENTIRELY built on <b class=" text-orange-600">Svelte</b>, that doesn't save any progress.</p>
 			<p>When I implement the working login and account feature on the website, I can save the user's progress.</p>
 			<p>I could also gather statistics about it, visualize the guess history and maybe a global "accuracy %".</p>
 		</details>

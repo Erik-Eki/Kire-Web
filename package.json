@@ -34,6 +34,7 @@
     "contentful": "^10.5.1",
     "cookie": "^0.5.0",
     "d3": "^7.8.5",
+    "echarts": "^5.4.3",
     "marked": "^7.0.3",
     "nanostores": "^0.9.3",
     "preact": "^10.17.1",

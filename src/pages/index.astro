@@ -7,10 +7,12 @@ import { useStoryblokApi } from '@storyblok/astro'
 import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
 import { contentfulClient } from '../lib/contentful'
 import type { ContentPost, ContentComic } from '../lib/contentful'
-import bikeTest from "$assets/bike.json"
-import carTest from "$assets/car.json"
-import { bicyclePOST, carPOST } from "$scripts/azureml-api"
-import HoroscopeGame from './horoscope-game.astro'
+import bikeTest from '$assets/bike.json'
+import carTest from '$assets/car.json'
+// import { bicyclePOST, carPOST } from '$scripts/azureml-api'
+// import HoroscopeGame from './horoscope-game.astro'
+import { Icon } from 'astro-icon'
+
 // import CarSelector from "$components/misc/CarSelection.svelte"
 // import {getUser, supabase} from '$lib/supabaseClient';
 
@@ -75,29 +77,31 @@ const story = data.story.content
 // const markdown = await response.text()
 // const supaBaseContent = marked.parse(markdown)
 
-const bikeEndpoint: String =
-	'http://42cee8a1-d308-4e59-a387-2a14cf9dea27.northeurope.azurecontainer.io/score'
-// const electricityEndpoint: String =
-	// 'http://af6fe771-ed99-44fc-b290-e0ea2f2dc0d8.northeurope.azurecontainer.io/score'
-const carEndpoint: String =
-	'http://2a92d5ed-23e5-4ade-abf5-9d188ef4a1cd.northeurope.azurecontainer.io/score'
+// const bikeEndpoint: String =
+// 	'http://42cee8a1-d308-4e59-a387-2a14cf9dea27.northeurope.azurecontainer.io/score'
+// // const electricityEndpoint: String =
+// // 'http://af6fe771-ed99-44fc-b290-e0ea2f2dc0d8.northeurope.azurecontainer.io/score'
+// const carEndpoint: String =
+// 	'http://2a92d5ed-23e5-4ade-abf5-9d188ef4a1cd.northeurope.azurecontainer.io/score'
 
+// let bikeRes = await bicyclePOST({ url: bikeEndpoint, body: bikeTest })
+// const bicycleData = await bikeRes.json()
 
-let bikeRes = await bicyclePOST({ url: bikeEndpoint, body: bikeTest })
-const bicycleData = await bikeRes.json()
-
-let carRes = await carPOST({ url: carEndpoint, body: carTest })
-const carData = await carRes.json()
+// let carRes = await carPOST({ url: carEndpoint, body: carTest })
+// const carData = await carRes.json()
 
 // const preds = carData?.Results?.WebServiceOutput0.map((i, index) => {
 // 	<div class="m-2">{index}. {i}</div>
 // })
+//import Test from "$lib/wasmTest.astro"
+// import fs from 'fs'
+
+// import WasmTest from '$lib/wasmTest.astro'
 ---
 
 <!-- <Layout title="Welcome to Astro." user={user}> -->
 <Layout title="Welcome to the Danger Zone!">
 	<main>
-
 		<h1 class="mb-4">Welcome to the <span class="text-gradient">Danger Zone!</span></h1>
 
 		<!-- <div class="someclass">
@@ -109,19 +113,26 @@ const carData = await carRes.json()
 
 		<!-- <Login /> -->
 
-		<div class="p-4 mb-6 flex flex-col gap-4 rounded drop-shadow-lg bg-gradient-to-r from-blue-900 to-cyan-900">
-			<h1>Checkout new Horoscope Guessing Game!</h1>
-			<a class="w-fit p-4 font-bold text-lg border-2 border-white rounded" href="/horoscope-game">Play game!</a>
-		</div>
-
 		<div class="flex w-full flex-col gap-12">
+			<div
+				class="flex flex-col gap-4 rounded bg-gradient-to-r from-blue-900 to-cyan-900 p-4 drop-shadow-lg"
+			>
+				<h1>Checkout new Horoscope Guessing Game!</h1>
+				<a class="w-fit rounded border-2 border-white p-4 text-lg font-bold" href="/horoscope-game"
+					>Play game!</a
+				>
+			</div>
+
 			<StoryblokComponent blok={story} />
 
-			<ul
+			<div
 				class="list-none rounded-lg border-2 border-solid border-violet-800 bg-black bg-opacity-40 p-2"
 			>
 				<h1 class="text-center text-white">Contentful Blog posts</h1>
-				<p>{'Disabled because Contentful broke :('}</p>
+				<p class="flex flex-row rounded bg-red-600 p-2 text-white saturate-50">
+					<Icon name="mdi:exclamation-thick" class="w-10" />
+					 Disabled because Contentful API broke :(
+				</p>
 				<!-- contentPosts.map((post) => (
 					<li>
 						<a href={`/contentful_posts/${post.slug}/`} rel="prefetch-intent">
@@ -131,7 +142,7 @@ const carData = await carRes.json()
 						<p>{post.description}</p>
 					</li>
 				)) -->
-			</ul>
+			</div>
 
 			<!-- <CarSelector carTestData={carTest} client:load/> -->
 
@@ -139,36 +150,52 @@ const carData = await carRes.json()
 				class="flex w-full flex-col rounded-lg border-2 border-solid border-violet-800 bg-black bg-opacity-40 p-2"
 			>
 				<h1 class="text-center text-white">Azure Machine Learning Test</h1>
+
+				<p class="flex flex-row rounded bg-red-600 p-2 text-white saturate-50">
+					<Icon name="mdi:exclamation-thick" class="w-10" />
+					 Disabled because AzureML costed me 80€ for 1 month :(
+				</p>
+				<p>
+					I tried out AzureML and have some test endpoints online. I send some data from the client
+					to them and get a response.
+				</p>
 				<!-- <div>Parameters:
 					{marked.parse(JSON.stringify(testEndpoint))}
 				</div> -->
 				<h1>Car price prediction</h1>
 				<h2>Parameters:</h2>
-				<div class="fancy-scrollbar overflow-auto flex flex-col whitespace-nowrap">
-					{carTest.Inputs.WebServiceInput0.map((i, index) => (
-						<code class="m-2">{1+index}. {JSON.stringify(i)}</code>
-					))}
+				<div class="fancy-scrollbar flex flex-col overflow-auto whitespace-nowrap">
+					{
+						carTest.Inputs.WebServiceInput0.map((i, index) => (
+							<code class="m-2">
+								{1 + index}. {JSON.stringify(i)}
+							</code>
+						))
+					}
 					<!-- {JSON.stringify(carTest)} -->
-					</div>
+				</div>
 				<h2>Predicted car price:</h2>
 				<div>
-					{carData.Results ? (
-						// carData.Results.WebServiceInput0.map((i) => {
-						// 	<div class="m-2">{i}</div>
-						// })
-						carData.Results.WebServiceOutput0.map((i, index) => (
-							<div class="m-2">{1+index}. ${i?.predicted_price.toFixed(2)}</div>
-						))
-						// <div>{JSON.stringify(carData?.Results)}</div>
-					)
-					: (
-						<div>Loading...</div>
-					)
-					}
+					Null
+					<!-- {
+						carData.Results ? (
+							// carData.Results.WebServiceInput0.map((i) => {
+							// 	<div class="m-2">{i}</div>
+							// })
+							carData.Results.WebServiceOutput0.map((i, index) => (
+								<div class="m-2">
+									{1 + index}. ${i?.predicted_price.toFixed(2)}
+								</div>
+							))
+						) : (
+							// <div>{JSON.stringify(carData?.Results)}</div>
+							<div>Loading...</div>
+						)
+					} -->
 					<!-- {JSON.stringify(carData?.Results)} -->
 				</div>
 
-				<hr class="mt-5">
+				<hr class="mt-5" />
 				<!-- <div>Parameters:
 					{marked.parse(JSON.stringify(testEndpoint))}
 				</div> -->
@@ -179,7 +206,8 @@ const carData = await carRes.json()
 				</code>
 				<h2>Predicted bicycle rent:</h2>
 				<div>
-					${Number(bicycleData?.Results).toFixed(2)}
+					Null
+					<!-- ${Number(bicycleData?.Results).toFixed(2)} -->
 				</div>
 			</div>
 		</div>
@@ -233,9 +261,14 @@ const carData = await carRes.json()
 		</ul>
 	</main>
 </Layout>
-<!-- <script>
-	import "../scripts/einstein-tile.js";
-</script> -->
+<script>
+	// WebAssembly.instantiateStreaming(
+	// 	fetch("../lib/hello.wasm")
+	// )
+	// .then(obj => {
+	// 	console.log(obj)
+	// })
+</script>
 
 <style>
 	.astro-a {
@@ -279,4 +312,4 @@ const carData = await carRes.json()
 		padding: 0;
 	}
 </style>
-../scripts/bicycle.ts
+ ../scripts/bicycle.ts
