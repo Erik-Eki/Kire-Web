@@ -3,6 +3,7 @@
 	"exclude": ["node_modules/*", "__sapper__/*", "public/*"],
 	"compilerOptions": {
 		"module": "esnext",
+		"baseUrl": ".",
 		"paths": {
 			"$lib/*": ["src/lib/*"],
 			"$components/*": ["src/components/*"],
