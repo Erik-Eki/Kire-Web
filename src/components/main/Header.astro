@@ -1,10 +1,10 @@
 ---
-import Navigation from "./Navigation.astro";
-import Hamburger from './Hamburger.astro';
-// import LoginModal from "../login/LoginModal.svelte"
+import Navigation from './Navigation.astro'
+import Hamburger from './Hamburger.astro'
+import LoginModal from '$components/login-svelte/LoginModal.svelte'
+//import Login from '$components/login/login.astro'
 
 let user = null
-
 
 // supabase.auth.onAuthStateChange((event, session) => {
 // 	//   if (event == 'SIGNED_IN') console.log('SIGNED_IN', session)
@@ -18,37 +18,47 @@ let user = null
 // 	// 		console.log(session.user)
 // 	// 	}
 // 	// }
-	
+
 // })
 
 // const isLoggedIn = !(user == null);
+//const session = Astro.cookies.get('session_token')?.value;
+
 let ebin = true
+
+// session={
+//         (event) => {Astro.cookies.set('session_token', event.detail.sessionCookie)}
+//     }
 ---
 
-<p class="border-t-white border mt-2 mb-2"></p>
+<p class="mb-2 mt-2 border border-t-white"></p>
 <div class="kire-web">KIRE WEB</div>
-<!-- <LoginModal client:load/> -->
+<!-- <LoginModal session={session} client:visible /> -->
+<LoginModal 
+    client:visible
+    />
 <header class="main-header">
-    <nav class="header-container">
-        <Hamburger />
-        <Navigation />
-    </nav>
+	<nav class="header-container">
+		<Hamburger />
+		<Navigation />
+	</nav>
+	<!-- <Login /> -->
 </header>
 
 <style>
-.header-container {
-    /* min-height: 70px; */
-    /* max-height: 100px; */
-    /* height: 70px; */
-    /* display: grid; */
-	/* align-items: center; */
-}
+	.header-container {
+		/* min-height: 70px; */
+		/* max-height: 100px; */
+		/* height: 70px; */
+		/* display: grid; */
+		/* align-items: center; */
+	}
 
-.kire-web {
-    font-family: Norse;
-    font-size: 50px;
-    letter-spacing: 4ch;
-    text-align: center;
-    margin-right:-4ch;
-}
+	.kire-web {
+		font-family: Norse;
+		font-size: 50px;
+		letter-spacing: 4ch;
+		text-align: center;
+		margin-right: -4ch;
+	}
 </style>

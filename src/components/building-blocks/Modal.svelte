@@ -34,7 +34,6 @@
 		<!-- svelte-ignore a11y-no-static-element-interactions -->
 		<div on:click|stopPropagation>
 			<slot name="header" />
-			<hr />
 			<slot />
 			<hr />
 			<!-- svelte-ignore a11y-autofocus -->
@@ -49,6 +48,11 @@
 		border-radius: 0.2em;
 		border: none;
 		padding: 0;
+		position: absolute;
+		left: 50%;
+		top: 2rem;
+		transform: translate(-50%, 0);
+		margin: 0; /*reset some browser centering*/
 	}
 	dialog::backdrop {
 		background: rgba(0, 0, 0, 0.3);

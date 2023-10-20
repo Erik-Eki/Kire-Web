@@ -125,7 +125,7 @@ const story = data.story.content
 
 			<StoryblokComponent blok={story} />
 
-			<div
+			<!-- <div
 				class="list-none rounded-lg border-2 border-solid border-violet-800 bg-black bg-opacity-40 p-2"
 			>
 				<h1 class="text-center text-white">Contentful Blog posts</h1>
@@ -133,7 +133,7 @@ const story = data.story.content
 					<Icon name="mdi:exclamation-thick" class="w-10" />
 					 Disabled because Contentful API broke :(
 				</p>
-				<!-- contentPosts.map((post) => (
+				contentPosts.map((post) => (
 					<li>
 						<a href={`/contentful_posts/${post.slug}/`} rel="prefetch-intent">
 							<h2 class=" font-bold underline underline-offset-2">{post.title}</h2>
@@ -141,8 +141,8 @@ const story = data.story.content
 						<time>{post.date}</time>
 						<p>{post.description}</p>
 					</li>
-				)) -->
-			</div>
+				)) 
+			</div> -->
 
 			<!-- <CarSelector carTestData={carTest} client:load/> -->
 

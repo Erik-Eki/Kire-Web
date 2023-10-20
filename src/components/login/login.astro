@@ -1,0 +1,146 @@
+---
+import { checkForState, checkForSession, supabase } from '$lib/supabaseClient'
+//import { useState } from 'astro/client'
+//import { setCookie } from 'astro/server'
+
+// Get the current user and session from the Supabase client
+// const user = supabase.auth.user()
+// const session = supabase.auth.session()
+
+// Create a state variable to store the session status
+//const [sessionStatus, setSessionStatus] = useState(session ? 'active' : 'expired')
+
+// Listen to auth state changes and update the session status accordingly
+// supabase.auth.onAuthStateChange((event, session) => {
+// 	if (event === 'SIGNED_OUT') {
+// 		// The session has expired, set the status to 'expired'
+// 		setSessionStatus('expired')
+// 	} else if (event === 'SIGNED_IN' || event === 'USER_UPDATED') {
+// 		// The user has signed in or updated their profile, set the status to 'active'
+// 		setSessionStatus('active')
+// 	}
+// })
+
+// Get the session token from the cookie
+const sessionToken = Astro.cookies.get('session_token')
+console.log("SESSION:", sessionToken)
+
+const { data: user, error } = await supabase.auth.getUser(String(sessionToken))
+//const sessionToken = supabase.auth.getSession()
+	//counter = cookie.number() + 1
+    // Use the Supabase client to get the current user from the session token
+    //const { data, error } = await supabase.auth.getUser(String(sessionToken))
+
+//     const { data, error } = await supabase.auth.getSession()
+//     if(error) {
+//         console.error(error)
+//     } else {
+//         const { data, error } = await supabase.auth.refreshSession()
+//         const { session, user } = data
+
+//         //const { data: { user } } = await supabase.auth.getUser()
+//     }
+// }
+
+// To revoke a session in Supabase auth, you need to use the supabase.auth.api.signOut() method,
+// which will invalidate the current session and remove the session data from the browser cookie1.
+
+// You can also pass an optional refresh_token parameter to revoke a specific session1.
+
+// Alternatively, you can revoke a session from the database by using SQL commands.
+
+// For example, you can delete the session and refresh token records from the auth.sessions and auth.refresh_tokens tables,
+// or update their revoked and not_after fields to true and NOW() respectively2. However,
+// this method requires direct access to the database and may not be suitable for client-side applications.
+
+// Here is an example of how you can revoke a session in Supabase auth using JavaScript:
+
+// Revoke the current session
+// const { error } = await supabase.auth.signOut()
+// // Handle any errors
+// if (error) {
+// 	console.error(error)
+// } else {
+// 	console.log('Session revoked')
+// }
+
+//async function signIn(params) { 
+const handleLogIn = async (event) => {
+	event.preventDefault()
+    const email = event.target.email.value
+    const password = event.target.password.value
+	//const { email, password } = params
+
+	// Use the Supabase client to sign in the user with email and password
+	const { data, error } = await supabase.auth.signInWithPassword({
+		email,
+		password
+	})
+
+	console.log('SESSION login:', data)
+	// If there is an error, return a 400 response with the error message
+	if (error) {
+		return {
+			status: 400,
+			body: error.message
+		}
+	}
+
+	//session = data.session
+
+	// If the sign in is successful, set a cookie with the session token
+	// You can customize the cookie name, options, and expiration time
+	Astro.cookies.set('session_token', data.session.access_token, {
+		path: '/',
+		httpOnly: true,
+		maxAge: data.session.expires_in
+	})
+
+    // Serialize the session into a cookie
+    // const sessionCookie = serialize('session', JSON.stringify(session), {
+    //     maxAge: 60 * 60 * 24 * 7, // 1 week
+    //     path: '/',
+    //     httpOnly: true,
+    //     secure: process.env.NODE_ENV === 'production',
+    // })
+	// Return a 200 response with the user data
+	return {
+		status: 200,
+		body: data
+	}
+}
+
+const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut()
+    if (error?.message) console.error(error)
+
+    Astro.cookies.set('session_token', data.session.access_token, {
+		path: '/',
+		httpOnly: true,
+		maxAge: data.session.expires_in
+	})
+}
+
+let email = 'eriko.oy38@gmail.com'
+let password = 'kakkapylly2'
+---
+
+<>
+    {user && (
+        <form method="POST" onsubmit="handleLogout()">
+            <button type="submit">Logout</button>
+        </form>
+    )}
+    {!user && (
+        <div>
+            <h1>Log in</h1>
+            <form method="POST" onsubmit="handleLogIn()">
+            <label>Email</label>
+            <input type="email" name="email" required placeholder={email} value={email}/>
+            <label>Password</label>
+            <input type="password" name="password" required placeholder={password} value={password} required minlength="6"/>
+            <button type="submit">Log in</button>
+            </form>
+        </div>
+    )}
+</>
