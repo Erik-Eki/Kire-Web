@@ -4,8 +4,6 @@ import Hamburger from './Hamburger.astro'
 import LoginModal from '$components/login-svelte/LoginModal.svelte'
 //import Login from '$components/login/login.astro'
 
-let user = null
-
 // supabase.auth.onAuthStateChange((event, session) => {
 // 	//   if (event == 'SIGNED_IN') console.log('SIGNED_IN', session)
 // 	//   if (event == 'SIGNED_OUT') console.log('SIGNED_OUT', session)
@@ -23,8 +21,6 @@ let user = null
 
 // const isLoggedIn = !(user == null);
 //const session = Astro.cookies.get('session_token')?.value;
-
-let ebin = true
 
 // session={
 //         (event) => {Astro.cookies.set('session_token', event.detail.sessionCookie)}

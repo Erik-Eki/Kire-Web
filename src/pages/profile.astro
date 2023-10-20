@@ -1,0 +1,16 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Profile from "$components/building-blocks/Profile.svelte"
+
+const pageTitle: String = "Profile"
+
+// let ses = Astro.cookies.get("session")
+// console.log(ses)
+---
+
+<Layout title={pageTitle}>
+    <h1 class="text-gradient">{pageTitle}</h1>
+
+    <Profile client:visible/>
+    
+</Layout>

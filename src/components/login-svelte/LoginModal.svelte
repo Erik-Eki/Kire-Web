@@ -175,7 +175,12 @@
 
 <div class="flex flex-row justify-between">
 	{#if isLoggedIn}
-		<div class="m-2 pb-2 pl-5 pr-5 pt-2">{username}</div>
+		<div class="m-2 pb-2 pl-5 pr-5 pt-2">
+			<details class="user-options">
+				<summary><strong>{username}</strong></summary>
+				<a href="/profile">Profile</a>
+			</details>
+		</div>
 	{:else}
 		<div class="m-2 pb-2 pl-5 pr-5 pt-2"></div>
 	{/if}
@@ -317,4 +322,54 @@
 		border: 1px lightslategrey solid;
 		border-radius: 5px;
 	}
+
+	.user-options {
+		display: flex; 
+		border-radius: 10px;
+		padding: 0px 10px 0px 30px !important;
+		position: relative;
+		/* max-width: 20rem; */
+	}
+	.user-options:hover {
+		background: rgba(0, 0, 0, 0.15);
+		padding: 6px;
+		width: 15em;
+		border: none;
+		box-shadow: 3px 3px 4px black;
+		cursor: pointer;
+	}
+	.user-options[open] {
+		position: absolute;
+		background: rgb(14, 2, 46);
+		padding: 0px 10px 0px 30px !important;
+		width: 15em;
+		border: none;
+		box-shadow: 3px 3px 4px black;
+		cursor: pointer;
+	}
+	.user-options > a {
+		text-decoration-line: none;
+		padding-left: 30px;
+		border: 2px solid transparent;
+		padding: 10px;
+		margin: 5px;
+		transition: all ease-in-out 0.2s;
+	}
+	.user-options > a::before {
+		content: "❯ ";
+	}
+	.user-options > a:hover {
+		background: rgb(75, 2, 243);
+		border-radius: 10px;
+	}
+
+	.user-options summary::-webkit-details-marker,
+	.user-options summary::marker {
+		display: none; 
+		content: "";
+	}
+
+	/* .user-options::marker {
+		content: none;
+	} */
 </style>
