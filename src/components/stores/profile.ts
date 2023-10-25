@@ -1,3 +1,5 @@
 import { map } from 'nanostores'
 
-export const profile = map({name: "anon"})
+
+
+export const currentUserProfile = map({username: null, user_id: null})

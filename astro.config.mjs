@@ -34,7 +34,8 @@ export default defineConfig({
       components: {
         blogPost: 'storyblok/BlogPost',
         blogPostList: 'storyblok/BlogPostList',
-        page: 'storyblok/Page'
+        page: 'storyblok/Page',
+        //updatePost: "api/update-posts"
       },
       apiOptions: {
         // Choose your Storyblok space region

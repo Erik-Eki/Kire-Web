@@ -2,13 +2,15 @@
 	//import Cookies from 'js-cookie';
 	import Tabs from '$components/building-blocks/Tabs.svelte'
 	import Modal from '../building-blocks/Modal.svelte'
-	import { checkForState, supabase } from '$lib/supabaseClient'
-	import { fade } from 'svelte/transition'
-	import { profile } from '$components/stores/profile'
+	import { downloadImage, getProfile, supabase } from '$lib/supabaseClient'
+	//import { fade } from 'svelte/transition'
+	//import { profile } from '$components/stores/profile'
+	import type { AuthSession } from '@supabase/supabase-js'
+	import { onMount } from 'svelte'
+	//import { createStore } from 'nano-store';
+	import { currentUserProfile } from '$components/stores/profile'
 
-	// export const $profile = map({
-	//     name: 'anonymous'
-	// })
+	let session: AuthSession
 
 	let showModal = false
 
@@ -16,13 +18,47 @@
 	let username = ''
 	let email = '' //'kire.nenoksuuh@gmail.com'
 	let password = '' //'munakoiso47' //kakkapylly2
-	// let email = ""
-	// let password = ""
 	let remember = false
+	let avatarName
+	let avatarUrl
 
-	let isLoggedIn = false
 	let loginError = false
 	let passwordRecovering = false
+
+	onMount(async () => {
+		// supabase.auth.getSession().then(({ data }) => {
+		// 	session = data.session
+		// 	username = data.session.user.user_metadata?.username
+		// })
+
+		// supabase.auth.onAuthStateChange((_event, _session) => {
+		// 	session = _session
+		// 	//isLoggedIn = true
+		// 	//username = session.user.user_metadata?.username
+		// })
+		await supabase.auth.getSession().then(({ data }) => {
+			session = data.session
+		})
+
+		supabase.auth.onAuthStateChange((_event, _session) => {
+			session = _session
+		})
+
+		await getProfile(session).then((res) => {
+			avatarName = res.avatar_url
+			username = res.username
+
+			//currentUserProfile.subscribe(prof => {
+			//	username
+			//})
+			currentUserProfile.set({username: username, user_id: session.user.id})
+		})
+
+		avatarUrl = await downloadImage(avatarName)
+	})
+	// export const $profile = map({
+	//     name: 'anonymous'
+	// })
 
 	function handleShowModal() {
 		showModal = true
@@ -52,7 +88,6 @@
 		}
 
 		if (data?.session) {
-			isLoggedIn = true
 			handleHideModal()
 		} else {
 			loginError = true
@@ -84,7 +119,7 @@
 		}
 
 		if (data?.session) {
-			isLoggedIn = true
+			//isLoggedIn = true
 			username = data.session.user.user_metadata?.username
 
 			// fetch(`${window.location.origin}/api/login?session_token=${data?.session?.access_token}`, {
@@ -115,7 +150,6 @@
 		if (error?.message) console.error(error)
 
 		//Cookies.remove('session_token');
-		isLoggedIn = false
 		username = null
 	}
 
@@ -142,15 +176,15 @@
 	// async function checkSession() {
 	// 	return await checkForSession()
 	// }
-	async function checkSession() {
-		const { data, error } = await supabase.auth.getSession()
-		if (error?.message) console.error(error)
-		if (data.session) {
-			isLoggedIn = true
+	// async function checkSession() {
+	// 	const { data, error } = await supabase.auth.getSession()
+	// 	if (error?.message) console.error(error)
+	// 	if (data.session) {
+	// 		session = data.session
 
-			username = data.session.user.user_metadata?.username
-		}
-	}
+	// 		username = data.session.user.user_metadata?.username
+	// 	}
+	// }
 
 	function handleKeydown(event) {
 		// prevent that a space is typed
@@ -161,7 +195,7 @@
 		username = username.replaceAll(' ', '')
 	}
 
-	checkSession()
+	//checkSession()
 
 	//export let session;
 	let tabItems = [
@@ -174,10 +208,30 @@
 </script>
 
 <div class="flex flex-row justify-between">
-	{#if isLoggedIn}
-		<div class="m-2 pb-2 pl-5 pr-5 pt-2">
+	{#if session}
+		<div class="pb-2 pl-5 pr-5 pt-2">
 			<details class="user-options">
-				<summary><strong>{username}</strong></summary>
+				<summary>
+					<div class="cover">
+						{#if avatarUrl}
+							<img src={avatarUrl} alt={avatarUrl ? 'Avatar' : 'No image'} />
+						{:else}
+							<svg
+								class="bg-gray-600"
+								xmlns="http://www.w3.org/2000/svg"
+								width="1em"
+								height="1em"
+								viewBox="0 0 24 24"
+								{...$$props}
+								><path
+									fill="currentColor"
+									d="M12 4a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4Z"
+								/></svg
+							>
+						{/if}
+						<strong>{username}</strong>
+					</div>
+				</summary>
 				<a href="/profile">Profile</a>
 			</details>
 		</div>
@@ -189,7 +243,7 @@
 		<!-- <div>Logged in: {isLoggedIn}</div> -->
 		<!-- <button on:click={() => createTestUser()}>Create dummy user</button> -->
 
-		{#if isLoggedIn}
+		{#if session}
 			<button
 				on:click={() => handleLogout()}
 				class="m-2 rounded-lg border-2 border-transparent pb-2 pl-5 pr-5 pt-2 transition hover:bg-violet-800 hover:text-white"
@@ -216,8 +270,6 @@
 			<!-- <div>{JSON.stringify($profile)}</div> -->
 
 			{#if 1 === currentTab}
-				<!-- <h2 class="mb-2 border-b-2 border-solid border-b-violet-800">Log in</h2> -->
-
 				<div>Email</div>
 				<input
 					bind:value={email}
@@ -255,8 +307,6 @@
 			{/if}
 
 			{#if 2 === currentTab}
-				<!-- <h2 class="mb-2 border-b-2 border-solid border-b-violet-800">Sign up</h2> -->
-
 				<div>Username (No spaces)</div>
 				<input
 					bind:value={username}
@@ -317,6 +367,22 @@
 {/if}
 
 <style>
+	.cover {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 1rem;
+	}
+	.cover img,
+	svg {
+		margin: 0;
+		width: 3rem !important;
+		height: 3rem !important;
+		border-radius: 100%;
+		object-fit: cover;
+		overflow: hidden;
+		border: 1px solid white;
+	}
 	.loginField {
 		padding: 5px;
 		border: 1px lightslategrey solid;
@@ -324,9 +390,9 @@
 	}
 
 	.user-options {
-		display: flex; 
+		display: flex;
 		border-radius: 10px;
-		padding: 0px 10px 0px 30px !important;
+		padding: 5px 10px 0px 30px !important;
 		position: relative;
 		/* max-width: 20rem; */
 	}
@@ -341,7 +407,7 @@
 	.user-options[open] {
 		position: absolute;
 		background: rgb(14, 2, 46);
-		padding: 0px 10px 0px 30px !important;
+		padding: 5px 10px 0px 30px !important;
 		width: 15em;
 		border: none;
 		box-shadow: 3px 3px 4px black;
@@ -356,7 +422,7 @@
 		transition: all ease-in-out 0.2s;
 	}
 	.user-options > a::before {
-		content: "❯ ";
+		content: '❯ ';
 	}
 	.user-options > a:hover {
 		background: rgb(75, 2, 243);
@@ -365,8 +431,8 @@
 
 	.user-options summary::-webkit-details-marker,
 	.user-options summary::marker {
-		display: none; 
-		content: "";
+		display: none;
+		content: '';
 	}
 
 	/* .user-options::marker {

@@ -1,16 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro'
-import Profile from "$components/building-blocks/Profile.svelte"
+import ProfilePage from '$components/building-blocks/Profile.svelte'
+import type { AuthSession } from '@supabase/supabase-js'
+import { supabase } from '$lib/supabaseClient'
 
-const pageTitle: String = "Profile"
-
-// let ses = Astro.cookies.get("session")
-// console.log(ses)
+const pageTitle: String = 'Profile'
 ---
 
 <Layout title={pageTitle}>
-    <h1 class="text-gradient">{pageTitle}</h1>
+	<h1 class="text-gradient">{pageTitle}</h1>
 
-    <Profile client:visible/>
-    
+	<ProfilePage client:load />
 </Layout>

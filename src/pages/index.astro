@@ -65,9 +65,11 @@ const contentComics = entriesComics.items.map((item) => {
 
 const storyblokApi = useStoryblokApi()
 const { data } = await storyblokApi.get('cdn/stories/home', {
-	version: 'draft'
+	version: 'published'
 })
 const story = data.story.content
+
+
 
 // const user = await getUser(Astro.request);
 

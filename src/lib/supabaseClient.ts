@@ -28,7 +28,45 @@ export const supabase = createClient(supabaseUrl,supabaseAnonKey)
 //     return await getUser(req) != null
 // }
 //Saving the auth session cookies in Astro is a way to persist the user’s authentication state across different pages and requests. You can use the Astro setCookie and getCookie methods to set and get cookies in your Astro components and API routes. Here is an example of how you can use these methods:
+export async function downloadImage(path: string) {
+    try {
+        const { data, error } = await supabase.storage.from('avatars').download(path)
 
+        if (error) {
+            throw error
+        }
+
+        const url = URL.createObjectURL(data)
+        return url
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log('Error downloading image: ', error.message)
+        }
+    }
+}
+
+
+export async function getProfile(session) {
+    try {
+        const { user } = session
+
+        const { data, error, status } = await supabase
+            .from('profiles')
+            .select('username, email, bio, avatar_url, created_at, updated_at')
+            .eq('id', user.id)
+            .single()
+
+        if (error && status !== 406) throw error
+
+        if (data) {
+            return data
+        }
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(error.message)
+        }
+    }
+}
 
 export async function fetchUserDetails() {
     return supabase.auth.getUser()

@@ -6,8 +6,7 @@ import { fade, slide } from 'astro:transitions'
 import Header from '$components/main/Header.astro'
 import Footer from '../components/main/Footer.astro'
 // import { checkForState, checkForSession, fetchUserDetails, supabase } from '$lib/supabaseClient'
-import { profile } from '$components/stores/profile'
-
+//import { profile } from '$components/stores/profile'
 // let state = await checkForState(Astro.request)
 // let user = fetchUserDetails()
 // let session = checkForSession()
@@ -33,11 +32,11 @@ if (cookie) {
 }
 Astro.cookies.set('counter', counter)
 
-let currentUser
-profile.subscribe((prof) => {
-	// document.getElementById("nanoTest").innerHTML = JSON.stringify(prof)
-	currentUser = JSON.stringify(prof)
-})
+//let currentUser
+// profile.subscribe((prof) => {
+// 	// document.getElementById("nanoTest").innerHTML = JSON.stringify(prof)
+// 	currentUser = JSON.stringify(prof)
+// })
 ---
 
 <!DOCTYPE html>

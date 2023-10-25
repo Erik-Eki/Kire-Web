@@ -3,6 +3,7 @@ import { useStoryblokApi } from '@storyblok/astro'
 import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
 import Layout from 'src/layouts/Layout.astro'
 import { Icon } from 'astro-icon'
+import { supabase } from '$lib/supabaseClient'
 
 const storyblokApi = useStoryblokApi()
 const slug = Astro.params.slug
@@ -11,6 +12,8 @@ let content: Object
 let created_at: String
 let edited_at: String
 let videoID: String
+
+
 
 try {
 	const { data } = await storyblokApi.get(`cdn/stories/${slug}`, {

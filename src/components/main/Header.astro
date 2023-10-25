@@ -30,9 +30,7 @@ import LoginModal from '$components/login-svelte/LoginModal.svelte'
 <p class="mb-2 mt-2 border border-t-white"></p>
 <div class="kire-web">KIRE WEB</div>
 <!-- <LoginModal session={session} client:visible /> -->
-<LoginModal 
-    client:visible
-    />
+<LoginModal client:load />
 <header class="main-header">
 	<nav class="header-container">
 		<Hamburger />
