@@ -1,7 +1,6 @@
 ---
 import { storyblokEditable, renderRichText } from '@storyblok/astro'
 import RichTextRenderer from '@storyblok/astro/RichTextRenderer.astro'
-import CommentWriter from '$components/building-blocks/CommentWriter.svelte'
 import CommentSection from '$components/building-blocks/CommentSection.svelte'
 
 
@@ -28,8 +27,8 @@ const currSlug = Astro.url.pathname
 		<!-- <img src={blok.imageLink?.url}> -->
 	</article>
 
-	<CommentWriter slug={currSlug} postID={blok._uid} client:visible />
-	<CommentSection postID={blok._uid} client:visible/>
+	<hr>
+	<CommentSection slug={currSlug} postID={blok._uid} client:visible/>
 	
 </div>
 

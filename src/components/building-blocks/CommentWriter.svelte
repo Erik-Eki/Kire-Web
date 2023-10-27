@@ -8,6 +8,8 @@
 
 	export let slug: String
     export let postID: String
+    export let replyTo: String | null = null
+    export let focusOn
 
 	let session: AuthSession
 	
@@ -35,7 +37,7 @@
 			//user_id: currentUserProfile.get()?.username,
 			user_id: userID,
 			comment: comment,
-            reply_to: null,
+            reply_to: replyTo,
             //created_at: new Date(),
             updated_at: new Date()
 		}
@@ -48,7 +50,6 @@
 </script>
 
 <div>
-    <hr>
     {#if username}
         <div class="flex flex-col">
             <div class="text-base">
@@ -56,6 +57,7 @@
             </div>
             <label>
                 <textarea
+                    bind:this={focusOn}
                     bind:value={comment}
                     placeholder="Here are my thoughts..."
                     class="h-40 max-h-96 w-full rounded border-2 border-white bg-transparent pl-4 pr-4 pt-1"
