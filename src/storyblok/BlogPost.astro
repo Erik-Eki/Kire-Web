@@ -2,34 +2,38 @@
 import { storyblokEditable, renderRichText } from '@storyblok/astro'
 import RichTextRenderer from '@storyblok/astro/RichTextRenderer.astro'
 import CommentSection from '$components/building-blocks/CommentSection.svelte'
+import { getReadingTime } from '$lib/reading-time'
+import PostStats from "$components/building-blocks/PostStats.svelte"
 
+const { blok } = Astro.props;
+const content = renderRichText(blok.content);
+const currSlug = Astro.url.pathname;
 
-const { blok } = Astro.props
-//const content = renderRichText(blok.content)
-const currSlug = Astro.url.pathname
-
-//console.log(blok)
+//const { Content, remarkPluginFrontmatter } = await blok.content.render();
 ---
 
 <div>
-
 	<article {...storyblokEditable(blok)} class="page">
 		<div class="mb-10 border-b-2 border-b-violet-800 pb-2">
 			<h1 class="supertitle">{blok.title}</h1>
-			<p>{blok.description}</p>
+			<div class="flex flex-row justify-between">
+				<p>{blok.description}</p>
+				<p>{getReadingTime(content)} minute read</p>
+				<!-- <p class=" self-end">{remarkPluginFrontmatter.minutesRead}</p> -->
+			</div>
+			<PostStats slug={currSlug} client:visible/>
 		</div>
 		<div
 			class="prose prose-lg dark:prose-invert prose-code:m-1 prose-code:rounded prose-code:bg-gray-800 prose-code:p-2 prose-code:text-green-600 prose-code:before:content-none prose-code:after:content-none"
 		>
-			<!-- <Fragment set:html={content}/> -->
-			<RichTextRenderer richTextData={blok.content} />
+			<Fragment set:html={content} />
+			<!-- <RichTextRenderer richTextData={blok.content} /> -->
 		</div>
 		<!-- <img src={blok.imageLink?.url}> -->
 	</article>
 
-	<hr>
-	<CommentSection slug={currSlug} postID={blok._uid} client:visible/>
-	
+	<hr />
+	<CommentSection slug={currSlug} postID={blok._uid} client:visible />
 </div>
 
 <style>

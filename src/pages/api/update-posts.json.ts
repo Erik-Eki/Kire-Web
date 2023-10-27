@@ -27,7 +27,7 @@ async function getPosts() {
                     id: story.content._uid,
                     title: story.content.title,
                     description: story.content.description,
-                    slug: story.name,
+                    slug: "/" + story.name,
                     //content: story.content.content.content,
                     created_at: story.first_published_at,
                     updated_at: story.created_at

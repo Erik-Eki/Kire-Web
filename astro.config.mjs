@@ -10,9 +10,13 @@ import preact from '@astrojs/preact';
 import vue from '@astrojs/vue';
 import alpinejs from '@astrojs/alpinejs';
 import solidJs from "@astrojs/solid-js";
+import { remarkReadingTime } from './remark-reading-time.mjs';
+
 const env = loadEnv('', process.cwd(), 'STORYBLOK');
 
-
+// markdown: {
+//   remarkPlugins: [remarkReadingTime],
+// },
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
@@ -24,6 +28,7 @@ export default defineConfig({
       entrypoint: 'astro/assets/services/noop'
     }
   },
+  
   integrations: [
     tailwind({
       applyBaseStyles: true
