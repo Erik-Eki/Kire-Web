@@ -8,7 +8,7 @@ import { supabase } from '$lib/supabaseClient'
 const storyblokApi = useStoryblokApi()
 const slug = Astro.params.slug
 
-let content: Object
+let content
 let created_at: String
 let edited_at: String
 let videoID: String
@@ -30,7 +30,6 @@ try {
 
 	const youtubeComponent = data?.story?.content?.youtube //data?.story?.content?.body?.find((item) => item.component === 'youtube')
 
-	//const video_id = () => {
 	if (youtubeComponent) {
 		if (youtubeComponent.startsWith('https://www.youtube.com/watch?v=')) {
 			//return youtubeComponent.video.split('=')[1]
@@ -40,8 +39,6 @@ try {
 			videoID = youtubeComponent.split('/')[3]
 		}
 	}
-	//}
-	//videoID = video_id()
 } catch (error) {
 	console.error(error)
 	return Astro.redirect('/404')
@@ -58,9 +55,8 @@ try {
 		>
 			<!-- <i class="fa-solid fa-arrow-left text-4xl"></i> Back</button -->
 			<Icon name="mdi:chevron-left" class="w-14" />
-			<!-- <div>Back</div> -->
 		</button>
-		<h1 class="supertitle">{content?.title}</h1>
+		<h1>{content?.title}</h1>
 		<div class="ml-2">
 			<div>{created_at}</div>
 			{edited_at && <div class="text-sm">(Edited: {edited_at})</div>}

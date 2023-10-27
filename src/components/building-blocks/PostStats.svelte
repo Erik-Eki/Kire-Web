@@ -44,7 +44,6 @@
 			.select('*')
 			.eq('post_id', postID)
 
-        console.log(userID, data)
 		let sums = data.reduce((totals, obj) => {
                 let likes = 0
                 let dislikes = 0
@@ -56,8 +55,6 @@
                     dislikes = totals.dislikes += 1
                     if (obj.user_id === userID) dislikedByCurrentUser = true
                 }
-                // likes: totals.likes + (obj.like === true ? 1 : 0),
-                // dislikes: totals.dislikes + (obj.dislike === true ? 1 : 0)
 				return {
 					likes, dislikes
 				}

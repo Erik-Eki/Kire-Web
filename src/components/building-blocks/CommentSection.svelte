@@ -15,9 +15,6 @@
 	let username
 	let userID
 	let commentCount: number = 0
-	// let showCommentBox
-	// let commentComponents
-	//let focusOn
 
 	function createTreeStructure(comments, parent_id) {
 		var tree = []

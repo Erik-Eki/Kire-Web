@@ -42,22 +42,15 @@
 		})
 	})
 
-	// function handleSubmit() {
-	//     dispatch("submit", comment);
-	//     comment = ""; // clear the input
-	// }
-
 	async function handlePostComment() {
 		const formattedComment = comment.replace('\r\n', '\\r\\n')
 
 		const commentData = {
 			post_id: postID,
 			post_slug: slug,
-			//user_id: currentUserProfile.get()?.username,
 			user_id: userID,
 			comment: formattedComment,
 			reply_to: currentlyReplyingTo,
-			//created_at: new Date(),
 			updated_at: new Date()
 		}
 
