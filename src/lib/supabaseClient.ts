@@ -7,7 +7,7 @@ const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY
 
 // export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey)
 
-export const supabase = createClient(supabaseUrl,supabaseAnonKey)
+export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 
 
@@ -29,19 +29,24 @@ export const supabase = createClient(supabaseUrl,supabaseAnonKey)
 // }
 //Saving the auth session cookies in Astro is a way to persist the user’s authentication state across different pages and requests. You can use the Astro setCookie and getCookie methods to set and get cookies in your Astro components and API routes. Here is an example of how you can use these methods:
 export async function downloadImage(path: string) {
-    try {
-        const { data, error } = await supabase.storage.from('avatars').download(path)
+    if (path) {
+        try {
+            const { data, error } = await supabase.storage.from('avatars').download(path)
 
-        if (error) {
-            throw error
-        }
+            if (error) {
+                throw error
+            }
 
-        const url = URL.createObjectURL(data)
-        return url
-    } catch (error) {
-        if (error instanceof Error) {
-            console.log('Error downloading image: ', error.message)
+            const url = URL.createObjectURL(data)
+            return url
+        } catch (error) {
+            if (error instanceof Error) {
+                console.log('Error downloading image: ', error.message)
+            }
         }
+    }
+    else {
+        return null
     }
 }
 
@@ -76,14 +81,14 @@ export async function checkForState(req: Request) {
     const c = cookie.parse(req.headers.get('cookie') ?? "");
     // console.log("REQ", c)
     const { event, session } = await supabase.auth.onAuthStateChange((event, session) => {
-          if (event == 'SIGNED_IN') console.log('SIGNED_IN', session)
-          if (event == 'SIGNED_OUT') console.log('SIGNED_OUT', session)
-          if (event == 'TOKEN_REFRESHED') console.log('TOKEN_REFRESHED', session)
-    
+        if (event == 'SIGNED_IN') console.log('SIGNED_IN', session)
+        if (event == 'SIGNED_OUT') console.log('SIGNED_OUT', session)
+        if (event == 'TOKEN_REFRESHED') console.log('TOKEN_REFRESHED', session)
+
         console.log("AUTH CHANGE:", event, session)
     })
 
-    return {event, session}
+    return { event, session }
 }
 
 export async function checkForSession() {

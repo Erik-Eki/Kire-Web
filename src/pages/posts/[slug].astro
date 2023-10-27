@@ -13,8 +13,6 @@ let created_at: String
 let edited_at: String
 let videoID: String
 
-
-
 try {
 	const { data } = await storyblokApi.get(`cdn/stories/${slug}`, {
 		version: import.meta.env.DEV ? 'draft' : 'published'
@@ -44,8 +42,6 @@ try {
 	}
 	//}
 	//videoID = video_id()
-
-	// console.log("###########", data.story)
 } catch (error) {
 	console.error(error)
 	return Astro.redirect('/404')
@@ -53,15 +49,18 @@ try {
 ---
 
 <Layout title="Blog post">
-	<div class="flex flex-col gap-1">
+	<div class="flex flex-col gap-1 prose dark:prose-invert prose-h1:text-5xl max-w-6xl prose-img:m-0">
 		<button
-			onclick="javascript: history.back()"
-			class="flex flex-row w-fit text-left rounded p-3 text-4xl duration-200 ease-in-out hover:bg-violet-950"
+			onclick="
+			javascript: history.back()
+"
+			class="flex w-fit flex-row rounded p-3 text-left text-4xl duration-200 ease-in-out hover:bg-violet-950"
 		>
 			<!-- <i class="fa-solid fa-arrow-left text-4xl"></i> Back</button -->
-			<Icon name="mdi:chevron-left" class=" w-14" />
+			<Icon name="mdi:chevron-left" class="w-14" />
 			<!-- <div>Back</div> -->
 		</button>
+		<h1 class="supertitle">{content?.title}</h1>
 		<div class="ml-2">
 			<div>{created_at}</div>
 			{edited_at && <div class="text-sm">(Edited: {edited_at})</div>}
@@ -79,7 +78,7 @@ try {
 						allowfullscreen
 					/>
 				) : (
-					<img src={content?.headerImage?.url} class="h-auto w-full rounded-lg max-w-5xl" />
+					<img src={content?.headerImage?.url} class="h-auto w-full max-w-5xl rounded-lg" />
 				)
 			}
 		</div>

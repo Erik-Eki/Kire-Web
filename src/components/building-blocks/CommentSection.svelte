@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte'
 	import { supabase } from '$lib/supabaseClient'
 	import { currentUserProfile } from '$components/stores/profile'
-    import CommentWriter from '$components/building-blocks/CommentWriter.svelte'
+	import CommentWriter from '$components/building-blocks/CommentWriter.svelte'
 	import Comment from './Comment.svelte'
 	//import type { AuthSession } from '@supabase/supabase-js'
 	//import { currentUserProfile } from '$components/stores/profile'
@@ -14,10 +14,10 @@
 	let tree
 	let username
 	let userID
-    let commentCount: number = 0
+	let commentCount: number = 0
 	// let showCommentBox
 	// let commentComponents
-    let focusOn
+	//let focusOn
 
 	function createTreeStructure(comments, parent_id) {
 		var tree = []
@@ -30,7 +30,6 @@
 				}
 				tree.push(comments[i])
 			}
-            
 		}
 
 		return tree
@@ -39,7 +38,7 @@
 	async function getComments() {
 		const { data, error } = await supabase
 			.from('comments')
-			.select('*, profiles (username), comment_ratings(like, dislike)')
+			.select('*, profiles (username), comment_ratings(like, dislike, user_id)')
 			.eq('post_id', postID)
 			.order('created_at', { ascending: false })
 
@@ -49,9 +48,19 @@
 			if (row.comment_ratings) {
 				row.likes = 0
 				row.dislikes = 0
+				row.likedByCurrentUser = false
+				row.dislikedByCurrentUser = false
 				for (let i of row.comment_ratings) {
-					row.likes += i.like ? 1 : 0
-					row.dislikes += i.dislike ? 1 : 0
+					if (i.like) {
+						row.likes += 1
+
+						if (i.user_id === userID) row.likedByCurrentUser = true
+					}
+					if (i.dislike) {
+						row.dislikes += 1
+
+						if (i.user_id === userID) row.dislikedByCurrentUser = true
+					}
 				}
 			}
 			acc.push(row)
@@ -62,7 +71,7 @@
 		let tree = createTreeStructure(data, null)
 
 		comments = tree
-        commentCount = data.length
+		commentCount = data.length
 	}
 
 	async function rating(commentID, like, dislike) {
@@ -153,7 +162,7 @@
 					getComments()
 				}
 			)
-            .on(
+			.on(
 				'postgres_changes',
 				{ event: '*', schema: 'public', table: 'comment_ratings' },
 				(payload) => {
@@ -163,31 +172,11 @@
 			)
 			.subscribe()
 
-		//console.log("CHANNELS:", supabase.getChannels())
 	})
 </script>
 
-<!-- <div>
-	<h2 class="mt-0 pt-0">Comments: {comments ? comments.length : 0}</h2>
-	<hr />
-	{#if comments}
-		<div class="flex flex-col gap-4">
-            {#each commentComponents as c}
-				
-                <svelte:self {...c} />
-			{/each}
-			{#each comments as c}
-				
-			{/each}
-		</div>
-	{:else}
-		<div>Be the first to commment :)</div>
-	{/if}
-	<hr />
-</div> -->
-
 <div>
-    <CommentWriter slug={slug} postID={postID} {focusOn} />
+	<CommentWriter {slug} {postID} focusOn={true} />
 
 	<h2 class="mt-0 pt-0">Comments: {commentCount}</h2>
 	<hr />
@@ -200,67 +189,3 @@
 	{/if}
 	<hr />
 </div>
-
-<!--
-// async function createElement(props) {
-	// 	const CustomElement = (await import('./CommentOLD.svelte')).default
-	// 	return new CustomElement({
-	// 		target: document.body,
-	// 		props: {
-	// 			...props
-	// 		}
-	// 	})
-	// }
-
-	// async function createCommentComponent(commentData) {
-	// 	const element = await createElement(commentData)
-	// 	for (let c of commentData.c.children) {
-	// 		if (c.children) {
-	// 			await createCommentComponent({ c: c.children, username, userID, slug, postID })
-	// 		}
-	// 		const child = await createElement(commentData)
-	// 		//const elem = document.createElement(`${<Comment {c} {username} {userID} {slug} {postID}/>}`)
-	// 		element.appendChild(child)
-	// 	}
-	//     console.log(element)
-	// 	return element
-	// }
-
-	// var CommentComponent = {
-	// 	props: ['comment'],
-	// 	template: `
-    //     <div>
-    //         <p>{{comment.content}}</p>
-    //         <ul>
-    //             {#each comment.children as c}
-    //                 <CommentComponent :comment="c"></CommentComponent>
-    //             {/each}
-    //         </ul>
-    //     </div>
-    // `
-	// }
-
-	// function createCommentComponent(comment) {
-	// 	var children = comment.children || []
-	// 	var childComponents = children.map(createCommentComponent)
-	// 	return {
-	// 		id: comment.id,
-	// 		comment: comment.comment,
-	// 		likes: comment.likes,
-	// 		dislikes: comment.dislikes,
-	// 		children: childComponents,
-	// 		Component: CommentComponent
-	// 	}
-	// }
-
-	//var tree2 = createTreeStructure(comments, null)
-
-	// {#if c.children}
-	//     {@html createCommentComponent({ c, username, userID, slug, postID })}
-	//     <!-- <Comment {c} {username} {userID} {slug} {postID} /> 
-	// {:else}
-	//     {@html createElement({ c, username, userID, slug, postID })}
-	//     <Comment {c} {username} {userID} {slug} {postID} /> 
-	// {/if}
-	// {@html c.Component.template}
--->

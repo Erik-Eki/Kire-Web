@@ -48,9 +48,6 @@
 			avatarName = res.avatar_url
 			username = res.username
 
-			//currentUserProfile.subscribe(prof => {
-			//	username
-			//})
 			currentUserProfile.set({username: username, user_id: session.user.id})
 		})
 
@@ -150,6 +147,7 @@
 		if (error?.message) console.error(error)
 
 		//Cookies.remove('session_token');
+		currentUserProfile.set({username: null, user_id: null})
 		username = null
 	}
 
