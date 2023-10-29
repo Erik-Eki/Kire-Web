@@ -14,14 +14,16 @@ const currSlug = Astro.url.pathname;
 
 <div>
 	<article {...storyblokEditable(blok)} class="page">
-		<div class="mb-10 border-b-2 border-b-violet-800 pb-2">
+		<div class="mb-10 border-b-2 border-b-violet-800 pb-2 max-w-4xl">
 			<!-- <h1 class="supertitle">{blok.title}</h1> -->
 			<div class="flex flex-row justify-between">
 				<i>{blok.description}</i>
 				<div>{getReadingTime(content)} minute read</div>
 				<!-- <p class=" self-end">{remarkPluginFrontmatter.minutesRead}</p> -->
 			</div>
-			<PostStats slug={currSlug} client:visible/>
+			<div>
+				<PostStats slug={currSlug} client:visible/>
+			</div>
 		</div>
 		<div
 			class="prose prose-lg dark:prose-invert prose-code:m-1 prose-code:rounded prose-code:bg-gray-800 prose-code:p-2 prose-code:text-green-600 prose-code:before:content-none prose-code:after:content-none"
