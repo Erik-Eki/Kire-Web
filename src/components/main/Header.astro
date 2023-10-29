@@ -36,7 +36,30 @@ import LoginModal from '$components/login-svelte/LoginModal.svelte'
 		<Hamburger />
 		<Navigation />
 	</nav>
-	<!-- <Login /> -->
+
+	<!-- <form hx-post>
+		<label>
+			
+		</label>
+	</form> -->
+	<!-- hx-get="/api/search?q=${encodeURIComponent(this.value)}" -->
+	<!-- hx-params="q:_" -->
+	<div>
+		<input
+			type="text"
+			id="search-input"
+			hx-get="/api/search"
+			hx-params="q:_"
+			hx-trigger="keyup changed delay:500ms"
+			hx-target="#search-result"
+			placeholder="Search..."
+		/>
+
+		<div id="search-result"></div>
+	</div>
+
+	<button hx-get="say_hello.html" hx-target="#outcome">Click me</button>
+	<div id="outcome"></div>
 </header>
 
 <style>
