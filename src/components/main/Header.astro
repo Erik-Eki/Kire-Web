@@ -27,9 +27,39 @@ import LoginModal from '$components/login-svelte/LoginModal.svelte'
 //     }
 ---
 
+<script>
+	function processResults(event) {
+
+	console.log(event)
+
+	// searchResult.forEach(i => {
+    //   const resultDiv = document.createElement('div');
+    //   resultDiv.innerHTML = `<h2>${i.slug}</h2><p>${i.title}</p><p>${i.description}</p>`;
+    //   resultsDiv.appendChild(resultDiv);
+    // });
+}
+</script>
+
 <p class="mb-2 mt-2 border border-t-white"></p>
 <div class="kire-web">KIRE WEB</div>
 <!-- <LoginModal session={session} client:visible /> -->
+<!-- hx-vals=`js:{"q": document.getElementById("search-input").value}` -->
+
+<div>
+	<input
+		type="text"
+		id="search-input"
+		hx-get="/api/search"
+		hx-vals='js:{"q": document.getElementById("search-input").value.length > 2 ? document.getElementById("search-input").value : null}'
+		hx-trigger="keyup changed delay:500ms"
+		hx-target="#search-result"
+		hx-swap-oob="true"
+		placeholder="Search content..."
+		class=" bg-transparent text-white border-2 border-violet-80 rounded w-full p-2 m-2"
+	/>
+
+	<div id="search-result"></div>
+</div>
 <LoginModal client:load />
 <header class="main-header">
 	<nav class="header-container">
@@ -43,23 +73,8 @@ import LoginModal from '$components/login-svelte/LoginModal.svelte'
 		</label>
 	</form> -->
 	<!-- hx-get="/api/search?q=${encodeURIComponent(this.value)}" -->
+	<!-- hx-params=`${'q=' + encodeURIComponent(this.value)}` -->
 	<!-- hx-params="q:_" -->
-	<div>
-		<input
-			type="text"
-			id="search-input"
-			hx-get="/api/search"
-			hx-params="q:_"
-			hx-trigger="keyup changed delay:500ms"
-			hx-target="#search-result"
-			placeholder="Search..."
-		/>
-
-		<div id="search-result"></div>
-	</div>
-
-	<button hx-get="say_hello.html" hx-target="#outcome">Click me</button>
-	<div id="outcome"></div>
 </header>
 
 <style>
