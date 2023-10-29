@@ -13,6 +13,7 @@
 	let mounted: Boolean = false
 	let focusOn: String | null = null
 	let currentlyReplyingTo: String | null = null
+    let showDeleteModal = false;
 
 	async function rating(commentID, like, dislike) {
 		const payload = {
@@ -42,13 +43,16 @@
 	}
 
 	async function deleteComment(commentID) {
-		const { data, error } = await supabase
-			.from('comments')
-			.delete()
-			.eq('id', commentID)
-			.eq('user_id', userID)
+        const { data, error } = await supabase
+            .from('comments')
+            //.delete()
+            .update({ comment: null, user_id: null })
+            .eq('id', commentID)
+            //.eq('user_id', userID)
 
-		if (error) console.error(error)
+        if (error) console.error(error)
+
+        showDeleteModal = null
 	}
 
     function handleUpdate(event) {
@@ -57,7 +61,6 @@
 
 	onMount(() => {
 		mounted = true
-		console.log(comments)
 	})
 </script>
 
@@ -65,7 +68,7 @@
 	{#each comments as comment}
 		<div class="ml-4 h-fit border-l-2 border-l-gray-500 pl-4 pr-4 pt-4">
 			<div class="flex flex-row items-center gap-4">
-				<div class="text-base text-violet-500">{comment.profiles.username}</div>
+				<div class="text-base text-violet-500">{comment?.profiles?.username || "<unknown user>"}</div>
 				<div class="text-sm">
 					{new Date(comment.created_at).toLocaleString('en-FI', {
 						dateStyle: 'short',
@@ -74,7 +77,11 @@
 				</div>
 			</div>
 
-			<p class="pl-4 whitespace-pre-wrap">{comment.comment}</p>
+            {#if comment.comment}
+			    <p class="pl-4 whitespace-pre-wrap">{comment.comment}</p>
+            {:else}
+                <p class="pl-4 whitespace-pre-wrap text-gray-400">{"<comment deleted by user>"}</p>
+            {/if}
 
 			<div class="flex flex-row items-center gap-2">
 				<!-- LIKE -->
@@ -196,7 +203,7 @@
 				{#if userID == comment.user_id}
 					<button
 						class="contents rounded p-2 text-red-600 hover:bg-red-600 hover:text-white"
-						on:click={() => deleteComment(comment.id)}
+						on:click={() => showDeleteModal = comment.id}
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -213,6 +220,13 @@
 					</button>
 				{/if}
 			</div>
+            {#if showDeleteModal == comment.id}
+                <div class="w-fit bg-black bg-opacity-30 border border-red-700 rounded p-4 m-2">
+                    <div>Are you sure you want to delete your comment?</div>
+                    <button class="p-2 w-20 bg-red-800 text-white rounded-l" on:click={() => deleteComment(comment.id)}>Yes</button>
+                    <button class="p-2 w-20 bg-gray-600 text-white rounded-r" on:click={() => showDeleteModal = null}>No</button>
+                </div>
+            {/if}
 
 			{#if currentlyReplyingTo == comment.id}
 				<div class="pl-8">
