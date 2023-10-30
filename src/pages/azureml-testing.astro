@@ -1,0 +1,94 @@
+---
+import Layout from '$layouts/Layout.astro';
+import { Icon } from 'astro-icon'
+import bikeTest from '$assets/bike.json'
+import carTest from '$assets/car.json'
+---
+
+<Layout title="AzureML testing">
+<div
+	class="flex w-full flex-col rounded-lg border-2 border-solid border-violet-800 bg-black bg-opacity-40 p-2"
+>
+	<h1 class="text-center text-white">Azure Machine Learning Test</h1>
+
+	<p class="flex flex-row rounded bg-red-600 p-2 text-white saturate-50">
+		<Icon name="mdi:exclamation-thick" class="w-10" />
+		 Disabled because AzureML costed me 80€ for 1 month :(
+	</p>
+	<p>
+		I tried out AzureML and have some test endpoints online. I send some data from the client to
+		them and get a response.
+	</p>
+	<!-- <div>Parameters:
+					{marked.parse(JSON.stringify(testEndpoint))}
+				</div> -->
+	<h1>Car price prediction</h1>
+	<h2>Parameters:</h2>
+	<div class="fancy-scrollbar flex flex-col overflow-auto whitespace-nowrap">
+		{
+			carTest.Inputs.WebServiceInput0.map((i, index) => (
+				<code class="m-2">
+					{1 + index}. {JSON.stringify(i)}
+				</code>
+			))
+		}
+		<!-- {JSON.stringify(carTest)} -->
+	</div>
+	<h2>Predicted car price:</h2>
+	<div>
+		Null
+		<!-- {
+						carData.Results ? (
+							// carData.Results.WebServiceInput0.map((i) => {
+							// 	<div class="m-2">{i}</div>
+							// })
+							carData.Results.WebServiceOutput0.map((i, index) => (
+								<div class="m-2">
+									{1 + index}. ${i?.predicted_price.toFixed(2)}
+								</div>
+							))
+						) : (
+							// <div>{JSON.stringify(carData?.Results)}</div>
+							<div>Loading...</div>
+						)
+					} -->
+		<!-- {JSON.stringify(carData?.Results)} -->
+	</div>
+
+	<hr class="mt-5" />
+	<!-- <div>Parameters:
+					{marked.parse(JSON.stringify(testEndpoint))}
+				</div> -->
+	<h1>Bike rental price prediction</h1>
+	<h2>Parameters:</h2>
+	<code class="fancy-scrollbar overflow-auto">
+		{JSON.stringify(bikeTest)}
+	</code>
+	<h2>Predicted bicycle rent:</h2>
+	<div>
+		Null
+		<!-- ${Number(bicycleData?.Results).toFixed(2)} -->
+	</div>
+</div>
+</Layout>
+
+<!-- <ContentPosts client:load/> -->
+<!-- <ContentComics client:load/> -->
+
+<!-- <ul
+			class="mb-4 mt-4 rounded-lg border-2 border-solid border-violet-800 bg-black bg-opacity-40 p-2"
+		>
+			<h1 class="text-white text-center">Contentful Images</h1>
+			{
+				contentComics.map((post) => (
+					<li>
+						<a href={`/contentful_posts/${post.slug}/`} rel="prefetch-intent">
+							<h2 class=" font-bold underline underline-offset-2">{post.title}</h2>
+						</a>
+						<Image src={post.content[0].fields.file.url} alt={`Background image for ${post.title}`} width="1000" height="1000"/>
+					</li>
+				))
+			}
+		</ul> -->
+
+<!-- <article set:html={supaBaseContent} /> -->

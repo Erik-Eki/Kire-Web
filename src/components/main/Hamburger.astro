@@ -1,11 +1,16 @@
 ---
+
 ---
+
 <div class="hamburger">
-    <span class="line"></span>
-    <span class="line"></span>
-    <span class="line"></span>
+	<span class="line"></span>
+	<span class="line"></span>
+	<span class="line"></span>
 </div>
 
-<script>
-	import "../../scripts/menu";
+<script is:inline>
+	// import "../../scripts/menu";
+	document.querySelector('.hamburger').addEventListener('click', () => {
+		document.querySelector('.nav-links').classList.toggle('expanded')
+	})
 </script>

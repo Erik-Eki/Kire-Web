@@ -7,11 +7,8 @@ import { useStoryblokApi } from '@storyblok/astro'
 import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
 import { contentfulClient } from '../lib/contentful'
 import type { ContentPost, ContentComic } from '../lib/contentful'
-import bikeTest from '$assets/bike.json'
-import carTest from '$assets/car.json'
 // import { bicyclePOST, carPOST } from '$scripts/azureml-api'
 // import HoroscopeGame from './horoscope-game.astro'
-import { Icon } from 'astro-icon'
 
 // import CarSelector from "$components/misc/CarSelection.svelte"
 // import {getUser, supabase} from '$lib/supabaseClient';
@@ -114,13 +111,11 @@ const story = data.story.content
 		<!-- <Login /> -->
 
 		<div class="flex w-full flex-col gap-12">
+
 			<div
-				class="flex flex-col gap-4 rounded bg-gradient-to-r from-blue-900 to-cyan-900 p-4 drop-shadow-lg"
+				class="flex flex-col gap-4 rounded bg-gradient-to-r from-green-700 to-yellow-300 p-4 drop-shadow-lg"
 			>
-				<h1>Checkout new Horoscope Guessing Game!</h1>
-				<a class="w-fit rounded border-2 border-white p-4 text-lg font-bold" href="/horoscope-game"
-					>Play game!</a
-				>
+				<h2>🎉 Big update! Comments & Rating functional on the website! 🎉</h2>
 			</div>
 
 			<div
@@ -128,6 +123,15 @@ const story = data.story.content
 			>
 				<h1 class="text-center text-white">Storyblok Blog posts</h1>
 				<StoryblokComponent blok={story} />
+			</div>
+
+			<div
+				class="flex flex-col gap-4 rounded bg-gradient-to-r from-blue-900 to-cyan-900 p-4 drop-shadow-lg"
+			>
+				<h1>Checkout new Horoscope Guessing Game!</h1>
+				<a class="w-fit rounded border-2 border-white p-4 text-lg font-bold" href="/horoscope-game"
+					>Play game!</a
+				>
 			</div>
 
 			<!-- <div
@@ -150,171 +154,75 @@ const story = data.story.content
 			</div> -->
 
 			<!-- <CarSelector carTestData={carTest} client:load/> -->
-
-			<div
-				class="flex w-full flex-col rounded-lg border-2 border-solid border-violet-800 bg-black bg-opacity-40 p-2"
-			>
-				<h1 class="text-center text-white">Azure Machine Learning Test</h1>
-
-				<p class="flex flex-row rounded bg-red-600 p-2 text-white saturate-50">
-					<Icon name="mdi:exclamation-thick" class="w-10" />
-					 Disabled because AzureML costed me 80€ for 1 month :(
-				</p>
-				<p>
-					I tried out AzureML and have some test endpoints online. I send some data from the client
-					to them and get a response.
-				</p>
-				<!-- <div>Parameters:
-					{marked.parse(JSON.stringify(testEndpoint))}
-				</div> -->
-				<h1>Car price prediction</h1>
-				<h2>Parameters:</h2>
-				<div class="fancy-scrollbar flex flex-col overflow-auto whitespace-nowrap">
-					{
-						carTest.Inputs.WebServiceInput0.map((i, index) => (
-							<code class="m-2">
-								{1 + index}. {JSON.stringify(i)}
-							</code>
-						))
-					}
-					<!-- {JSON.stringify(carTest)} -->
-				</div>
-				<h2>Predicted car price:</h2>
-				<div>
-					Null
-					<!-- {
-						carData.Results ? (
-							// carData.Results.WebServiceInput0.map((i) => {
-							// 	<div class="m-2">{i}</div>
-							// })
-							carData.Results.WebServiceOutput0.map((i, index) => (
-								<div class="m-2">
-									{1 + index}. ${i?.predicted_price.toFixed(2)}
-								</div>
-							))
-						) : (
-							// <div>{JSON.stringify(carData?.Results)}</div>
-							<div>Loading...</div>
-						)
-					} -->
-					<!-- {JSON.stringify(carData?.Results)} -->
-				</div>
-
-				<hr class="mt-5" />
-				<!-- <div>Parameters:
-					{marked.parse(JSON.stringify(testEndpoint))}
-				</div> -->
-				<h1>Bike rental price prediction</h1>
-				<h2>Parameters:</h2>
-				<code class="fancy-scrollbar overflow-auto">
-					{JSON.stringify(bikeTest)}
-				</code>
-				<h2>Predicted bicycle rent:</h2>
-				<div>
-					Null
-					<!-- ${Number(bicycleData?.Results).toFixed(2)} -->
-				</div>
-			</div>
+			<p class="instructions mt-5">
+				This frontpage follows the <code>Astro template</code>. <br />
+				<strong>Below are links to Astro resources</strong>
+			</p>
+			<ul role="list" class="link-card-grid">
+				<Card
+					href="https://docs.astro.build/"
+					title="Documentation"
+					body="Learn how Astro works and explore the official API docs."
+				/>
+				<Card
+					href="https://astro.build/integrations/"
+					title="Integrations"
+					body="Supercharge your project with new frameworks and libraries."
+				/>
+				<Card
+					href="https://astro.build/themes/"
+					title="Themes"
+					body="Explore a galaxy of community-built starter themes."
+				/>
+				<Card
+					href="https://astro.build/chat/"
+					title="Community"
+					body="Come say hi to our amazing Discord community. ❤️"
+				/>
+			</ul>
 		</div>
-
-		<!-- <ContentPosts client:load/> -->
-		<!-- <ContentComics client:load/> -->
-
-		<!-- <ul
-			class="mb-4 mt-4 rounded-lg border-2 border-solid border-violet-800 bg-black bg-opacity-40 p-2"
-		>
-			<h1 class="text-white text-center">Contentful Images</h1>
-			{
-				contentComics.map((post) => (
-					<li>
-						<a href={`/contentful_posts/${post.slug}/`} rel="prefetch-intent">
-							<h2 class=" font-bold underline underline-offset-2">{post.title}</h2>
-						</a>
-						<Image src={post.content[0].fields.file.url} alt={`Background image for ${post.title}`} width="1000" height="1000"/>
-					</li>
-				))
-			}
-		</ul> -->
-
-		<!-- <article set:html={supaBaseContent} /> -->
-
-		<p class="instructions mt-5">
-			This frontpage follows the <code>Astro template</code>. <br />
-			<strong>Below are links to Astro resources</strong>
-		</p>
-		<ul role="list" class="link-card-grid">
-			<Card
-				href="https://docs.astro.build/"
-				title="Documentation"
-				body="Learn how Astro works and explore the official API docs."
-			/>
-			<Card
-				href="https://astro.build/integrations/"
-				title="Integrations"
-				body="Supercharge your project with new frameworks and libraries."
-			/>
-			<Card
-				href="https://astro.build/themes/"
-				title="Themes"
-				body="Explore a galaxy of community-built starter themes."
-			/>
-			<Card
-				href="https://astro.build/chat/"
-				title="Community"
-				body="Come say hi to our amazing Discord community. ❤️"
-			/>
-		</ul>
 	</main>
-</Layout>
-<script>
-	// WebAssembly.instantiateStreaming(
-	// 	fetch("../lib/hello.wasm")
-	// )
-	// .then(obj => {
-	// 	console.log(obj)
-	// })
-</script>
 
-<style>
-	.astro-a {
-		position: absolute;
-		top: -32px;
-		left: 50%;
-		transform: translatex(-50%);
-		width: 220px;
-		height: auto;
-		z-index: -1;
-	}
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
-	}
-	.instructions {
-		margin-bottom: 2rem;
-		border: 1px solid rgba(var(--accent-light), 25%);
-		background: linear-gradient(rgba(var(--accent-dark), 66%), rgba(var(--accent-dark), 33%));
-		padding: 1.5rem;
-		border-radius: 8px;
-	}
-	.instructions code {
-		font-size: 0.8em;
-		font-weight: bold;
-		background: rgba(var(--accent-light), 12%);
-		color: rgb(var(--accent-light));
-		border-radius: 4px;
-		padding: 0.3em 0.4em;
-	}
-	.instructions strong {
-		color: rgb(var(--accent-light));
-	}
-	.link-card-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-		gap: 2rem;
-		padding: 0;
-	}
-</style>
- ../scripts/bicycle.ts
+	<style>
+		.astro-a {
+			position: absolute;
+			top: -32px;
+			left: 50%;
+			transform: translatex(-50%);
+			width: 220px;
+			height: auto;
+			z-index: -1;
+		}
+		.text-gradient {
+			background-image: var(--accent-gradient);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			background-size: 400%;
+			background-position: 0%;
+		}
+		.instructions {
+			margin-bottom: 2rem;
+			border: 1px solid rgba(var(--accent-light), 25%);
+			background: linear-gradient(rgba(var(--accent-dark), 66%), rgba(var(--accent-dark), 33%));
+			padding: 1.5rem;
+			border-radius: 8px;
+		}
+		.instructions code {
+			font-size: 0.8em;
+			font-weight: bold;
+			background: rgba(var(--accent-light), 12%);
+			color: rgb(var(--accent-light));
+			border-radius: 4px;
+			padding: 0.3em 0.4em;
+		}
+		.instructions strong {
+			color: rgb(var(--accent-light));
+		}
+		.link-card-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+			gap: 2rem;
+			padding: 0;
+		}
+	</style>
+</Layout>

@@ -31,12 +31,6 @@ if (cookie) {
 	counter = cookie.number() + 1
 }
 Astro.cookies.set('counter', counter)
-
-//let currentUser
-// profile.subscribe((prof) => {
-// 	// document.getElementById("nanoTest").innerHTML = JSON.stringify(prof)
-// 	currentUser = JSON.stringify(prof)
-// })
 ---
 
 <!DOCTYPE html>
@@ -82,8 +76,7 @@ Astro.cookies.set('counter', counter)
 	<body class="smooth-scroll flex flex-col prose max-w-6xl dark:prose-invert md:prose-lg lg:prose-xl">
 		<pre
 			class="construction text-center text-2xl font-extrabold text-black">&#128679 UNDER HEAVY CONSTRUCTION BECAUSE WORKERS UNIONIZED &#128679</pre>
-		<!-- <div id="nanoTest">{currentUser}</div> -->
-		<Header />
+		<Header/>
 
 		<main class="flex-1">
 			<slot />
@@ -99,26 +92,7 @@ Astro.cookies.set('counter', counter)
 		</h2>
 
 		<Footer />
-		<!-- <div class="container mx-auto px-4 font-outfit">
-			<div class="flex flex-col items-center pt-20 pb-12 prose-a:text-blue-800 prose-blockquote:text-gray-500 prose-blockquote:border-l prose-blockquote:border-l-4 prose-blockquote:border-emerald-500 prose-blockquote:font-light">
-				<h1 class="text-3xl md:text-7xl text-white">Astro + Supabase + Vercel</h1>
-				<LoginStatus isLoggedIn={isLoggedIn}></LoginStatus>
-				<div class="pt-8 max-w-xl">
-					<article class="prose-lg lg:prose-xl">
-						<slot/>
-					</article>
-				</div>
-			</div>
-		</div> -->
-	</body><!-- <script>
-	import { profile } from "$components/stores/profile";
-
-	profile.subscribe(prof => {
-		document.getElementById("nanoTest").innerHTML = JSON.stringify(prof)
-	})
-</script> --><!-- <style is:global>
-	
-</style> -->
+	</body>
 	<style>
 		.smooth-scroll {
 			scroll-behavior: smooth;

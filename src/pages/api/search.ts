@@ -44,6 +44,7 @@ export async function GET({ params, request }: APIContext) {
       `;
     });
 
+    console.log(results)
 
     // const results = {
     //   //title: `ebin search results for: ${body}`,
