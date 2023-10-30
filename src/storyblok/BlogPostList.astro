@@ -35,37 +35,35 @@ const posts = data.stories.map(story => {
 const { blok } = Astro.props
 ---
 
-<div class="not-prose border-solid border-2 border-violet-800 rounded-lg p-2 bg-black bg-opacity-40">
-  <h1 class=" text-white text-center">Storyblok Blog posts</h1>
-  <ul {...storyblokEditable(blok)} class="post-list fancy-scrollbar flex flex-row gap-8 overflow-x-auto overflow-y-hidden pb-4 m-2">
-    {posts.map(post => (
-      <div class="post-box bg-zinc-900 border-2 border-zinc-700 rounded pl-2 pr-2 pt-5 pb-12 h-55">
-        <a 
-        href={post.slug}
-        style=`--bgURL: url(${post.headImage})`
-        class="card-button card-background p-5 w-full h-full rounded-md"
-        rel="prefetch-intent"
-        >
-          <li class=" flex flex-col h-full">
-            {post.created_at !== post.edited_at && 
-              <time class="text-sm text-end">
-                (edited: {new Date(post.edited_at).toLocaleString("en-FI", {dateStyle: "short", timeStyle: "short"})})
-              </time>
-              }
-            <time class="text-sm">
-              {new Date(post.created_at).toLocaleString("en-FI", {dateStyle: "full", timeStyle: "short"})}
+<!-- <div class="not-prose border-solid border-2 border-violet-800 rounded-lg p-2 bg-black bg-opacity-40"> -->
+<ul {...storyblokEditable(blok)} class="post-list fancy-scrollbar flex flex-row gap-8 overflow-x-auto overflow-y-hidden pb-4 m-2">
+  {posts.map(post => (
+    <div class="post-box bg-zinc-900 border-2 border-zinc-700 rounded pl-2 pr-2 pt-5 pb-12 h-55">
+      <a 
+      href={post.slug}
+      style=`--bgURL: url(${post.headImage})`
+      class="card-button card-background p-5 w-full h-full rounded-md"
+      rel="prefetch-intent"
+      >
+        <li class=" flex flex-col h-full">
+          {post.created_at !== post.edited_at && 
+            <time class="text-sm text-end">
+              (edited: {new Date(post.edited_at).toLocaleString("en-FI", {dateStyle: "short", timeStyle: "short"})})
             </time>
-            <p class=" text-3xl flex-grow w-4/5 line-clamp-2 max-h-20 ease-in-out duration-500 hover:max-h-80 hover:lg:line-clamp-none no-underline">{post.title}</p>
-            <p class="text-base text-end">{post.description}</p>
-          </li>
-        </a>
-    </div>
-    ))}
-    {excess &&
-      <a href="/posts/" class="w-max p-3 font-bold text-lg rounded ease-out duration-200 hover:bg-white hover:text-black">View more</a>
-    }
-  </ul>
-</div>
+            }
+          <time class="text-sm">
+            {new Date(post.created_at).toLocaleString("en-FI", {dateStyle: "full", timeStyle: "short"})}
+          </time>
+          <p class=" text-3xl flex-grow w-4/5 line-clamp-2 max-h-20 ease-in-out duration-500 hover:max-h-80 hover:lg:line-clamp-none no-underline">{post.title}</p>
+          <p class="text-base text-end">{post.description}</p>
+        </li>
+      </a>
+  </div>
+  ))}
+  {excess &&
+    <a href="/posts/" class="w-max p-3 font-bold text-lg rounded ease-out duration-200 hover:bg-white hover:text-black">View more</a>
+  }
+</ul>
 
 <style>
   .post-box {

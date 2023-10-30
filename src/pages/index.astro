@@ -69,8 +69,6 @@ const { data } = await storyblokApi.get('cdn/stories/home', {
 })
 const story = data.story.content
 
-
-
 // const user = await getUser(Astro.request);
 
 // const response = await fetch(
@@ -104,7 +102,6 @@ const story = data.story.content
 <!-- <Layout title="Welcome to Astro." user={user}> -->
 <Layout title="Welcome to the Danger Zone!">
 	<main>
-
 		<h1 class="mb-4">Welcome to the <span class="text-gradient">Danger Zone!</span></h1>
 
 		<!-- <div class="someclass">
@@ -126,7 +123,12 @@ const story = data.story.content
 				>
 			</div>
 
-			<StoryblokComponent blok={story} />
+			<div
+				class="flex w-full flex-col rounded-lg border-2 border-solid border-violet-800 bg-black bg-opacity-40 p-2"
+			>
+				<h1 class="text-center text-white">Storyblok Blog posts</h1>
+				<StoryblokComponent blok={story} />
+			</div>
 
 			<!-- <div
 				class="list-none rounded-lg border-2 border-solid border-violet-800 bg-black bg-opacity-40 p-2"

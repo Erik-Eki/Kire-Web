@@ -21,6 +21,7 @@
 	let remember = false
 	let avatarName
 	let avatarUrl
+	let admin
 
 	let loginError = false
 	let passwordRecovering = false
@@ -47,8 +48,9 @@
 		await getProfile(session).then((res) => {
 			avatarName = res.avatar_url
 			username = res.username
+			admin = res.admin
 
-			currentUserProfile.set({username: username, user_id: session.user.id})
+			currentUserProfile.set({username: username, user_id: session.user.id, admin: admin})
 		})
 
 		avatarUrl = await downloadImage(avatarName)
@@ -146,8 +148,7 @@
 		const { error } = await supabase.auth.signOut()
 		if (error?.message) console.error(error)
 
-		//Cookies.remove('session_token');
-		currentUserProfile.set({username: null, user_id: null})
+		currentUserProfile.set({username: null, user_id: null, admin: false})
 		username = null
 	}
 
@@ -170,19 +171,6 @@
 			}
 		})
 	}
-	//const session = Cookies.get('session_token');
-	// async function checkSession() {
-	// 	return await checkForSession()
-	// }
-	// async function checkSession() {
-	// 	const { data, error } = await supabase.auth.getSession()
-	// 	if (error?.message) console.error(error)
-	// 	if (data.session) {
-	// 		session = data.session
-
-	// 		username = data.session.user.user_metadata?.username
-	// 	}
-	// }
 
 	function handleKeydown(event) {
 		// prevent that a space is typed
@@ -390,14 +378,14 @@
 	.user-options {
 		display: flex;
 		border-radius: 10px;
-		padding: 5px 10px 0px 30px !important;
+		padding: 5px 30px 0px 10px !important;
 		position: relative;
 		/* max-width: 20rem; */
 	}
 	.user-options:hover {
 		background: rgba(0, 0, 0, 0.15);
-		padding: 6px;
-		width: 15em;
+		/* padding: 6px; */
+		/* width: 15em; */
 		border: none;
 		box-shadow: 3px 3px 4px black;
 		cursor: pointer;
@@ -405,8 +393,8 @@
 	.user-options[open] {
 		position: absolute;
 		background: rgb(14, 2, 46);
-		padding: 5px 10px 0px 30px !important;
-		width: 15em;
+		padding: 5px 30px 0px 10px !important;
+		/* width: 15em; */
 		border: none;
 		box-shadow: 3px 3px 4px black;
 		cursor: pointer;

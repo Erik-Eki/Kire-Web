@@ -27,6 +27,43 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 // export async function isLoggedIn(req: Request) {
 //     return await getUser(req) != null
 // }
+
+export async function setAdmin(userId) {
+    console.log(userId)
+    const { error } = await supabase
+        .from('profiles')
+        .update({ 'admin': true })
+        .eq('id', userId)
+
+    if (error) {
+        console.error('Error updating user role: ', error)
+    } else {
+        console.log('User role updated successfully')
+    }
+}
+
+export async function checkAdmin(userid) {
+  
+    if (userid) {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('admin')
+        .eq('id', userid)
+        .single()
+  
+      if (error) {
+        console.error('Error fetching user data: ', error)
+      } else if (data && data.admin) {
+        console.log('User is an admin')
+      } else {
+        console.log('User is not an admin')
+      }
+    } else {
+      console.log('No user is logged in')
+    }
+  }
+
+
 //Saving the auth session cookies in Astro is a way to persist the user’s authentication state across different pages and requests. You can use the Astro setCookie and getCookie methods to set and get cookies in your Astro components and API routes. Here is an example of how you can use these methods:
 export async function downloadImage(path: string) {
     if (path) {
@@ -57,7 +94,7 @@ export async function getProfile(session) {
 
         const { data, error, status } = await supabase
             .from('profiles')
-            .select('username, email, bio, avatar_url, created_at, updated_at')
+            .select('username, email, bio, avatar_url, created_at, updated_at, admin')
             .eq('id', user.id)
             .single()
 
@@ -77,19 +114,19 @@ export async function fetchUserDetails() {
     return supabase.auth.getUser()
 }
 
-export async function checkForState(req: Request) {
-    const c = cookie.parse(req.headers.get('cookie') ?? "");
-    // console.log("REQ", c)
-    const { event, session } = await supabase.auth.onAuthStateChange((event, session) => {
-        if (event == 'SIGNED_IN') console.log('SIGNED_IN', session)
-        if (event == 'SIGNED_OUT') console.log('SIGNED_OUT', session)
-        if (event == 'TOKEN_REFRESHED') console.log('TOKEN_REFRESHED', session)
+// export async function checkForState(req: Request) {
+//     const c = cookie.parse(req.headers.get('cookie') ?? "");
+//     // console.log("REQ", c)
+//     const { data, error } = await supabase.auth.onAuthStateChange((event, session) => {
+//         if (event == 'SIGNED_IN') console.log('SIGNED_IN', session)
+//         if (event == 'SIGNED_OUT') console.log('SIGNED_OUT', session)
+//         if (event == 'TOKEN_REFRESHED') console.log('TOKEN_REFRESHED', session)
 
-        console.log("AUTH CHANGE:", event, session)
-    })
+//         console.log("AUTH CHANGE:", event, session)
+//     })
 
-    return { event, session }
-}
+//     return { event, error }
+// }
 
 export async function checkForSession() {
     const { data, error } = await supabase.auth.getSession()

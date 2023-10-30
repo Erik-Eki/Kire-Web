@@ -1,6 +1,10 @@
 import type { APIContext } from 'astro';
 import { supabase } from '$lib/supabaseClient';
 
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
 async function searchSite(query) {
   const { data, error } = await supabase
     .from('posts')
@@ -16,7 +20,7 @@ async function searchSite(query) {
 export async function GET({ params, request }: APIContext) {
 //export default async (req, res) => {
     const query = new URL(request.url).searchParams
-    const body = query.getAll("q")
+    const body = escapeRegExp(String(query.getAll("q")))
     //const query = request.query.q;
   
     // Your search logic here. This could be a database search,
@@ -24,14 +28,18 @@ export async function GET({ params, request }: APIContext) {
     // This will depend on how your site's data is structured.
     const searchResult = await searchSite(body)
 
+
     let results = '<h3>Search results:</h3><div class="border-b border-b-white">';
     // Loop through the data and create a new div for each result
     searchResult.forEach(i => {
+      const highlightedTitle = i.title.replace(new RegExp(body, 'gi'), (match) => `<mark>${match}</mark>`);
+      const highlightedDescription = i.description.replace(new RegExp(body, 'gi'), (match) => `<mark>${match}</mark>`);
+
       results += `
         <h2 class=" p-0">
-          <a href="${i.slug}">${i.title}</a>
+          <a href="${i.slug}">${highlightedTitle}</a>
         </h2>
-        <i>${i.description}</i>
+        <i>${highlightedDescription}</i>
         <div class="border-b border-b-white">
       `;
     });

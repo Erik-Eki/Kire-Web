@@ -9,6 +9,7 @@
 	export let postID: String
 	//export let replyTo: String | null = null
 	export let focusOn
+	export let originalComment
 	export let currentlyReplyingTo: String | null = null
 
 	let session: AuthSession
@@ -22,7 +23,7 @@
 	const dispatch = createEventDispatcher();
 
 	// focus the input whenever 'focus' changes to true
-	$: if (focusOn) {
+	$: if (focusOn && !originalComment) {
         // In Svelte, the DOM element might not be available immediately. So we only focus when it's ready.
         if (inputElement) inputElement.focus();
 		// afterUpdate(() => {
