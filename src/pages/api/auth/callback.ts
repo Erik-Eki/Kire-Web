@@ -27,7 +27,11 @@ export const GET: APIRoute = async ({ request, cookies, redirect }) => {
     const authCode = requestUrl.searchParams.get("code");
     const next = requestUrl.searchParams.get('next')
   
-    console.log(authCode, request, cookies, redirect)
+    console.log("AUTHCODE",authCode)
+    console.log("NEXT",next)
+    console.log("REQ",request)
+    console.log("COOKIES",cookies)
+    console.log(redirect)
 
     if (!authCode) {
       return new Response("No code provided", { status: 400 });
@@ -53,6 +57,8 @@ export const GET: APIRoute = async ({ request, cookies, redirect }) => {
     });
 
     
-    return redirect(next)
+    if (!error) {
+      return redirect(`/${next.slice(1)}`)
+    }
     //return redirect("/");
   };

@@ -5,21 +5,22 @@
 	import { currentUserProfile } from '$components/stores/profile'
 	import { createEventDispatcher } from 'svelte'
 
-	export let slug: String
-	export let postID: String
-	export let userID: String
-	export let username: String
-	//export let replyTo: String | null = null
+	export let slug: string
+	export let postID: string
+	export let userID: string
+	export let username: string
+	export let replyTo: string | null = null
 	export let focusOn
 	export let originalComment
-	export let currentlyReplyingTo: String | null = null
+	export let currentlyReplyingTo: string | null = null
+	export let comment: string | null = null
+	export let commentID: string | null = null
+	
+	//export let editing: Boolean = false
 
 	let session: AuthSession
 
 	let inputElement
-	
-	
-	let comment = ''
 	let loading = false
 
 	const dispatch = createEventDispatcher();
@@ -54,14 +55,22 @@
 			post_slug: slug,
 			user_id: userID,
 			comment: formattedComment,
-			reply_to: currentlyReplyingTo,
+			reply_to: currentlyReplyingTo ? currentlyReplyingTo : replyTo,
 			updated_at: new Date()
 		}
+		if (commentID) {
+			const { error } = await supabase.from('comments').update(commentData).eq('id', commentID)
+			if (error) console.error(error)
+		}
+		else {
+			const { error } = await supabase.from('comments').insert(commentData)
+			if (error) console.error(error)
+		}
 
-		const { data, error } = await supabase.from('comments').insert(commentData)
-		if (error) console.error(error)
+		
+		
 
-		comment = ''
+		comment = null
 		focusOn = false
 
         currentlyReplyingTo = null
@@ -73,7 +82,7 @@
 	{#if username}
 		<div class="flex flex-col">
 			<div class="text-base">
-				Comment as <a href="/profile" class="text-violet-400">{username}</a>
+				Comment as <a href="/account/profile" class="text-violet-400">{username}</a>
 			</div>
 			<label>
 				<textarea

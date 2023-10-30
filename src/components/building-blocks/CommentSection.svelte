@@ -37,7 +37,7 @@
 	async function getComments() {
 		const { data, error } = await supabase
 			.from('comments')
-			.select('*, profiles (username), comment_ratings(like, dislike, user_id)')
+			.select('*, profiles (username, admin), comment_ratings(like, dislike, user_id)')
 			.eq('post_id', postID)
 			.order('created_at', { ascending: false })
 

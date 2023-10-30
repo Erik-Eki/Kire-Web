@@ -10,7 +10,7 @@
 	let loading = false
 	let profileLoaded = false
 	let loaded = false
-	let userID: string | null = null
+	// let userID: string | null = null
 	let username: string | null = null
 	let email: string | null = null
 	let bio: string | null = null
@@ -31,10 +31,11 @@
 		})
 
 		await getProfile(session).then((res) => {
+			console.log(res)
 			loading = false
 			profileLoaded = true
-			userID = res.id
-			;(username = res.username), (email = res.email)
+			username = res.username
+			email = res.email
 			bio = res.bio
 			avatarUrl = res.avatar_url
 			createdAt = res.created_at
@@ -85,6 +86,9 @@
 			}, 4000)
 		}
 	}
+	function handleInput(event) {
+		username = username.replace(/[^a-zA-Z0-9-_]/g, "")
+	}
 </script>
 
 {#if session}
@@ -102,6 +106,7 @@
 				type="text"
 				class="rounded border-2 border-white bg-transparent pl-2 text-white"
 				bind:value={username}
+				on:input={handleInput}
 				placeholder={session.user.user_metadata?.username}
 			/>
 		</div>

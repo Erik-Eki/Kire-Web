@@ -12,8 +12,9 @@
 
 	let showCommentBox
 	let mounted: Boolean = false
-	let focusOn: String | null = null
-	let currentlyReplyingTo: String | null = null
+	let focusOn: string | null = null
+	let currentlyReplyingTo: string | null = null
+	let currentlyEditing: string | null = null
 	let showDeleteModal = false
 
 	async function rating(commentID, like, dislike) {
@@ -63,10 +64,12 @@
 
 	function handleUpdate(event) {
 		currentlyReplyingTo = event.detail
+		currentlyEditing = event.detail
 	}
 
 	onMount(() => {
 		mounted = true
+		console.log(comments)
 	})
 </script>
 
@@ -76,7 +79,9 @@
 			{#if comment?.profiles?.username}
 				<div>
 					<div class="flex flex-row items-center gap-4">
-						<div class="text-base text-violet-500">{comment?.profiles?.username}</div>
+						<div class="text-base text-violet-500">
+							{comment?.profiles?.username}{comment?.profiles?.admin ? ' (admin)' : ''}
+						</div>
 						<div class="text-sm">
 							{new Date(comment.created_at).toLocaleString('en-FI', {
 								dateStyle: 'short',
@@ -84,7 +89,25 @@
 							})}
 						</div>
 					</div>
-					<p class="whitespace-pre-wrap pl-4">{comment.comment}</p>
+					{#if currentlyEditing === comment.id}
+						<div class="pl-8">
+							<CommentWriter
+								on:update={handleUpdate}
+								comment={comment.comment}
+								commentID={comment.id}
+								{slug}
+								{postID}
+								{userID}
+								{username}
+								replyTo={comment.reply_to}
+								originalComment={false}
+								{currentlyReplyingTo}
+								focusOn={true}
+							/>
+						</div>
+					{:else}
+						<p class="whitespace-pre-wrap pl-4">{comment.comment}</p>
+					{/if}
 				</div>
 			{:else}
 				<div class="text-gray-500">
@@ -179,7 +202,7 @@
 					<div class="h-2 w-2 rounded-full bg-white"></div>
 
 					<!-- REPLY -->
-					{#if currentlyReplyingTo == comment.id}
+					{#if currentlyReplyingTo === comment.id}
 						<button
 							class="contents rounded text-red-500 disabled:opacity-50"
 							on:click={() => (currentlyReplyingTo = null)}
@@ -215,6 +238,47 @@
 							>
 							<div class="text-sm">Reply</div>
 						</button>
+					{/if}
+
+					<!-- EDIT -->
+					{#if userID == comment.user_id}
+						{#if currentlyEditing === comment.id}
+							<button
+								class="contents rounded text-red-500 disabled:opacity-50"
+								on:click={() => (currentlyEditing = null)}
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="1em"
+									height="1em"
+									viewBox="0 0 24 24"
+									{...$$props}
+									><path
+										fill="currentColor"
+										d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"
+									/></svg
+								>
+								<div class="text-sm">Discard</div>
+							</button>
+						{:else}
+							<button
+								class="contents rounded disabled:opacity-50"
+								on:click={() => (currentlyEditing = comment.id)}
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="1em"
+									height="1em"
+									viewBox="0 0 24 24"
+									{...$$props}
+									><path
+										fill="currentColor"
+										d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"
+									/></svg
+								>
+								<div class="text-sm">Edit</div>
+							</button>
+						{/if}
 					{/if}
 
 					<!-- DELETE -->
@@ -266,7 +330,7 @@
 						{postID}
 						{userID}
 						{username}
-                        originalComment={false}
+						originalComment={false}
 						{currentlyReplyingTo}
 						focusOn={true}
 					/>
