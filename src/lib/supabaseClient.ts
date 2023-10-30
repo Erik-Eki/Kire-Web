@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+import { createBrowserClient, createServerClient } from '@supabase/ssr'
 import cookie from "cookie"
 import type { Database } from '../types'
 
@@ -7,8 +8,10 @@ const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY
 
 // export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey)
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
-
+export const supabase = createBrowserClient(
+    supabaseUrl,
+    supabaseAnonKey
+)
 
 
 // export async function getUser(req: Request) {
@@ -43,25 +46,25 @@ export async function setAdmin(userId) {
 }
 
 export async function checkAdmin(userid) {
-  
+
     if (userid) {
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('admin')
-        .eq('id', userid)
-        .single()
-  
-      if (error) {
-        console.error('Error fetching user data: ', error)
-      } else if (data && data.admin) {
-        console.log('User is an admin')
-      } else {
-        console.log('User is not an admin')
-      }
+        const { data, error } = await supabase
+            .from('profiles')
+            .select('admin')
+            .eq('id', userid)
+            .single()
+
+        if (error) {
+            console.error('Error fetching user data: ', error)
+        } else if (data && data.admin) {
+            console.log('User is an admin')
+        } else {
+            console.log('User is not an admin')
+        }
     } else {
-      console.log('No user is logged in')
+        console.log('No user is logged in')
     }
-  }
+}
 
 
 //Saving the auth session cookies in Astro is a way to persist the user’s authentication state across different pages and requests. You can use the Astro setCookie and getCookie methods to set and get cookies in your Astro components and API routes. Here is an example of how you can use these methods:
@@ -90,18 +93,20 @@ export async function downloadImage(path: string) {
 
 export async function getProfile(session) {
     try {
-        const { user } = session
+        if (session) {
+            const { user } = session
 
-        const { data, error, status } = await supabase
-            .from('profiles')
-            .select('username, email, bio, avatar_url, created_at, updated_at, admin')
-            .eq('id', user.id)
-            .single()
+            const { data, error, status } = await supabase
+                .from('profiles')
+                .select('username, email, bio, avatar_url, created_at, updated_at, admin')
+                .eq('id', user.id)
+                .single()
 
-        if (error && status !== 406) throw error
+            if (error && status !== 406) throw error
 
-        if (data) {
-            return data
+            if (data) {
+                return data
+            }
         }
     } catch (error) {
         if (error instanceof Error) {

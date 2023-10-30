@@ -24,6 +24,7 @@
     "@contentful/rich-text-from-markdown": "^15.16.7",
     "@contentful/rich-text-html-renderer": "^16.1.1",
     "@storyblok/astro": "^3.0.1",
+    "@supabase/ssr": "^0.0.4",
     "@supabase/supabase-js": "^2.32.0",
     "@types/alpinejs": "^3.7.2",
     "@vercel/analytics": "^1.0.2",

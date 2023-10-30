@@ -124,7 +124,7 @@
 </script>
 
 <div>
-	<CommentWriter {slug} {postID} focusOn={true} originalComment={true}/>
+	<CommentWriter {slug} {postID} {userID} {username} focusOn={true} originalComment={true}/>
 
 	<h2 class="mt-0 pt-0">Comments: {commentCount}</h2>
 	<hr />

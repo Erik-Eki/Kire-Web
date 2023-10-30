@@ -43,13 +43,6 @@ export async function GET({ params, request }: APIContext) {
         <div class="border-b border-b-white">
       `;
     });
-
-    console.log(results)
-
-    // const results = {
-    //   //title: `ebin search results for: ${body}`,
-    //   //search: html
-    // }//searchSite(query);
   
     //res.status(200).send(results);
     return new Response(results);

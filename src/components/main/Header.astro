@@ -2,30 +2,6 @@
 import Navigation from './Navigation.astro'
 import Hamburger from './Hamburger.astro'
 import LoginModal from '$components/login-svelte/LoginModal.svelte'
-import Search from '$components/main/Search.svelte'
-
-// supabase.auth.onAuthStateChange((event, session) => {
-// 	//   if (event == 'SIGNED_IN') console.log('SIGNED_IN', session)
-// 	//   if (event == 'SIGNED_OUT') console.log('SIGNED_OUT', session)
-// 	//   if (event == 'TOKEN_REFRESHED') console.log('TOKEN_REFRESHED', session)
-
-// 	console.log("AUTH CHANGE:", event, session)
-// 	// if (session) {
-// 	// 	user = session.user
-// 	// 	if (session && session.user) {
-// 	// 		console.log(session.user)
-// 	// 	}
-// 	// }
-
-// })
-
-// const isLoggedIn = !(user == null);
-//const session = Astro.cookies.get('session_token')?.value;
-
-// session={
-//         (event) => {Astro.cookies.set('session_token', event.detail.sessionCookie)}
-//     }
-const sum = (a, b) => a + b
 ---
 
 <p class="mb-2 mt-2 border border-t-white"></p>
@@ -63,15 +39,6 @@ const sum = (a, b) => a + b
 	window.addEventListener('astro-navigate', () => {
 		htmx.process(document.body)
 	})
-	//htmx.process(document.body);
-	// const script = document.createElement('script')
-	// script.src = '/htmx.min.js'
-	// script.onload = () => {
-	// 	// Initialize HTMX here
-	// 	htmx.process(document.body)
-	// 	//htmx.init()
-	// }
-	// document.head.appendChild(script)
 </script>
 
 <style>

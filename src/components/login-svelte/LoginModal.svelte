@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { cookie } from 'cookie';
 	//import Cookies from 'js-cookie';
 	import Tabs from '$components/building-blocks/Tabs.svelte'
 	import Modal from '../building-blocks/Modal.svelte'
@@ -18,6 +19,7 @@
 	let username = ''
 	let email = '' //'kire.nenoksuuh@gmail.com'
 	let password = '' //'munakoiso47' //kakkapylly2
+	let passwordValid = false
 	let remember = false
 	let avatarName
 	let avatarUrl
@@ -25,6 +27,8 @@
 
 	let loginError = false
 	let passwordRecovering = false
+
+	$: if (password.length > 6) passwordValid = true
 
 	onMount(async () => {
 		// supabase.auth.getSession().then(({ data }) => {
@@ -46,14 +50,16 @@
 		})
 
 		await getProfile(session).then((res) => {
-			avatarName = res.avatar_url
-			username = res.username
-			admin = res.admin
+			if (res) {
+				avatarName = res.avatar_url
+				username = res.username
+				admin = res.admin
 
-			currentUserProfile.set({username: username, user_id: session.user.id, admin: admin})
+				currentUserProfile.set({ username: username, user_id: session.user.id, admin: admin })
+			}
 		})
 
-		avatarUrl = await downloadImage(avatarName)
+		if (avatarName) avatarUrl = await downloadImage(avatarName)
 	})
 	// export const $profile = map({
 	//     name: 'anonymous'
@@ -61,9 +67,11 @@
 
 	function handleShowModal() {
 		showModal = true
+		passwordRecovering = false
 	}
 	function handleHideModal() {
 		showModal = false
+		passwordRecovering = false
 	}
 
 	const handleSignUp = async () => {
@@ -120,6 +128,15 @@
 		if (data?.session) {
 			//isLoggedIn = true
 			username = data.session.user.user_metadata?.username
+			//email = data.session.user.email
+
+			await getProfile(session).then((res) => {
+				avatarName = res.avatar_url
+				username = res.username
+				admin = res.admin
+
+				currentUserProfile.set({ username: username, user_id: session.user.id, admin: admin })
+			})
 
 			// fetch(`${window.location.origin}/api/login?session_token=${data?.session?.access_token}`, {
 			// 	method: 'POST',
@@ -144,20 +161,52 @@
 		}
 	}
 
+	const handleLoginGithub = async () => {
+		const { data, error } = await supabase.auth.signInWithOAuth({
+			provider: "github",
+			options: {
+				redirectTo: `${window.location.origin}/api/auth/callback`
+			},
+		})
+		if (error?.message) {
+			status = {
+				error: error.message,
+				success: false,
+				isLoading: false
+			}
+		} else {
+			status = { error: '', success: true, isLoading: false }
+		}
+		handleHideModal()
+
+	}
+
 	const handleLogout = async () => {
 		const { error } = await supabase.auth.signOut()
 		if (error?.message) console.error(error)
 
-		currentUserProfile.set({username: null, user_id: null, admin: false})
+		currentUserProfile.set({ username: null, user_id: null, admin: false })
 		username = null
 	}
 
 	async function handlePasswordReset() {
 		passwordRecovering = true
-		const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+
+		console.log(email)
+		// supabase.auth.onAuthStateChange((event, session) => {
+		// 	if (event === 'SIGNED_OUT' || event === 'PASSWORD_RECOVERY') {
+		// 		const expires = new Date(0).toUTCString()
+		// 		document.cookie = `my-access-token=; path=/; expires=${expires}; SameSite=Lax; secure`
+		// 	}
+		// })
+
+		//http://172.20.176.1:4321/api/auth/callback
+		// kire.nenoksuuh@gmail.com
+		await supabase.auth.resetPasswordForEmail(email, {
+			// redirectTo: `${window.location.origin}/api/auth/callback`
 			redirectTo: `${window.location.origin}/api/auth/callback?next=/account/update-password`
 		})
-		console.log(data)
+		// if (error) console.error(error)
 	}
 
 	async function createTestUser() {
@@ -276,20 +325,29 @@
 					<input type="checkbox" bind:checked={remember} />
 					Remember me
 				</label> -->
-				<!-- {#if passwordRecovering}
+				{#if passwordRecovering}
 					<div>Check your email for recovery instruction!</div>
 				{:else}
 					<button class="text-blue-800 hover:underline" on:click={() => handlePasswordReset()}
-						>Forgot your password?</button
+						>Forgot your password? (Type in email above, the click here)</button
 					>
-				{/if} -->
+				{/if}
 
 				<button
 					disabled={!email && !password}
 					on:click={() => handleLogin()}
+					on:keyup={(e) => e.key === 'Enter' && handleLogin()}
 					class="m-2 rounded-lg border-2 border-transparent bg-violet-800 pb-2 pl-5 pr-5 pt-2 text-white transition hover:border-violet-800 hover:bg-violet-400 hover:text-black"
 					>Log in</button
 				>
+
+				<button
+					on:click={() => handleLoginGithub()}
+					class="m-2 p-2 rounded-lg bg-gray-500 text-white flex flex-row gap-2 items-center justify-center"
+				>
+					Sign in with Github
+					<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...$$props}><path fill="currentColor" d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5c.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34c-.46-1.16-1.11-1.47-1.11-1.47c-.91-.62.07-.6.07-.6c1 .07 1.53 1.03 1.53 1.03c.87 1.52 2.34 1.07 2.91.83c.09-.65.35-1.09.63-1.34c-2.22-.25-4.55-1.11-4.55-4.92c0-1.11.38-2 1.03-2.71c-.1-.25-.45-1.29.1-2.64c0 0 .84-.27 2.75 1.02c.79-.22 1.65-.33 2.5-.33c.85 0 1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02c.55 1.35.2 2.39.1 2.64c.65.71 1.03 1.6 1.03 2.71c0 3.82-2.34 4.66-4.57 4.91c.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg>				
+				</button>
 			{/if}
 
 			{#if 2 === currentTab}
@@ -312,15 +370,16 @@
 				<div>Password</div>
 				<input
 					bind:value={password}
-					placeholder="*********"
+					placeholder="********* (at least 6 characters)"
 					class="loginField"
 					type="password"
 					required
 				/>
 
 				<button
-					disabled={!username && !email && !password}
+					disabled={(!username && !email && !password) || !passwordValid}
 					on:click={() => handleSignUp()}
+					on:keyup={(e) => e.key === 'Enter' && handleSignUp()}
 					class="m-2 rounded-lg border-2 border-transparent pb-2 pl-5 pr-5 pt-2 transition hover:border-violet-800"
 					>Sign up</button
 				>

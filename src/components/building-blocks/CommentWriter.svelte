@@ -7,6 +7,8 @@
 
 	export let slug: String
 	export let postID: String
+	export let userID: String
+	export let username: String
 	//export let replyTo: String | null = null
 	export let focusOn
 	export let originalComment
@@ -15,13 +17,14 @@
 	let session: AuthSession
 
 	let inputElement
-	let username
-	let userID
+	
+	
 	let comment = ''
 	let loading = false
 
 	const dispatch = createEventDispatcher();
 
+	$: username
 	// focus the input whenever 'focus' changes to true
 	$: if (focusOn && !originalComment) {
         // In Svelte, the DOM element might not be available immediately. So we only focus when it's ready.
@@ -31,17 +34,17 @@
         // });
 	}
 
-	onMount(async () => {
-		//focusOn.focus()
+	// onMount(async () => {
+	// 	//focusOn.focus()
 
-		// Listen to changes in the store, and show/hide the dialog accordingly
-		currentUserProfile.subscribe((n) => {
-			if (n.user_id) {
-				username = n.username
-				userID = n.user_id
-			}
-		})
-	})
+	// 	// Listen to changes in the store, and show/hide the dialog accordingly
+	// 	// currentUserProfile.subscribe((n) => {
+	// 	// 	if (n.user_id) {
+	// 	// 		username = n.username
+	// 	// 		userID = n.user_id
+	// 	// 	}
+	// 	// })
+	// })
 
 	async function handlePostComment() {
 		const formattedComment = comment.replace('\r\n', '\\r\\n')

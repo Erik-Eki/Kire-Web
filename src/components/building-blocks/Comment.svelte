@@ -264,6 +264,8 @@
 						on:update={handleUpdate}
 						{slug}
 						{postID}
+						{userID}
+						{username}
                         originalComment={false}
 						{currentlyReplyingTo}
 						focusOn={true}
