@@ -104,18 +104,12 @@
 	const handleLogin = async () => {
 		status = { error: '', success: false, isLoading: true }
 
-		// const { error } = await supabase.auth.signInWithOtp({
-		// 	email: email
-		// 	// options: {
-		// 	//     emailRedirectTo: import.meta.env.PUBLIC_REDIRECT_URL
-		// 	// }
-		// })
 		const { data, error } = await supabase.auth.signInWithPassword({
 			email: email,
 			password: password
 		})
 
-		if (error?.message) {
+		if (error) {
 			status = {
 				error: error.message,
 				success: false,
