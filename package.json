@@ -56,7 +56,7 @@
     "vue": "^3.3.4"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "github:tailwindcss/typography",
+    "@tailwindcss/typography": "^0.5.10",
     "autoprefixer": "^10.4.15",
     "postcss": "^8.4.29",
     "postcss-nested": "^6.0.1",

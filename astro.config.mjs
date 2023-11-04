@@ -20,9 +20,7 @@ const env = loadEnv('', process.cwd(), 'STORYBLOK');
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
-  adapter: vercel({
-    analytics: true
-  }),
+  adapter: vercel(),
   image: {
     service: {
       entrypoint: 'astro/assets/services/noop'
