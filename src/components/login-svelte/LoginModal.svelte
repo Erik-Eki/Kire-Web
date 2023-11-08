@@ -3,6 +3,7 @@
 	//import Cookies from 'js-cookie';
 	import Tabs from '$components/building-blocks/Tabs.svelte'
 	import Modal from '../building-blocks/Modal.svelte'
+	import Search from '$components/main/Search.svelte'
 	import { downloadImage, getProfile, supabase } from '$lib/supabaseClient'
 	//import { fade } from 'svelte/transition'
 	//import { profile } from '$components/stores/profile'
@@ -10,6 +11,7 @@
 	import { onMount } from 'svelte'
 	//import { createStore } from 'nano-store';
 	import { currentUserProfile } from '$components/stores/profile'
+	
 
 	let session: AuthSession
 
@@ -249,7 +251,7 @@
 	let currentTab
 </script>
 
-<div class="flex flex-row justify-between">
+<div class="justify-between parent-box">
 	{#if session}
 		<div class="pb-2 pl-5 pr-5 pt-2">
 			<details class="user-options">
@@ -275,32 +277,29 @@
 					</div>
 				</summary>
 				<a href="/account/profile">Profile</a>
+
+				<button
+					on:click={() => handleLogout()}
+					class="min-w-full m-2 rounded-lg border-2 border-transparent pb-2 pl-5 pr-5 pt-2 transition hover:bg-red-800 hover:text-white"
+				>
+					Log out
+				</button>
 			</details>
 		</div>
 	{:else}
-		<div class="m-2 pb-2 pl-5 pr-5 pt-2"></div>
+		<!-- <div class="m-2 pb-2 pl-5 pr-5 pt-2"></div> -->
+		<button
+			on:click={() => handleShowModal()}
+			class="m-2 rounded-lg border-2 border-transparent pb-2 pl-5 pr-5 pt-2 transition hover:bg-violet-800 hover:text-white"
+		>
+			Log in
+		</button>
 	{/if}
 
-	<div class="right-6">
-		<!-- <div>Logged in: {isLoggedIn}</div> -->
-		<!-- <button on:click={() => createTestUser()}>Create dummy user</button> -->
+	<Search/>
 
-		{#if session}
-			<button
-				on:click={() => handleLogout()}
-				class="m-2 rounded-lg border-2 border-transparent pb-2 pl-5 pr-5 pt-2 transition hover:bg-violet-800 hover:text-white"
-			>
-				Log out
-			</button>
-		{:else}
-			<button
-				on:click={() => handleShowModal()}
-				class="m-2 rounded-lg border-2 border-transparent pb-2 pl-5 pr-5 pt-2 transition hover:bg-violet-800 hover:text-white"
-			>
-				Log in
-			</button>
-		{/if}
-	</div>
+	<!-- <div class="right-6">
+	</div> -->
 </div>
 
 <!-- This IF is required to have the transition FX inside Modal work -->
@@ -408,27 +407,20 @@
 					<p>{JSON.stringify(status.error)}</p>
 				</div>
 			{/if}
-
-			<!-- <div>
-				<ul class="list-disc [&>li]:ml-10 [&>li]:text-base">
-					Funni issues
-					<li>Sign up working, but RLA is disabled (BAD so disabled)</li>
-					<li>
-						Log in is working, but session is not saved in cookies (How to get session data from
-						Svelte-component to Astro...)
-					</li>
-					<li>Sign out works fine</li>
-				</ul>
-			</div> 
-			<div>
-				<p>{JSON.stringify(status)}</p>
-			</div>
-			-->
 		</div>
 	</Modal>
 {/if}
 
 <style>
+	.parent-box {
+		display: flex;
+		flex-direction: row;
+	}
+	@media only screen and (max-width: 695px){
+		.parent-box {
+			flex-direction: column;
+		}
+	}
 	.cover {
 		display: flex;
 		flex-direction: row;
@@ -496,7 +488,6 @@
 		display: none;
 		content: '';
 	}
-
 	/* .user-options::marker {
 		content: none;
 	} */

@@ -31,7 +31,7 @@
 	}
 /> -->
 
-<div>
+<div class="flex-1">
 	<input
 		type="text"
 		id="search-input"
@@ -44,5 +44,8 @@
 		class="border-violet-80 mb-2 mt-2 w-full rounded border-2 bg-transparent p-2 text-white"
 	/>
 
-	<div id="search-result"></div>
+	<div 
+	id="search-result"
+	class="absolute z-50 rounded-lg right-0 left-0 ml-auto mr-auto pl-4 pr-4 bg-zinc-950 bg-opacity-90 max-w-4xl max-h-screen"
+	></div>
 </div>

@@ -7,13 +7,13 @@ import Search from './Search.svelte';
 
 <header class="main-header">
 	<!-- <p class="mb-2 mt-2 border border-t-white"></p> -->
-	<div class="kire-web">KIRE WEB</div>
-
-	<Search client:load/>
 
 	<LoginModal client:load />
-
-	<nav class="header-container">
+	<nav class="flex flex-row place-content-between">
+		<a href="/" class="justify-self-start small max-w-fit">
+			<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24"><path fill="currentColor" d="M9 7h2v3.33L13 7h2l-3 5l3 5h-2l-2-3.33V17H9V7M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2m0 2v14h14V5H5Z"/></svg>
+		</a>
+		<a href="/" class="kire-web flex-1 max-w-fit">KIRE WEB</a>
 		<Hamburger />
 		<Navigation />
 	</nav>
@@ -22,9 +22,27 @@ import Search from './Search.svelte';
 <style>
 	.kire-web {
 		font-family: Norse;
-		font-size: 50px;
-		letter-spacing: 4ch;
-		text-align: center;
-		margin-right: -4ch;
+		font-size: 2rem;
+		letter-spacing: 1ch;
+		text-decoration: none;
+		/* flex-basis: 50%; */
+		/* text-align: center; */
+		/* margin-right: -4ch; */
+		
 	}
+	.small {
+		display: none;
+	}
+	@media only screen and (max-width: 1280px){
+		.kire-web {
+			/* background: black; */
+			/* color: red; */
+			/* flex-basis: 25%; */
+			display: none;
+		}
+		.small {
+			display: flex;
+		}
+	}
+	
 </style>
