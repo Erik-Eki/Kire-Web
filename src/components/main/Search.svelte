@@ -1,7 +1,35 @@
 <script lang="ts">
-    const hxVals = 'js:{"q": document.getElementById("search-input").value.length > 2 ? document.getElementById("search-input").value : null}'
-    
+	import { onMount } from 'svelte'
+	const hxVals =
+		'js:{"q": document.getElementById("search-input").value.length > 2 ? document.getElementById("search-input").value : null}'
+
+	onMount(() => {
+		window.dispatchEvent(new Event('astro-navigate'))
+		window.addEventListener('astro-navigate', () => {
+			htmx.process(document.body)
+		})
+	})
 </script>
+
+<!-- <script type="module">
+	// I need to do this bullshit, as Astro handles client-side navigation.
+	// When you navigate to a new page, Astro.js does a full page refresh,
+	// which can cause issues with client-side libraries like HTMX
+	// I have to listen to navigation events and reinit HTMX
+	window.dispatchEvent(new Event('astro-navigate'))
+	window.addEventListener('astro-navigate', () => {
+		htmx.process(document.body)
+	})
+</script> -->
+
+<!-- <svelte:window 
+	dispatchEvent={(new Event("astro-navigate"))}
+	addEventListener={
+		('astro-navigate', () => {
+			htmx.process(document.body)
+		})
+	}
+/> -->
 
 <div>
 	<input

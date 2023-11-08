@@ -40,10 +40,10 @@ export async function GET({ params, request }: APIContext) {
           <a href="${i.slug}">${highlightedTitle}</a>
         </h2>
         <i>${highlightedDescription}</i>
-        <div class="border-b border-b-white">
+        <hr/>
       `;
     });
   
-    //res.status(200).send(results);
+    //res.status(200).send(results);<div class="border-b border-b-white">
     return new Response(results);
   };
