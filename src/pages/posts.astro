@@ -1,5 +1,6 @@
 ---
 import Layout from "$layouts/Layout.astro";
+import LayoutMargin from "$layouts/LayoutMargin.astro";
 import { storyblokEditable } from '@storyblok/astro'
 import { useStoryblokApi } from '@storyblok/astro'
 
@@ -33,8 +34,9 @@ const { blok } = Astro.props
 ---
 
 <Layout title="Blog">
-<div class="not-prose p-2 bg-black bg-opacity-40 mb-4 mt-4">
-    <h1 class=" text-white text-center">Storyblok Blog posts</h1>
+<LayoutMargin>
+<div class="not-prose p-2 mb-4 mt-4">
+    <h1 class=" text-white text-center text-5xl">Storyblok Blog posts</h1>
     <ul {...storyblokEditable(blok)} class=" flex flex-col gap-4">
       {posts.map(post => (
         <div class="h-72 bg-zinc-900 pl-2 pr-2 pt-5 pb-12 h-55 border-2 border-violet-800 rounded-lg">
@@ -63,6 +65,7 @@ const { blok } = Astro.props
       ))}
     </ul>
   </div>
+</LayoutMargin>
 </Layout>
 
 <style>

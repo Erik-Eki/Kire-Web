@@ -31,6 +31,27 @@ if (cookie) {
 	counter = cookie.number() + 1
 }
 Astro.cookies.set('counter', counter)
+
+// twitter={{
+// 				card: 'summary',
+// 				site: '@wahlstra'
+// 			}}
+// 			extend={{
+// 				meta: [
+// 					{
+// 						name: 'twitter:image',
+// 						content: 'https://astro-supabase-vercel.vercel.app/preview.png'
+// 					},
+// 					{ name: 'twitter:title', content: 'Astro Supabase Vercel website' },
+// 					{
+// 						name: 'twitter:description',
+// 						content:
+// 							'App prototype built with Astro and Supabase authentication, deployed to Vercel'
+// 					}
+// 				]
+// 			}}
+
+// <body class="smooth-scroll flex flex-col prose max-w-6xl dark:prose-invert md:prose-lg lg:prose-xl">
 ---
 
 <!DOCTYPE html>
@@ -51,51 +72,40 @@ Astro.cookies.set('counter', counter)
 
 		<title>{title}</title>
 		<SEO
-			title="Kire-web, a Website powered by Astro"
-			description="App prototype built with Astro and Supabase authentication, deployed to Vercel"
-			twitter={{
-				card: 'summary',
-				site: '@wahlstra'
-			}}
-			extend={{
-				meta: [
-					{
-						name: 'twitter:image',
-						content: 'https://astro-supabase-vercel.vercel.app/preview.png'
-					},
-					{ name: 'twitter:title', content: 'Astro Supabase Vercel website' },
-					{
-						name: 'twitter:description',
-						content:
-							'App prototype built with Astro and Supabase authentication, deployed to Vercel'
-					}
-				]
-			}}
+			title="Kire-web"
+			description="Website built with Astro, Svelte, and Supabase, deployed to Vercel"
 		/>
 	</head>
-	<body class="smooth-scroll flex flex-col prose max-w-6xl dark:prose-invert md:prose-lg lg:prose-xl">
-		<pre
-			class="construction text-center text-2xl font-extrabold text-black">&#128679 UNDER HEAVY CONSTRUCTION BECAUSE WORKERS UNIONIZED &#128679</pre>
-		<Header/>
+	<body
+		class="smooth-scroll overflow-x-hidden prose flex max-w-none flex-col dark:prose-invert md:prose-lg lg:prose-xl"
+	>
+		<div class="w-full">
+			<pre
+				class="construction text-center text-2xl font-extrabold text-black">
+			&#128679 UNDER HEAVY CONSTRUCTION BECAUSE WORKERS UNIONIZED &#128679
+		</pre>
 
-		<main class="flex-1">
-			<slot />
-		</main>
+			<Header />
 
-		<h2 class="flex">
-			Refresh counter test =
-			<div
-				class="bg-gradient-to-tr from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% bg-clip-text font-extrabold text-transparent"
-			>
-				{counter}
-			</div>
-		</h2>
+			<main class="flex-1">
+				<slot />
+			</main>
 
-		<Footer />
+			<h2 class="flex">
+				Refresh counter test =
+				<div
+					class="bg-gradient-to-tr from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% bg-clip-text font-extrabold text-transparent"
+				>
+					{counter}
+				</div>
+			</h2>
+
+			<Footer />
+			<style>
+				.smooth-scroll {
+					scroll-behavior: smooth;
+				}
+			</style>
+		</div>
 	</body>
-	<style>
-		.smooth-scroll {
-			scroll-behavior: smooth;
-		}
-	</style>
 </html>

@@ -1,6 +1,7 @@
 ---
 import '../styles/global.scss'
 import Layout from '../layouts/Layout.astro'
+import LayoutMargin from '$layouts/LayoutMargin.astro'
 import MarkdownPostLayout from '../layouts/MarkdownPostLayout.astro'
 import { Content as AboutMD } from '../content/about/about.mdx'
 
@@ -21,10 +22,12 @@ const textCase = 'uppercase'
 ---
 
 <Layout title="About this bad website">
+	<LayoutMargin>
 		<h1 class="text-gradient">{pageTitle}</h1>
 		<h2>... and my horribly bad, no good website!</h2>
 
 		<AboutMD />
+	</LayoutMargin>
 </Layout>
 
 <style define:vars={{ skillColor, fontWeight }}>

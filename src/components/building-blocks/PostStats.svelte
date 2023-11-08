@@ -7,12 +7,12 @@
 
 	let username
 	let userID
-	let postID: String
+	let postID: string
 	let pageViews: number = 0
 	let likes: number = 0
 	let dislikes: number = 0
-    let likedByCurrentUser: Boolean = false
-    let dislikedByCurrentUser: Boolean = false
+    let likedByCurrentUser: boolean = false
+    let dislikedByCurrentUser: boolean = false
 
 	async function incrementViews(slug) {
 		const { data, error } = await supabase.rpc('increment_page_view', { page_slug: slug })
@@ -44,29 +44,46 @@
 			.select('*')
 			.eq('post_id', postID)
 
-		let sums = data.reduce((totals, obj) => {
-                let likes = 0
-                let dislikes = 0
-                if(obj.like) {
-                    likes = totals.likes += 1
-                    if (obj.user_id === userID) likedByCurrentUser = true
-                }
-                if(obj.dislike) {
-                    dislikes = totals.dislikes += 1
-                    if (obj.user_id === userID) dislikedByCurrentUser = true
-                }
-				return {
-					likes, dislikes
-				}
-			},
-			{ likes: 0, dislikes: 0 }
-		)
+		// let sums = data.reduce((totals, obj) => {
+		// 		let likesTemp = 0
+		// 		let dislikesTemp = 0
+        //         if(obj.like) {
+		// 			likesTemp = totals.likes += 1
+        //             if (obj.user_id === userID) likedByCurrentUser = true
+        //         }
+        //         else if(obj.dislike) {
+        //             dislikesTemp = totals.dislikes += 1
+        //             if (obj.user_id === userID) dislikedByCurrentUser = true
+        //         }
+		// 		return {
+		// 			likesTemp, dislikesTemp
+		// 		}
+		// 	},
+		// 	{ likesTemp: 0, dislikesTemp: 0 }
+		// )
+		let counts = data.reduce((acc, obj) => {
+			if(obj.like) {
+				acc.likes++
+				if (obj.user_id === userID) likedByCurrentUser = true
+			}
+			else if(obj.dislike) {
+				acc.dislikes++
+				if (obj.user_id === userID) dislikedByCurrentUser = true
+			}
+			return acc;
+		}, {likes: 0, dislikes: 0})
 
-		likes = sums.likes
-		dislikes = sums.dislikes
+		likes = counts.likes
+		dislikes = counts.dislikes
+
+		console.log(counts, data, userID)
 	}
 
 	async function rating(postID, like, dislike) {
+
+		likedByCurrentUser = like
+		dislikedByCurrentUser = dislike
+
 		const payload = {
 			post_id: postID,
 			user_id: userID,
@@ -110,13 +127,16 @@
 		await fetchPageStats(slug)
 		await fetchPageRatings(postID)
 	})
+	// [&>*]:items-stretch
 </script>
+
+
 
 <div class="flex flex-row items-center gap-2">
 	<!-- LIKE -->
 	<button
-		disabled={!username}
-		class="contents rounded disabled:opacity-50"
+		disabled={!username || likedByCurrentUser}
+		class="flex items-center gap-1 rounded disabled:opacity-50 "
 		on:click={() => rating(postID, true, false)}
 	>
 		<!-- FILLED IF RATING FROM USER -->
@@ -152,8 +172,8 @@
 
 	<!-- DISLIKE -->
 	<button
-		disabled={!username}
-		class="contents rounded disabled:opacity-50"
+		disabled={!username || dislikedByCurrentUser}
+		class="flex items-center gap-1 rounded disabled:opacity-50"
 		on:click={() => rating(postID, false, true)}
 	>
 		<!-- FILLED IF RATING FROM USER -->

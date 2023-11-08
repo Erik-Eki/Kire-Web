@@ -4,26 +4,27 @@ import Hamburger from './Hamburger.astro'
 import LoginModal from '$components/login-svelte/LoginModal.svelte'
 ---
 
-<p class="mb-2 mt-2 border border-t-white"></p>
-<div class="kire-web">KIRE WEB</div>
-
-<div>
-	<input
-		type="text"
-		id="search-input"
-		hx-get="/api/search"
-		hx-vals='js:{"q": document.getElementById("search-input").value.length > 2 ? document.getElementById("search-input").value : null}'
-		hx-trigger="keyup changed delay:500ms"
-		hx-target="#search-result"
-		placeholder="Search content..."
-		class="border-violet-80 mb-2 mt-2 w-full rounded border-2 bg-transparent p-2 text-white"
-	/>
-
-	<div id="search-result"></div>
-</div>
-
-<LoginModal client:load />
 <header class="main-header">
+	<!-- <p class="mb-2 mt-2 border border-t-white"></p> -->
+	<div class="kire-web">KIRE WEB</div>
+
+	<div>
+		<input
+			type="text"
+			id="search-input"
+			hx-get="/api/search"
+			hx-vals='js:{"q": document.getElementById("search-input").value.length > 2 ? document.getElementById("search-input").value : null}'
+			hx-trigger="keyup changed delay:500ms"
+			hx-target="#search-result"
+			placeholder="Search content..."
+			class="border-violet-80 mb-2 mt-2 w-full rounded border-2 bg-transparent p-2 text-white"
+		/>
+
+		<div id="search-result"></div>
+	</div>
+
+	<LoginModal client:load />
+
 	<nav class="header-container">
 		<Hamburger />
 		<Navigation />
@@ -32,7 +33,7 @@ import LoginModal from '$components/login-svelte/LoginModal.svelte'
 
 <script type="module">
 	// I need to do this bullshit, as Astro handles client-side navigation.
-	// When you navigate to a new page, Astro.js does a full page refresh, 
+	// When you navigate to a new page, Astro.js does a full page refresh,
 	// which can cause issues with client-side libraries like HTMX
 	// I have to listen to navigation events and reinit HTMX
 	window.dispatchEvent(new Event('astro-navigate'))

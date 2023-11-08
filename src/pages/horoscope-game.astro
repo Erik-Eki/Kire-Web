@@ -3,6 +3,7 @@ import Layout from 'src/layouts/Layout.astro'
 import GameCards from '$components/horoscope-game/GameCards.svelte'
 import * as cheerio from 'cheerio'
 import { ZodUndefined } from 'astro/zod'
+import LayoutMargin from '$layouts/LayoutMargin.astro'
 
 const url: String =
 	'https://www.horoscope.com/us/horoscopes/general/horoscope-general-daily-yesterday.aspx?sign='
@@ -58,6 +59,7 @@ const todayDate = dd + '/' + mm + '/' + yyyy
 ---
 
 <Layout title="Horoscope Guessing Game">
+	<LayoutMargin>
 		<h1>Horoscope Guessing Game</h1>
 		<details>
 			<summary>Rules:</summary>
@@ -99,4 +101,5 @@ const todayDate = dd + '/' + mm + '/' + yyyy
 				)
 			}
 		</div>
+	</LayoutMargin>
 </Layout>

@@ -10,7 +10,7 @@ import preact from '@astrojs/preact';
 import vue from '@astrojs/vue';
 import alpinejs from '@astrojs/alpinejs';
 import solidJs from "@astrojs/solid-js";
-import { remarkReadingTime } from './remark-reading-time.mjs';
+// import { remarkReadingTime } from './remark-reading-time.mjs';
 
 const env = loadEnv('', process.cwd(), 'STORYBLOK');
 

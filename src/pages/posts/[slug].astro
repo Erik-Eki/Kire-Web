@@ -3,6 +3,7 @@ import { useStoryblokApi } from '@storyblok/astro'
 import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
 import Layout from 'src/layouts/Layout.astro'
 import { Icon } from 'astro-icon'
+import LayoutMargin from '$layouts/LayoutMargin.astro'
 
 const storyblokApi = useStoryblokApi()
 const slug = Astro.params.slug
@@ -45,8 +46,10 @@ try {
 ---
 
 <Layout title="Blog post">
+<LayoutMargin>
+	<div class="flex flex-col items-center">
 	<div
-		class="prose flex max-w-6xl flex-col gap-1 dark:prose-invert prose-h1:text-5xl prose-img:m-0"
+		class="prose max-w-6xl flex flex-col gap-1 dark:prose-invert prose-h1:text-5xl prose-img:m-0"
 	>
 		<button
 			onclick="
@@ -62,7 +65,7 @@ try {
 			<div>{created_at}</div>
 			{edited_at && <div class="text-sm">(Edited: {edited_at})</div>}
 		</div>
-		<div class="ml-2">
+		<div class="ml-2 flex self-center">
 			{
 				videoID ? (
 					<iframe
@@ -82,4 +85,6 @@ try {
 	</div>
 
 	<StoryblokComponent blok={content} />
+</div>
+</LayoutMargin>
 </Layout>
