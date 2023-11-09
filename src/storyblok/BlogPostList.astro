@@ -36,7 +36,7 @@ const { blok } = Astro.props
 ---
 
 <!-- <div class="not-prose border-solid border-2 border-violet-800 rounded-lg p-2 bg-black bg-opacity-40"> -->
-<ul {...storyblokEditable(blok)} class="post-list fancy-scrollbar flex flex-row gap-8 overflow-x-auto overflow-y-hidden pb-4 m-2">
+<ul {...storyblokEditable(blok)} id="fade" class="post-list fancy-scrollbar flex flex-row gap-8 overflow-x-auto overflow-y-hidden pb-4 m-2">
   {posts.map(post => (
     <div class="post-box bg-zinc-900 border-2 border-zinc-700 rounded-lg pl-2 pr-2 pt-5 pb-12 h-55">
       <a 
@@ -65,11 +65,51 @@ const { blok } = Astro.props
   }
 </ul>
 
+<script>
+function toggleFadeEffect(el) {
+  // Check if the element is scrollable
+  const isScrollable = el.scrollWidth > el.clientWidth;
+
+  // If the element is not scrollable, remove the mask-image property
+  if (!isScrollable) {
+    el.style.maskImage = "none";
+    return;
+  }
+
+  // Otherwise, the element is scrollable
+  // Check if the element is scrolled to the left or the right
+  const isScrolledToLeft = el.scrollLeft === 0;
+  const isScrolledToRight = el.scrollWidth <= el.clientWidth + el.scrollLeft;
+
+  // If the element is scrolled to the left, remove the left fade effect
+  if (isScrolledToLeft) {
+    el.style.webkitMaskImage = "linear-gradient(to right, black 0%, black 95%, transparent 100%)";
+  }
+  // If the element is scrolled to the right, remove the right fade effect
+  else if (isScrolledToRight) {
+    el.style.webkitMaskImage = "linear-gradient(to right, transparent 0%, black 5%, black 100%)";
+  }
+  // Otherwise, keep the fade effect at both ends
+  else {
+    el.style.webkitMaskImage = "linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)";
+  }
+}
+// Add a scroll event listener to the scrollable div
+document.getElementById("fade").addEventListener("scroll", function() {
+  // Call the toggleFadeEffect function with the element as the argument
+  toggleFadeEffect(this);
+});
+
+// Call the toggleFadeEffect function on page load
+toggleFadeEffect(document.getElementById("fade"));
+
+</script>
+
 <style>
   .post-box {
     /* width: 450px; */
     min-width: 450px;
-    max-width: 450px
+    max-width: 450px;
   }
   .card-button {
     /* height: 14vh; */
@@ -92,17 +132,9 @@ const { blok } = Astro.props
     background-size: cover !important;
     /* background-attachment:fixed !important; */
   }
-  /* .card-background{
-    position: relative;
-    z-index:1;
-    overflow:hidden
+
+  #fade {
+    -webkit-mask-image: linear-gradient(to right, black 0%, black 95%, transparent 100%)
   }
-  .card-background:before{
-      z-index:-1;
-      position:absolute;
-      left:0;
-      top:0;
-      content: url('path/to/image.ext');
-      opacity:0.4;
-  } */
+
 </style>
