@@ -7,18 +7,9 @@ const storyblokApi = useStoryblokApi()
 
 async function getPosts() {
     try {
-
-        // const client = createClient({
-        //     accessToken: process.env.STORYBLOK_TOKEN
-        // })
-
-        //console.log("###################", storyblokApi)
-
         const { data } = await storyblokApi.get("cdn/stories/", {
             version: 'published'
         })
-
-        //console.log("STORY", data.stories)
 
         return data.stories.map((story) => {
             console.log(story.content.title)

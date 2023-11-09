@@ -8,9 +8,9 @@ import { loadEnv } from 'vite';
 import prefetch from '@astrojs/prefetch';
 import preact from '@astrojs/preact';
 import vue from '@astrojs/vue';
-import alpinejs from '@astrojs/alpinejs';
-import solidJs from "@astrojs/solid-js";
-// import { remarkReadingTime } from './remark-reading-time.mjs';
+// import alpinejs from '@astrojs/alpinejs';
+// import solidJs from "@astrojs/solid-js";
+import { remarkReadingTime } from './remark-reading-time.mjs';
 
 const env = loadEnv('', process.cwd(), 'STORYBLOK');
 
@@ -48,12 +48,8 @@ export default defineConfig({
     prefetch(),
     svelte(), 
     vue(),
-    alpinejs(),
     preact({
       include: ['**/preact/*']
-    }), 
-    solidJs({
-      include: ['**/solid/*'],
     })
   ]
 });

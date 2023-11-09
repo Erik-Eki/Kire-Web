@@ -1,8 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import Card from '../components/Card.astro'
-import { Image } from 'astro:assets'
-import { marked } from 'marked'
+// import { Image } from 'astro:assets'
+// import { marked } from 'marked'
 import { useStoryblokApi } from '@storyblok/astro'
 import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
 import { contentfulClient } from '../lib/contentful'
@@ -101,9 +101,9 @@ const story = data.story.content
 <Layout title="Welcome to the Danger Zone!">
 	<main>
 		<LayoutMargin>
-		<div class="mb-32">
-			<h1 class="mb-4">Welcome to the <span class="text-gradient">Danger Zone!</span></h1>
-		</div>
+			<div class="mb-32">
+				<h1 class="mb-4">Welcome to the <span class="text-gradient">Danger Zone!</span></h1>
+			</div>
 		</LayoutMargin>
 
 		<!-- <div class="someclass">
@@ -116,26 +116,35 @@ const story = data.story.content
 		<!-- <Login /> -->
 
 		<div class="flex flex-col items-center gap-12">
-			<section class="flex flex-col w-full bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-sky-300 via-zinc-100 to-rose-300">
-			<div
-					class="w-fit self-center relative -top-12 flex flex-col rounded bg-gradient-to-tr from-green-700 to-yellow-300 p-4 drop-shadow-lg"
+			<section
+				id="banner"
+				class="flex w-full flex-col bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-sky-300 via-zinc-100 to-rose-300"
+			>
+				<canvas id="gameCanvas" class="absolute bg-white opacity-10 z-0"></canvas>
+				
+				<div
+					class="relative -top-12 flex w-fit flex-col self-center rounded bg-gradient-to-tr from-green-700 to-yellow-300 p-4 drop-shadow-lg"
 				>
 					<h2>🎉 Big update! Comments & Rating functional on the website! 🎉</h2>
 				</div>
 
-			<div
-				class="w-auto flex flex-col m-4 p-2"
-			>
-			<!-- rounded-lg border-2 border-solid border-violet-800 bg-black bg-opacity-40 -->
-				<h1 class="text-center text-zinc-900 m-0">Blog posts</h1>
-				<StoryblokComponent blok={story} />
-			</div>
-		</section>
+				<div class="m-4 flex w-auto flex-col p-2 z-10">
+					<!-- rounded-lg border-2 border-solid border-violet-800 bg-black bg-opacity-40 -->
+					<h1 class="m-0 text-center text-zinc-900">Blog posts</h1>
+					<StoryblokComponent blok={story} />
+				</div>
+			</section>
 
-			<div class="max-w-6xl flex flex-col m-8 gap-8">
-
+			<div class="m-8 flex max-w-6xl flex-col gap-8">
 				<h1>This website is powered by:</h1>
-				<a data-theme="dark" data-layers="1,2,3,4" data-stack-embed="true" href="https://embed.stackshare.io/stacks/embed/1cb95f866c35adfce069b852c8c3d1"></a><script async src="https://cdn1.stackshare.io/javascripts/client-code.js" charset="utf-8"></script>
+				<a
+					data-theme="dark"
+					data-layers="1,2,3,4"
+					data-stack-embed="true"
+					href="https://embed.stackshare.io/stacks/embed/1cb95f866c35adfce069b852c8c3d1"></a><script
+					async
+					src="https://cdn1.stackshare.io/javascripts/client-code.js"
+					charset="utf-8"></script>
 
 				<div
 					class="flex flex-col gap-4 rounded bg-gradient-to-r from-blue-900 to-cyan-900 p-4 drop-shadow-lg"
@@ -196,47 +205,128 @@ const story = data.story.content
 			</div>
 		</div>
 	</main>
-
-	<style>
-		/* .astro-a {
-			position: absolute;
-			top: -32px;
-			left: 50%;
-			transform: translatex(-50%);
-			width: 220px;
-			height: auto;
-			z-index: -1;
-		} */
-		.text-gradient {
-			background-image: var(--accent-gradient);
-			-webkit-background-clip: text;
-			-webkit-text-fill-color: transparent;
-			background-size: 400%;
-			background-position: 0%;
-		}
-		.instructions {
-			margin-bottom: 2rem;
-			border: 1px solid rgba(var(--accent-light), 25%);
-			background: linear-gradient(rgba(var(--accent-dark), 66%), rgba(var(--accent-dark), 33%));
-			padding: 1.5rem;
-			border-radius: 8px;
-		}
-		.instructions code {
-			font-size: 0.8em;
-			font-weight: bold;
-			background: rgba(var(--accent-light), 12%);
-			color: rgb(var(--accent-light));
-			border-radius: 4px;
-			padding: 0.3em 0.4em;
-		}
-		.instructions strong {
-			color: rgb(var(--accent-light));
-		}
-		.link-card-grid {
-			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-			gap: 2rem;
-			padding: 0;
-		}
-	</style>
 </Layout>
+
+
+<script>
+	const canvas = document.getElementById('gameCanvas')
+	const banner = document.getElementById('banner')
+	canvas.width = banner.clientWidth;
+	canvas.height = banner.clientHeight;
+	const context = canvas.getContext('2d')
+
+
+	const cellSize = 10
+	const rows = Math.round(canvas.height / cellSize)
+	const cols = Math.round(canvas.width / cellSize)
+	let grid = createGrid()
+
+	function createGrid() {
+		let arr = new Array(cols)
+		for (let i = 0; i < arr.length; i++) {
+			arr[i] = new Array(rows)
+			for (let j = 0; j < arr[i].length; j++) {
+				arr[i][j] = Math.random() > 0.5 ? 1 : 0
+			}
+		}
+		return arr
+	}
+
+	function drawGrid() {
+		for (let i = 0; i < cols; i++) {
+			for (let j = 0; j < rows; j++) {
+				const x = i * cellSize
+				const y = j * cellSize
+				if (grid[i][j] === 1) {
+					context.fillStyle = '#000'
+					context.fillRect(x, y, cellSize, cellSize)
+				} else {
+					context.fillStyle = '#fff'
+					context.fillRect(x, y, cellSize, cellSize)
+				}
+			}
+		}
+	}
+
+	function updateGrid() {
+		let newGrid = createGrid()
+		for (let i = 0; i < cols; i++) {
+			for (let j = 0; j < rows; j++) {
+				const neighbors = countNeighbors(grid, i, j)
+				if (grid[i][j] === 1 && (neighbors < 2 || neighbors > 3)) {
+					newGrid[i][j] = 0
+				} else if (grid[i][j] === 0 && neighbors === 3) {
+					newGrid[i][j] = 1
+				} else {
+					newGrid[i][j] = grid[i][j]
+				}
+			}
+		}
+		grid = newGrid
+	}
+
+	function countNeighbors(grid, x, y) {
+		let sum = 0
+		for (let i = -1; i < 2; i++) {
+			for (let j = -1; j < 2; j++) {
+				const col = (x + i + cols) % cols
+				const row = (y + j + rows) % rows
+				sum += grid[col][row]
+			}
+		}
+		sum -= grid[x][y] // remove current cell from sum
+		return sum
+	}
+
+	function gameLoop() {
+		updateGrid()
+		drawGrid()
+		requestAnimationFrame(gameLoop)
+	}
+
+	gameLoop()
+</script>
+
+
+<style>
+	/* .astro-a {
+		position: absolute;
+		top: -32px;
+		left: 50%;
+		transform: translatex(-50%);
+		width: 220px;
+		height: auto;
+		z-index: -1;
+	} */
+	.text-gradient {
+		background-image: var(--accent-gradient);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-size: 400%;
+		background-position: 0%;
+	}
+	.instructions {
+		margin-bottom: 2rem;
+		border: 1px solid rgba(var(--accent-light), 25%);
+		background: linear-gradient(rgba(var(--accent-dark), 66%), rgba(var(--accent-dark), 33%));
+		padding: 1.5rem;
+		border-radius: 8px;
+	}
+	.instructions code {
+		font-size: 0.8em;
+		font-weight: bold;
+		background: rgba(var(--accent-light), 12%);
+		color: rgb(var(--accent-light));
+		border-radius: 4px;
+		padding: 0.3em 0.4em;
+	}
+	.instructions strong {
+		color: rgb(var(--accent-light));
+	}
+	.link-card-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+		gap: 2rem;
+		padding: 0;
+	}
+</style>

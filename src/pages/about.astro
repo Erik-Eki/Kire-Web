@@ -22,15 +22,308 @@ const textCase = 'uppercase'
 ---
 
 <Layout title="About this bad website">
+	<!-- <div id="grid" class="absolute z-0 opacity-50"></div> -->
+	<canvas id="gameCanvas" height="570" class="bg-white absolute opacity-10"></canvas>
 	<LayoutMargin>
-		<h1 class="text-gradient">{pageTitle}</h1>
-		<h2>... and my horribly bad, no good website!</h2>
+		<div class="z-10">
+			<h1 class="text-gradient">{pageTitle}</h1>
+			<h2>... and my horribly bad, no good website!</h2>
 
-		<AboutMD />
+			<AboutMD />
+
+			<div class="flex flex-col gap-8">
+				<div id="canvas"></div>
+			</div>
+		</div>
 	</LayoutMargin>
 </Layout>
+<!-- <script src="../lib/gameOfLife.ts" is:inline > -->
+<script>
+	const canvas = document.getElementById('gameCanvas')
+	canvas.width = window.innerWidth
+	// canvas.height = window.innerHeight
+	const context = canvas.getContext('2d')
+
+	console.log(canvas.width, canvas.height)
+
+	const cellSize = 10
+	const rows = Math.round(canvas.height / cellSize)
+	const cols = Math.round(canvas.width / cellSize)
+	let grid = createGrid()
+
+	function createGrid() {
+		let arr = new Array(cols)
+		for (let i = 0; i < arr.length; i++) {
+			arr[i] = new Array(rows)
+			for (let j = 0; j < arr[i].length; j++) {
+				arr[i][j] = Math.random() > 0.5 ? 1 : 0
+			}
+		}
+		return arr
+	}
+
+	function drawGrid() {
+		for (let i = 0; i < cols; i++) {
+			for (let j = 0; j < rows; j++) {
+				const x = i * cellSize
+				const y = j * cellSize
+				if (grid[i][j] === 1) {
+					context.fillStyle = '#000'
+					context.fillRect(x, y, cellSize, cellSize)
+				} else {
+					context.fillStyle = '#fff'
+					context.fillRect(x, y, cellSize, cellSize)
+				}
+			}
+		}
+	}
+
+	function updateGrid() {
+		let newGrid = createGrid()
+		for (let i = 0; i < cols; i++) {
+			for (let j = 0; j < rows; j++) {
+				const neighbors = countNeighbors(grid, i, j)
+				if (grid[i][j] === 1 && (neighbors < 2 || neighbors > 3)) {
+					newGrid[i][j] = 0
+				} else if (grid[i][j] === 0 && neighbors === 3) {
+					newGrid[i][j] = 1
+				} else {
+					newGrid[i][j] = grid[i][j]
+				}
+			}
+		}
+		grid = newGrid
+	}
+
+	function countNeighbors(grid, x, y) {
+		let sum = 0
+		for (let i = -1; i < 2; i++) {
+			for (let j = -1; j < 2; j++) {
+				const col = (x + i + cols) % cols
+				const row = (y + j + rows) % rows
+				sum += grid[col][row]
+			}
+		}
+		sum -= grid[x][y] // remove current cell from sum
+		return sum
+	}
+
+	function gameLoop() {
+		updateGrid()
+		drawGrid()
+		requestAnimationFrame(gameLoop)
+	}
+
+	gameLoop()
+
+	// const canvas = document.getElementById('gameCanvas')
+	// const ctx = canvas.getContext('2d')
+
+	// const cellSize = 10
+	// const rows = canvas.height / cellSize
+	// const cols = canvas.width / cellSize
+
+	// // Create a 2D array to store the game grid
+	// const grid = new Array(cols).fill(null).map(() => new Array(rows).fill(0))
+
+	// // Initialize the grid with random living cells
+	// for (let i = 0; i < cols; i++) {
+	// 	for (let j = 0; j < rows; j++) {
+	// 		grid[i][j] = Math.random() > 0.5 ? 1 : 0
+	// 	}
+	// }
+
+	// // Function to draw the current state of the game grid
+	// function drawGrid() {
+	// 	ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+	// 	for (let i = 0; i < cols; i++) {
+	// 		for (let j = 0; j < rows; j++) {
+	// 			if (grid[i][j] === 1) {
+	// 				ctx.fillStyle = '#000'
+	// 				ctx.fillRect(i * cellSize, j * cellSize, cellSize, cellSize)
+	// 			}
+	// 		}
+	// 	}
+	// }
+
+	// function updateGrid() {
+	// 	// Perform game logic to update the grid based on Conway's rules
+
+	// 	// TODO: Implement game logic to update the grid based on Conway's rules
+
+	// 	// Redraw the grid with the updated state
+	// 	drawGrid()
+	// }
+
+	// // Set up a game loop to update and render the grid
+	// setInterval(updateGrid, 100)
+
+	// import * as d3 from 'd3'
+
+	// const coords = [
+	// 	`
+	// 375 375,
+	// 525 125,
+	// 675 125,
+	// 675 375,
+	// 900 500,
+	// 825 625,
+	// 525 625
+
+	// `
+	// ]
+	// const coords2 = [
+	// 	`
+	// 375 375,
+	// 450 500,
+	// 225 625,
+	// 0 500,
+	// 75 375
+	// `
+	// ]
+	// const coords3 = [
+	// 	`
+	// 225 375,
+	// 225 125,
+	// 450 0,
+	// 525 125,
+	// 375 375
+	// `
+	// ]
+
+	// let sv = d3
+	// 	.select('#canvas')
+	// 	.append('svg')
+	// 	.attr('width', 900)
+	// 	.attr('height', 625)
+	// 	.style('background', '#d9edf7')
+
+	// sv.append('polyline').attr('points', coords).style('fill', '#3c763d')
+	// sv.append('polyline').attr('points', coords2).style('fill', '#2899D1')
+	// sv.append('polyline').attr('points', coords3).style('fill', 'orangered')
+
+	// Set up the game of life grid
+	// const width = 50//window.screen.width;
+	// const height = 50//window.screen.height;
+
+	// let gridData = new Array(width * height).fill(null).map(() => (Math.random() > 0.5 ? 1 : 0))
+
+	// // Set up the D3 render
+	// const svg = d3
+	// 	.select('#canvas-2')
+	// 	.append('svg')
+	// 	.attr('width', width * 10)
+	// 	.attr('height', height * 10)
+
+	// const cells = svg
+	// 	.selectAll('rect')
+	// 	.data(gridData)
+	// 	.enter()
+	// 	.append('rect')
+	// 	.attr('width', 10)
+	// 	.attr('height', 10)
+	// 	.attr('x', (d, i) => (i % width) * 10)
+	// 	.attr('y', (d, i) => Math.floor(i / width) * 10)
+	// 	.attr('fill', (d) => (d ? 'black' : 'white'))
+
+	// // Update the game of life grid
+	// function updateGrid() {
+	// 	const newGridData = gridData.map((cell, i) => {
+	// 		const x = i % width
+	// 		const y = Math.floor(i / width)
+
+	// 		const neighbors = [
+	// 			gridData[(y - 1) * width + (x - 1)],
+	// 			gridData[(y - 1) * width + x],
+	// 			gridData[(y - 1) * width + (x + 1)],
+	// 			gridData[y * width + (x - 1)],
+	// 			gridData[y * width + (x + 1)],
+	// 			gridData[(y + 1) * width + (x - 1)],
+	// 			gridData[(y + 1) * width + x],
+	// 			gridData[(y + 1) * width + (x + 1)]
+	// 		].filter((d) => d).length
+
+	// 		if (cell) {
+	// 			return neighbors < 2 || neighbors > 3 ? 0 : 1
+	// 		} else {
+	// 			return neighbors === 3 ? 1 : 0
+	// 		}
+	// 	})
+
+	// 	cells.data(newGridData).attr('fill', (d) => (d ? 'black' : 'white'))
+
+	// 	gridData = newGridData
+	// }
+
+	// // Set up an interval to update the grid
+	// setInterval(updateGrid, 50)
+
+	// D3 code to create a canvas and generate tiles
+	// var width = 900,
+	// 	height = 625
+
+	// var svg = d3.select('#canvas-2').append('svg').attr('width', width).attr('height', height)
+	// // var svg = d3.select('body').append('svg').attr('width', width).attr('height', height)
+
+	// var zoom = d3.zoom().scaleExtent([1, 8]).on('zoom', zoomed)
+
+	// svg.call(zoom)
+
+	// var tileWidth = 50,
+	// 	tileHeight = (Math.sqrt(3) / 2) * tileWidth
+
+	// function zoomed() {
+	// 	g.attr('transform', d3.event.transform)
+	// }
+
+	// var g = svg.append('g')
+
+	// // Algorithm to connect and tile the tiles accordingly
+	// function generateTile(x, y) {
+	// 	var tileColor = d3.interpolateViridis(Math.random())
+
+	// 	var points = [
+	// 		[x, y],
+	// 		[x + tileWidth, y],
+	// 		[x + (tileWidth * 3) / 2, y + tileHeight],
+	// 		[x + tileWidth, y + tileHeight * 2],
+	// 		[x, y + tileHeight * 2],
+	// 		[x - tileWidth / 2, y + tileHeight]
+	// 	]
+
+	// 	var line = d3
+	// 		.line()
+	// 		.x(function (d) {
+	// 			return d[0]
+	// 		})
+	// 		.y(function (d) {
+	// 			return d[1]
+	// 		})
+	// 		.curve(d3.curveLinearClosed)
+
+	// 	g.append('path').attr('d', line(points)).attr('fill', tileColor).attr('stroke', 'black')
+	// }
+
+	// // Generate and position the tiles on the canvas
+	// for (var i = 0; i < width / tileWidth; i++) {
+	// 	for (var j = 0; j < height / tileHeight; j++) {
+	// 		generateTile((i * tileWidth * 3) / 2, j * tileHeight * 2)
+	// 	}
+	// }
+</script>
 
 <style define:vars={{ skillColor, fontWeight }}>
+	.cell {
+		width: 10px;
+		height: 10px;
+		/* background: #000; */
+		border: 1px solid #000;
+		display: inline-block;
+	}
+	.alive {
+		background: #000;
+	}
 	h1 {
 		color: purple;
 		font-size: 4rem;

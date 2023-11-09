@@ -33,8 +33,6 @@ export async function GET({ params, request }: APIContext) {
     // This will depend on how your site's data is structured.
     const searchResult = await searchSite(body)
 
-    console.log(searchResult)
-
     let results = '<h3>Search results:</h3><div';
 
     if (searchResult.length > 0) {

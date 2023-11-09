@@ -14,10 +14,6 @@ import { marked } from 'marked'
 let post
 const { slug } = Astro.params
 
-// const page = pages.find((page) => page.slug === slug);
-// if (!page) return Astro.redirect("/404");
-// const { title, text } = page;
-
 try {
 	const data = await contentfulClient.getEntries<ContentPost>({
 		content_type: 'contentPost',

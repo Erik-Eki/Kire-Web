@@ -17,67 +17,78 @@ import LayoutMargin from '$layouts/LayoutMargin.astro'
 ---
 
 <Layout title="Framework Demos">
-<LayoutMargin>
-	<div class="prose min-w-full dark:prose-invert">
-		<h2>Here are demos of trying out all the frameworks Astro supports.</h2>
-		<p>They are simple commponents with some reactivity to test how they handle.</p>
-		<ul class="w-full">
-			<li class="framework-list hover:border-orange-600">
-				<Image src={svelteLogo} alt="Svelte logo" width="150" height="100" class="h-full" />
-				<div class="framework-blurb-box">
-					<h1>Svelte</h1>
-					<SvelteContent />
-                    <a href="/framework-demos/svelte" class="p-3 rounded text-xl font-bold text-center bg-orange-700">Check here</a>
-				</div>
-			</li>
-			<li class="framework-list hover:border-emerald-600">
-				<Image src={vueLogo} alt="Vue.js logo" width="150" height="100" class="h-full" />
-				<div class="framework-blurb-box">
-					<h1>Vue</h1>
-					<VueContent />
-					<a href="/framework-demos/vue" class="p-3 rounded text-xl font-bold text-center bg-green-500">Check here</a>				
-				</div>
-			</li>
-			<li class="framework-list hover:border-blue-300">
-				<Image src={solidjsLogo} alt="Solid.js logo" width="150" height="100" class="h-full" />
-				<div class="framework-blurb-box">
-					<h1>Solid</h1>
-					<SolidContent />
-                    <pre class="construction text-center text-2xl font-extrabold text-black p-2">&#128679 WIP &#128679</pre>
-				</div>
-			</li>
-			<li class="framework-list hover:border-violet-500">
-				<Image src={preactLogo} alt="Preact logo" width="150" height="100" class="h-full" />
-				<div class="framework-blurb-box">
-					<h1>Preact</h1>
-					<PreactContent />
-					<a href="/framework-demos/preact" class="p-3 rounded text-xl font-bold text-center bg-violet-600">Check here</a>				
-				</div>
-			</li>
-			<li class="framework-list hover:border-gray-400">
-				<Image src={alpineLogo} alt="Preact logo" width="150" height="100" class="h-full" />
-				<div class="framework-blurb-box">
-					<h1>Alpine</h1>
-					<AlpineContent />
-                    <pre class="construction text-center text-2xl font-extrabold text-black p-2">&#128679 WIP &#128679</pre>
-				</div>
-			</li>
-		</ul>
-	</div>
-</LayoutMargin>
+	<LayoutMargin>
+		<div class="prose min-w-full dark:prose-invert">
+			<h2>Here are demos of trying out all the frameworks Astro supports.</h2>
+			<p>They are simple commponents with some reactivity to test how they handle.</p>
+			<ul class="w-full">
+				<li class="framework-list hover:border-orange-600">
+					<Image src={svelteLogo} alt="Svelte logo" width="150" height="100" class="h-full" />
+					<div class="framework-blurb-box">
+						<h1>Svelte</h1>
+						<SvelteContent />
+						<a
+							href="/framework-demos/svelte"
+							class="rounded bg-orange-700 p-3 text-center text-xl font-bold">Check here</a
+						>
+					</div>
+				</li>
+				<li class="framework-list hover:border-emerald-600">
+					<Image src={vueLogo} alt="Vue.js logo" width="150" height="100" class="h-full" />
+					<div class="framework-blurb-box">
+						<h1>Vue</h1>
+						<VueContent />
+						<a
+							href="/framework-demos/vue"
+							class="rounded bg-green-500 p-3 text-center text-xl font-bold">Check here</a
+						>
+					</div>
+				</li>
+				<li class="framework-list hover:border-violet-500">
+					<Image src={preactLogo} alt="Preact logo" width="150" height="100" class="h-full" />
+					<div class="framework-blurb-box">
+						<h1>Preact</h1>
+						<PreactContent />
+						<a
+							href="/framework-demos/preact"
+							class="rounded bg-violet-600 p-3 text-center text-xl font-bold">Check here</a
+						>
+					</div>
+				</li>
+				<li class="framework-list hover:border-gray-400">
+					<Image src={alpineLogo} alt="Preact logo" width="150" height="100" class="h-full" />
+					<div class="framework-blurb-box">
+						<h1>Alpine</h1>
+						<AlpineContent />
+						<pre
+							class="construction p-2 text-center text-2xl font-extrabold text-black">&#128679 WIP &#128679</pre>
+					</div>
+				</li>
+				<li class="framework-list hover:border-blue-300">
+					<Image src={solidjsLogo} alt="Solid.js logo" width="150" height="100" class="h-full" />
+					<div class="framework-blurb-box">
+						<h1>Solid</h1>
+						<SolidContent />
+						<pre
+							class="construction p-2 text-center text-2xl font-extrabold text-black">&#128679 WIP &#128679</pre>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</LayoutMargin>
 </Layout>
 
 <!-- <style define:vars={{ borderColor }}> -->
 <style>
 	.framework-list {
-        /* color: #ff3c00; */
+		/* color: #ff3c00; */
 		display: flex;
 		gap: 20px;
 		width: 100%;
 		padding: 20px;
 		margin: 10px 0 10px 0;
 		border: 2px transparent solid;
-        border-radius: 20px;  
+		border-radius: 20px;
 
 		/* @nest &:hover {
 			border: 2px solid var(--borderColor);
@@ -89,7 +100,7 @@ import LayoutMargin from '$layouts/LayoutMargin.astro'
         } */
 	}
 
-    /* [class*="bg-"] {
+	/* [class*="bg-"] {
         color: darkcyan;
         background-color: attr(class);
     }
@@ -99,7 +110,7 @@ import LayoutMargin from '$layouts/LayoutMargin.astro'
         border: 2px solid attr(class);
         background-color: attr(class) !important;
     } */
-    /* @mixin change-hover-color($classname){
+	/* @mixin change-hover-color($classname){
         &.#{$classname}{
             color: #{$classname};
         }
@@ -109,12 +120,12 @@ import LayoutMargin from '$layouts/LayoutMargin.astro'
         color: white;
         @include change-hover-color($classname);
     } */
-    /* [variable="value"] {
+	/* [variable="value"] {
         &:hover {
             border: 2px solid var(--hover_color);
         }
     } */
-    /* [class*='color']:hover {
+	/* [class*='color']:hover {
         border: 2px inherit solid;
         border-radius: 20px;
     } */

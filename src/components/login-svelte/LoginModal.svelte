@@ -194,11 +194,9 @@
 		// 	}
 		// })
 
-		console.log(`${window.location.origin}/api/auth/callback`)
 		//http://172.20.176.1:4321/api/auth/callback
 		// kire.nenoksuuh@gmail.com
 		const { error } = await supabase.auth.resetPasswordForEmail(email, {
-			//redirectTo: `${window.location.origin}/api/auth/callback`
 			redirectTo: `${window.location.origin}/api/auth/callback?next=/account/update-password`
 		})
 		if (error) console.error(error)
