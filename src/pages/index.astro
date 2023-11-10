@@ -122,6 +122,7 @@ const story = data.story.content
 <!-- <Layout title="Welcome to Astro." user={user}> -->
 <Layout title="Welcome to the Danger Zone!">
 	<main>
+		<canvas id="gameCanvas" height="2000" class="bg-white absolute opacity-10 z-0"></canvas>
 		<LayoutMargin>
 			<div class="mb-32">
 				<h1 class="mb-4 font-mono">
@@ -133,9 +134,9 @@ const story = data.story.content
 		<div class="flex flex-col items-center gap-12">
 			<section
 				id="banner"
-				class="flex w-full flex-col bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-sky-300 via-zinc-100 to-rose-300"
+				class="z-10 flex w-full flex-col bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-sky-300 via-zinc-100 to-rose-300"
 			>
-				<canvas id="gameCanvas" class="absolute z-0 bg-white opacity-10"></canvas>
+				<!-- <canvas id="gameCanvas" class="absolute z-0 bg-white opacity-10"></canvas> -->
 
 				<div
 					class="relative -top-12 flex w-fit flex-col self-center rounded bg-gradient-to-tr from-green-700 to-yellow-300 p-4 drop-shadow-lg"
@@ -149,7 +150,7 @@ const story = data.story.content
 				</div>
 			</section>
 
-			<div class="m-8 flex max-w-6xl flex-col gap-32">
+			<div class="m-8 flex max-w-6xl flex-col gap-32 z-10">
 				<!-- <div class="flex flex-row justify-between gap-4">
 					<Card
 						href="/about"
@@ -256,8 +257,9 @@ const story = data.story.content
 <script>
 	const canvas = document.getElementById('gameCanvas')
 	const banner = document.getElementById('banner')
-	canvas.width = banner.clientWidth
-	canvas.height = banner.clientHeight
+	// canvas.width = banner.clientWidth
+	// canvas.height = banner.clientHeight
+	canvas.width = window.innerWidth
 	const context = canvas.getContext('2d')
 
 	const cellSize = 10
@@ -355,6 +357,10 @@ const story = data.story.content
 		height: auto;
 		z-index: -1;
 	} */
+	#gameCanvas {
+		-webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 60%, transparent 100%)
+	}
+
 	.text-gradient {
 		background-image: var(--accent-gradient);
 		-webkit-background-clip: text;
