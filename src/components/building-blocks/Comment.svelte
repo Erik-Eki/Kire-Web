@@ -69,13 +69,12 @@
 
 	onMount(() => {
 		mounted = true
-		console.log(comments)
 	})
 </script>
 
 {#if mounted}
 	{#each comments as comment}
-		<div class="ml-4 h-fit border-l-2 border-l-gray-500 pl-4 pr-4 pt-4">
+		<div class=" w-full ml-4 h-fit border-l-2 border-l-gray-500 pl-4 pr-4 pt-4">
 			{#if comment?.profiles?.username}
 				<div>
 					<div class="flex flex-row items-center gap-4">
@@ -344,9 +343,3 @@
 		</div>
 	{/each}
 {/if}
-
-<style>
-	.kakka {
-		color: #18a730;
-	}
-</style>

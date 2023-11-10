@@ -129,7 +129,7 @@
 	<h2 class="mt-0 pt-0">Comments: {commentCount}</h2>
 	<hr />
 	{#if comments}
-		<div class="flex flex-col gap-4">
+		<div class="flex flex-col gap-4 max-w-full">
 			<Comment {comments} {username} {userID} {admin} {slug} {postID} />
 		</div>
 	{:else}

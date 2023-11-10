@@ -23,7 +23,7 @@ const textCase = 'uppercase'
 
 <Layout title="About this bad website">
 	<!-- <div id="grid" class="absolute z-0 opacity-50"></div> -->
-	<canvas id="gameCanvas" height="570" class="bg-white absolute opacity-10"></canvas>
+	<canvas id="gameCanvas" height="1000" class="bg-white absolute opacity-10"></canvas>
 	<LayoutMargin>
 		<div class="z-10">
 			<h1 class="text-gradient">{pageTitle}</h1>
@@ -314,6 +314,9 @@ const textCase = 'uppercase'
 </script>
 
 <style define:vars={{ skillColor, fontWeight }}>
+	#gameCanvas {
+		-webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%)
+	}
 	.cell {
 		width: 10px;
 		height: 10px;

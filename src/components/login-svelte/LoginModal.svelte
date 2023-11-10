@@ -250,6 +250,9 @@
 </script>
 
 <div class="justify-between parent-box">
+	
+	<Search/>
+
 	{#if session}
 		<div class="pb-2 pl-5 pr-5 pt-2">
 			<details class="user-options">
@@ -293,8 +296,6 @@
 			Log in
 		</button>
 	{/if}
-
-	<Search/>
 
 	<!-- <div class="right-6">
 	</div> -->

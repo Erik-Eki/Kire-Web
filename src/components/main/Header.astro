@@ -6,7 +6,6 @@ import Search from './Search.svelte'
 ---
 
 <header class="main-header">
-	<LoginModal client:load />
 	<nav class="flex flex-row place-content-between">
 		<a href="/" class="small max-w-fit justify-self-start">
 			<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24"
@@ -20,6 +19,7 @@ import Search from './Search.svelte'
 		<Hamburger />
 		<Navigation />
 	</nav>
+	<LoginModal client:load />
 </header>
 
 <style>

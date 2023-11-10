@@ -8,6 +8,7 @@ import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
 import { contentfulClient } from '../lib/contentful'
 import type { ContentPost, ContentComic } from '../lib/contentful'
 import LayoutMargin from '$layouts/LayoutMargin.astro'
+import '../styles/test.scss'
 // import { bicyclePOST, carPOST } from '$scripts/azureml-api'
 // import HoroscopeGame from './horoscope-game.astro'
 
@@ -95,6 +96,27 @@ const story = data.story.content
 // import fs from 'fs'
 
 // import WasmTest from '$lib/wasmTest.astro'
+
+// <!-- <div
+// 				class="list-none rounded-lg border-2 border-solid border-violet-800 bg-black bg-opacity-40 p-2"
+// 			>
+// 				<h1 class="text-center text-white">Contentful Blog posts</h1>
+// 				<p class="flex flex-row rounded bg-red-600 p-2 text-white saturate-50">
+// 					<Icon name="mdi:exclamation-thick" class="w-10" />
+// 					 Disabled because Contentful API broke :(
+// 				</p>
+// 				contentPosts.map((post) => (
+// 					<li>
+// 						<a href={`/contentful_posts/${post.slug}/`} rel="prefetch-intent">
+// 							<h2 class=" font-bold underline underline-offset-2">{post.title}</h2>
+// 						</a>
+// 						<time>{post.date}</time>
+// 						<p>{post.description}</p>
+// 					</li>
+// 				))
+// 			</div> -->
+
+// 				<!-- <CarSelector carTestData={carTest} client:load/> -->
 ---
 
 <!-- <Layout title="Welcome to Astro." user={user}> -->
@@ -102,50 +124,92 @@ const story = data.story.content
 	<main>
 		<LayoutMargin>
 			<div class="mb-32">
-				<h1 class="mb-4">Welcome to the <span class="text-gradient">Danger Zone!</span></h1>
+				<h1 class="mb-4 font-mono">
+					Welcome to the <span class="text-gradient">Danger Zone!</span>
+				</h1>
 			</div>
 		</LayoutMargin>
-
-		<!-- <div class="someclass">
-			<h2>Drawing SVG Shapes With D3</h2>
-			<div id="svghandle"></div>
-		</div> -->
-
-		<!-- <BucketFetch client:load/> -->
-
-		<!-- <Login /> -->
 
 		<div class="flex flex-col items-center gap-12">
 			<section
 				id="banner"
 				class="flex w-full flex-col bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-sky-300 via-zinc-100 to-rose-300"
 			>
-				<canvas id="gameCanvas" class="absolute bg-white opacity-10 z-0"></canvas>
-				
+				<canvas id="gameCanvas" class="absolute z-0 bg-white opacity-10"></canvas>
+
 				<div
 					class="relative -top-12 flex w-fit flex-col self-center rounded bg-gradient-to-tr from-green-700 to-yellow-300 p-4 drop-shadow-lg"
 				>
 					<h2>🎉 Big update! Comments & Rating functional on the website! 🎉</h2>
 				</div>
 
-				<div class="flex w-auto flex-col z-10">
-					<!-- rounded-lg border-2 border-solid border-violet-800 bg-black bg-opacity-40 -->
-					<h1 class="m-0 text-center text-zinc-900">Blog posts</h1>
+				<div class="z-10 flex w-auto flex-col">
+					<h1 class="m-0 text-center font-mono text-zinc-900">Blog posts</h1>
 					<StoryblokComponent blok={story} />
 				</div>
 			</section>
 
-			<div class="m-8 flex max-w-6xl flex-col gap-8">
-				<h1>This website is powered by:</h1>
-				<a
-					data-theme="dark"
-					data-layers="1,2,3,4"
-					data-stack-embed="true"
-					href="https://embed.stackshare.io/stacks/embed/1cb95f866c35adfce069b852c8c3d1"></a><script
-					async
-					src="https://cdn1.stackshare.io/javascripts/client-code.js"
-					charset="utf-8"></script>
+			<div class="m-8 flex max-w-6xl flex-col gap-32">
+				<!-- <div class="flex flex-row justify-between gap-4">
+					<Card
+						href="/about"
+						title="About me"
+						body="I am Erik, but my brand name is Kire."
+					/>
+					<div class=" text-4xl border-b-2 border-r-2 border-white border-double w-1/2 rounded-lg bg-zinc-100 p-4 text-black shadow-black shadow-inner">
+					<div class=" text-4xl">
+						<p class="tt">
+							On this website, you can mainly find my personal blog and webcomics that I will eventually produce.
+						</p>
+					</div>
+				</div> -->
 
+				<div class="pp">
+					<h1 class="w-1/2 self-end font-mono">Erik (KIRE) is a reneissance man of sorts...</h1>
+
+					<article style="--hsl0: 49, 100%, 54%; --hsl1: 33, 96%, 50%; --idx: 0" data-icon="🌐">
+						<h3>Skill</h3>
+						<h4>Fullstack Web Dev</h4>
+						<p>
+							Javascript/Typescript, React, Svelte, Node.js, Astro, SQL, Postgres, NoSQL, Supabase,
+							Firebase, Microsoft Azure
+						</p>
+					</article>
+
+					<article style="--hsl0: 82, 81%, 52%; --hsl1: 104, 56%, 51%; --idx: 1" data-icon="🐍">
+						<h3>Skill</h3>
+						<h4>Python dev, AI & ML</h4>
+						<p>numpy, pandas, matplotlib, tensorflow, pytorch, cv2...</p>
+					</article>
+
+					<article style="--hsl0: 169, 50%, 44%; --hsl1: 191, 99%, 27%; --idx: 2" data-icon="✏️">
+						<h3>Skill</h3>
+						<h4>Writing & Doc</h4>
+						<p>I write too dang much even on my spare time on social media.</p>
+					</article>
+
+					<article style="--hsl0: 332, 94%, 67%; --hsl1: 338, 101%, 59%; --idx: 3" data-icon="🎨">
+						<h3>Skill</h3>
+						<h4>Art</h4>
+						<p>
+							I have drawn since I was 4 and do mainly digital art nowadays. I've always wanted to
+							make a professional webcomic.
+						</p>
+					</article>
+				</div>
+
+				<div class="rounded bg-white">
+					<h1 class="p-2 text-black">This website is powered by:</h1>
+					<a
+						data-theme="dark"
+						data-layers="1,2,3,4"
+						data-stack-embed="true"
+						href="https://embed.stackshare.io/stacks/embed/1cb95f866c35adfce069b852c8c3d1"
+					></a><script
+						async
+						src="https://cdn1.stackshare.io/javascripts/client-code.js"
+						charset="utf-8"></script>
+				</div>
 				<div
 					class="flex flex-col gap-4 rounded bg-gradient-to-r from-blue-900 to-cyan-900 p-4 drop-shadow-lg"
 				>
@@ -156,65 +220,45 @@ const story = data.story.content
 					>
 				</div>
 
-				<!-- <div
-				class="list-none rounded-lg border-2 border-solid border-violet-800 bg-black bg-opacity-40 p-2"
-			>
-				<h1 class="text-center text-white">Contentful Blog posts</h1>
-				<p class="flex flex-row rounded bg-red-600 p-2 text-white saturate-50">
-					<Icon name="mdi:exclamation-thick" class="w-10" />
-					 Disabled because Contentful API broke :(
-				</p>
-				contentPosts.map((post) => (
-					<li>
-						<a href={`/contentful_posts/${post.slug}/`} rel="prefetch-intent">
-							<h2 class=" font-bold underline underline-offset-2">{post.title}</h2>
-						</a>
-						<time>{post.date}</time>
-						<p>{post.description}</p>
-					</li>
-				)) 
-			</div> -->
-
-				<!-- <CarSelector carTestData={carTest} client:load/> -->
-				<p class="instructions mt-5">
-					This frontpage follows the <code>Astro template</code>. <br />
-					<strong>Below are links to Astro resources</strong>
-				</p>
-				<ul role="list" class="link-card-grid">
-					<Card
-						href="https://docs.astro.build/"
-						title="Documentation"
-						body="Learn how Astro works and explore the official API docs."
-					/>
-					<Card
-						href="https://astro.build/integrations/"
-						title="Integrations"
-						body="Supercharge your project with new frameworks and libraries."
-					/>
-					<Card
-						href="https://astro.build/themes/"
-						title="Themes"
-						body="Explore a galaxy of community-built starter themes."
-					/>
-					<Card
-						href="https://astro.build/chat/"
-						title="Community"
-						body="Come say hi to our amazing Discord community. ❤️"
-					/>
-				</ul>
+				<div>
+					<p class="instructions mt-5">
+						This frontpage follows the <code>Astro template</code>. <br />
+						<strong>Below are links to Astro resources</strong>
+					</p>
+					<ul role="list" class="link-card-grid">
+						<Card
+							href="https://docs.astro.build/"
+							title="Documentation"
+							body="Learn how Astro works and explore the official API docs."
+						/>
+						<Card
+							href="https://astro.build/integrations/"
+							title="Integrations"
+							body="Supercharge your project with new frameworks and libraries."
+						/>
+						<Card
+							href="https://astro.build/themes/"
+							title="Themes"
+							body="Explore a galaxy of community-built starter themes."
+						/>
+						<Card
+							href="https://astro.build/chat/"
+							title="Community"
+							body="Come say hi to our amazing Discord community. ❤️"
+						/>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</main>
 </Layout>
 
-
 <script>
 	const canvas = document.getElementById('gameCanvas')
 	const banner = document.getElementById('banner')
-	canvas.width = banner.clientWidth;
-	canvas.height = banner.clientHeight;
+	canvas.width = banner.clientWidth
+	canvas.height = banner.clientHeight
 	const context = canvas.getContext('2d')
-
 
 	const cellSize = 10
 	const rows = Math.round(canvas.height / cellSize)
@@ -278,15 +322,28 @@ const story = data.story.content
 		return sum
 	}
 
-	function gameLoop() {
-		updateGrid()
-		drawGrid()
+	let lastRender = 0
+	let fps = 30 // Adjust the frames per second to control the speed
+
+	function gameLoop(timestamp) {
+		if (timestamp - lastRender >= 1000 / fps) {
+			updateGrid()
+			drawGrid()
+			lastRender = timestamp
+		}
 		requestAnimationFrame(gameLoop)
 	}
 
-	gameLoop()
-</script>
+	requestAnimationFrame(gameLoop)
 
+	// function gameLoop() {
+	// 	updateGrid()
+	// 	drawGrid()
+	// 	requestAnimationFrame(gameLoop)
+	// }
+
+	// gameLoop()
+</script>
 
 <style>
 	/* .astro-a {
