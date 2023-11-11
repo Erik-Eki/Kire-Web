@@ -4,6 +4,7 @@ import Layout from '../layouts/Layout.astro'
 import LayoutMargin from '$layouts/LayoutMargin.astro'
 import MarkdownPostLayout from '../layouts/MarkdownPostLayout.astro'
 import { Content as AboutMD } from '../content/about/about.mdx'
+import ChangeLog from "CHANGELOG.md"
 
 const pageTitle = 'About Me'
 
@@ -35,6 +36,12 @@ const textCase = 'uppercase'
 				<div id="canvas"></div>
 			</div>
 		</div>
+
+		<hr>
+
+		<ChangeLog />
+
+		<hr>
 	</LayoutMargin>
 </Layout>
 <script src="/gameOfLife_test.js" is:inline >
