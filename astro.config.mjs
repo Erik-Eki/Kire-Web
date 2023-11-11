@@ -1,5 +1,4 @@
 import { defineConfig } from 'astro/config';
-import legacy from '@vitejs/plugin-legacy'
 import vercel from '@astrojs/vercel/serverless';
 import svelte from '@astrojs/svelte';
 import tailwind from '@astrojs/tailwind';
@@ -27,11 +26,6 @@ export default defineConfig({
       entrypoint: 'astro/assets/services/noop'
     }
   },
-  plugins: [
-    legacy({
-      targets: ['defaults', 'not IE 11'],
-    }),
-  ],
   integrations: [
     tailwind({
       applyBaseStyles: true
