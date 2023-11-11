@@ -1,23 +1,62 @@
 ---
 import Social from '../main/Social.astro'
+import fs from "fs"
 
+// Read the package.json file and parse it as a JSON object
+const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+
+// Get the version text from the version property
+const version = packageJson.version;
+
+// Import the standard-version package
+
+// Call the standard-version API with options
+// standardVersion({
+// 	// Specify the bumpFiles to update
+// 	bumpFiles: [
+// 		{
+// 			filename: 'package.json',
+// 			type: 'json'
+// 		},
+// 		{
+// 			filename: 'version.txt',
+// 			type: 'plain-text'
+// 		}
+// 	],
+// 	// Specify the header for the changelog
+// 	header: '# My Astro App Changelog\n\n'
+// })
+// 	.then(() => {
+// 		// Success message
+// 		console.log('New version and changelog generated successfully!')
+// 	})
+// 	.catch((err) => {
+// 		// Error message
+// 		console.error(`Something went wrong: ${err.message}`)
+// 	})
 ---
 
-<footer>
-	<Social
-		platform="linkedin.com/in"
-		title="LinkedIn"
-		username="erik-huuskonen-ai"
-		logo="/linkedin-blue.svg"
-		width="65"
-	/>
-	<Social
-		platform="github.com"
-		title="Github"
-		username="erik-eki"
-		logo="/github-mark-white.svg"
-		width="50"
-	/>
+<footer class="flex flex-col">
+	<div class="flex flex-row items-center gap-4">
+		<Social
+			platform="linkedin.com/in"
+			title="LinkedIn"
+			username="erik-huuskonen-ai"
+			logo="/linkedin-blue.svg"
+			width="65"
+		/>
+		<Social
+			platform="github.com"
+			title="Github"
+			username="erik-eki"
+			logo="/github-mark-white.svg"
+			width="50"
+		/>
+	</div>
+
+	<div class="p-4 font-thin text-gray-500">
+		version: {version}
+	</div>
 </footer>
 
 <style>
