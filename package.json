@@ -1,7 +1,7 @@
 {
   "name": "kire-web",
   "type": "module",
-  "version": "9.9.9",
+  "version": "9.9.10",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -66,10 +66,5 @@
     "prettier-plugin-astro": "^0.11.1",
     "standard-version": "^9.5.0",
     "typescript": "^5.2.2"
-  },
-  "standard-version": {
-    "scripts": {
-      "prebump": "echo 9.9.9"
-    }
   }
 }
