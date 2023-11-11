@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.11](https://github.com/Erik-Eki/Kire-Web/compare/v9.9.10...v0.4.11) (2023-11-11)
+
 ### [9.9.10](https://github.com/Erik-Eki/Kire-Web/compare/v9.9.9...v9.9.10) (2023-11-11)
 
 ### 9.9.9 (2023-11-11)
