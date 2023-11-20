@@ -10,7 +10,7 @@ import preact from '@astrojs/preact';
 import vue from '@astrojs/vue';
 // import alpinejs from '@astrojs/alpinejs';
 // import solidJs from "@astrojs/solid-js";
-import { remarkReadingTime } from './remark-reading-time.mjs';
+// import { remarkReadingTime } from './src/assets/scripts/remark-reading-time.mjs/index.js';
 
 const env = loadEnv('', process.cwd(), 'STORYBLOK');
 
@@ -34,9 +34,9 @@ export default defineConfig({
     storyblok({
       accessToken: env.STORYBLOK_TOKEN,
       components: {
-        blogPost: 'storyblok/BlogPost',
-        blogPostList: 'storyblok/BlogPostList',
-        page: 'storyblok/Page',
+        blogPost: 'components/storyblok/BlogPost',
+        blogPostList: 'components/storyblok/BlogPostList',
+        page: 'components/storyblok/Page',
         //updatePost: "api/update-posts"
       },
       apiOptions: {

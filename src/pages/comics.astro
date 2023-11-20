@@ -5,6 +5,32 @@ import LayoutMargin from "$layouts/LayoutMargin.astro";
 
 <Layout title="Comics">
 <LayoutMargin>
-    <div>WIP</div>
+    <h1>Comics</h1>
+    <div class="flex flex-col gap-8">
+        <section class="p-4 rounded bg-black bg-opacity-50 w-fit">
+            <div class="flex flex-col items-center">
+            <img class="cover-art self-center" src="https://res.cloudinary.com/drvyi4qko/image/upload/v1700446263/boivbemfqlvegbairiae.jpg">
+        </div>
+            <h2>Dungeon Crawler (WIP)</h2>
+            <details>
+                <summary>Description</summary>
+                <div class=" max-w-lg">
+                    <p>An adventuring knight Chanssa goes on a seemingly simple goblin slaying quest, but tragedy strikes as she falls through the floor and breaks both her legs.</p>
+                    <p>Chanssa, unable to now walk, stand, or fight and completely alone, has to crawl her way out of the dungeon. She faces obstacles that shouldn't pose her any problems normally, but in her injuries make them deadly: Doors, stairs, and monster.</p>
+                    <p>Dungeon Crawler is set in a dark and unforgiving fantasy world. Yet it is not without humour: Characterized by witty banter and whimsical characters, the dark is contrasted by the light. The story however tackles many serious and mature themes, such as <i>trauma, identity, sexuality, betreyal, perseverance, and hope.</i></p>
+                    <p class=" text-sm">Viewer discretion is adviced. Rated K-18
+                    </p>
+                </div>
+            </details>
+        </section>
+    </div>
 </LayoutMargin>
 </Layout>
+
+
+<style>
+    .cover-art {
+        width: 298px;
+        height: 421px;
+    }
+</style>
